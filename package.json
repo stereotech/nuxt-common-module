@@ -1,6 +1,6 @@
 {
   "name": "@stereotech/nuxt-common-module",
-  "version": "1.0.0",
+  "version": "1.7.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/stereotech/nuxt-common-module.git"
@@ -8,7 +8,10 @@
   "main": "./dist/index.cjs",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "unbuild"
+    "build": "unbuild",
+    "preversion": "npm test",
+    "version": "npm run build && git add -A dist",
+    "postversion": "git push && git push --tags && rm -rf build/temp"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
