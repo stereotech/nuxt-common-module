@@ -1,6 +1,7 @@
 
 import Vue from 'vue'
 import fileManager from '~common/components/FileManager.vue'
+import CardTitle from '~common/components/CardTitle.vue'
 // import PrintQueue from '~common/components/dashboard/PrintQueue'
 // import CreatePrintjobDialog from '~common/components/dashboard/CreatePrintjobDialog'
 // import WebcamCard from '~common/components/webcam/WebcamCard'
@@ -22,6 +23,7 @@ import fileManager from '~common/components/FileManager.vue'
 import { VOverflowBtn } from 'vuetify/lib'
 
 Vue.component(fileManager.name, fileManager)
+Vue.component(CardTitle.name, CardTitle)
 // Vue.component(PrintQueue.name, PrintQueue)
 // Vue.component(CreatePrintjobDialog.name, CreatePrintjobDialog)
 // Vue.component(WebcamCard.name, WebcamCard)
