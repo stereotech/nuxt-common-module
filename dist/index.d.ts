@@ -127,19 +127,6 @@ declare module '@nuxt/types' {
         common?: Partial<ModuleOptions>;
     }
 }
-declare module 'vue/types/vue' {
-    interface Vue {
-        $helpers: Helpers;
-        $notify: Notification;
-    }
-}
-declare module 'vuex/types/index' {
-    interface Store<S> {
-        $common: Common;
-        $helpers: Helpers;
-        $notify: Notification;
-    }
-}
 
 interface ModuleOptions {
     a: boolean;

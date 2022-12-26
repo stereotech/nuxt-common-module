@@ -35,9 +35,9 @@ export default class DashboardPrintQueue extends Vue {
     editJob(item: ServerPrintjobsStatePrintjob): void;
     startPrint(item: ServerPrintjobsStatePrintjob): void;
     printStateChanged(newVal: string): void;
-    get isTablet(): boolean;
-    get isDesktop(): boolean;
-    get isWidescreen(): boolean;
+    get isTablet(): any;
+    get isDesktop(): any;
+    get isWidescreen(): any;
     setPriority(item: ServerPrintjobsStatePrintjob, priority?: 'NORMAL' | 'HIGH' | 'LOW' | 'DELAY'): void;
     updatePrintjob(item: {}): void;
     changePrintjobsSync(newVal: any): void;

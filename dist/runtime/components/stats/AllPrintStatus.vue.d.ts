@@ -16,7 +16,7 @@ export default class StatsAllPrintStatus extends Vue {
     eventListenerResize(event: Event): void;
     getImage(): string | undefined;
     getGeometry(): {
-        width: number;
-        height: number;
+        width: any;
+        height: any;
     };
 }
