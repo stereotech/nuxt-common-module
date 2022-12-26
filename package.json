@@ -8,10 +8,7 @@
   "main": "./dist/index.cjs",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "unbuild",
-    "preversion": "npm test",
-    "version": "npm run build && git add -A dist",
-    "postversion": "git push && git push --tags && rm -rf build/temp"
+    "build": "unbuild"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
