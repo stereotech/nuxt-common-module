@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "sourceMap": true,
+    "strict": true,
+    "noEmit": true,
+    "experimentalDecorators": true,
+    "baseUrl": ".",
+    "moduleResolution": "Node",
+    "target": "ESNext",
+    "module": "ESNext",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "types": [
+      "node"
+    ],
+    "paths": {
+      "~common/*": [
+        "src/runtime/*"
+      ],
+      "~common": [
+        "src/runtime"
+      ]
+    }
+  },
+  "exclude": [
+    "dist"
+  ]
+}

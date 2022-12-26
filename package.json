@@ -1,0 +1,28 @@
+{
+  "name": "@stereotech/nuxt-common-module",
+  "version": "1.6.6",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stereotech/Ste-App-Client-2.git"
+  },
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "unbuild"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "dependencies": {
+    "nuxt-property-decorator": "^2.9.1",
+    "@nuxtjs/toast": "^3.3.1"
+  },
+  "devDependencies": {
+    "@nuxt/types": "latest",
+    "@nuxt/typescript-build": "latest",
+    "@nuxt/typescript-runtime": "latest",
+    "unbuild": "^1.0.1",
+    "upath": "^2.0.1",
+    "@nuxtjs/vuetify": "^1.12.3"
+  }
+}
