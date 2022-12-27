@@ -764,7 +764,9 @@ interface dialogCopyObject {
   newPath: string
   item: FileStateFile
 }
-@Component
+@Component({
+  name: "fileManager"
+})
 export default class fileManager extends Vue {
   @Prop({ type: Boolean, default: false }) closeable!: boolean
   @Prop({ type: Boolean, default: false }) noPrint!: boolean
