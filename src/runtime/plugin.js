@@ -20,7 +20,6 @@ import CardTitle from '~common/components/CardTitle.vue'
 // import DashboardPrinterHeaters from '~common/components/dashboard/DashboardPrinterHeaters'
 // import { Helpers } from '~common/plugins/helpers'
 // import { Notification } from '~common/plugins/notifications'
-import { VOverflowBtn } from 'vuetify/lib'
 
 Vue.component(fileManager.name, fileManager)
 Vue.component(CardTitle.name, CardTitle)
