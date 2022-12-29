@@ -103,7 +103,7 @@
             <span
               ><b>{{ $t("Files.CurrentPath") }}:</b>
               {{
-                currentPath !== initialPath
+                currentPath !== currentPathProp
                   ? "/" + this.currentPath.substring(7)
                   : "/"
               }}</span
@@ -157,7 +157,7 @@
           <div class="text-center">{{ $t("Files.Empty") }}</div>
         </template>
 
-        <template slot="body.prepend" v-if="currentPath !== initialPath">
+        <template slot="body.prepend" v-if="currentPath !== currentPathProp">
           <tr
             class="file-list-cursor"
             @click="clickRowGoBack"
@@ -666,7 +666,10 @@
           <v-simple-table>
             <template v-slot:default>
               <tbody>
-                <tr v-if="dialogCopy.newPath !== initialPath" @click="upClick">
+                <tr
+                  v-if="dialogCopy.newPath !== currentPathProp"
+                  @click="upClick"
+                >
                   <td class="px-1"><v-icon>mdi-folder-upload</v-icon></td>
                   <td class="px-1">..</td>
                 </tr>
@@ -790,7 +793,7 @@ export default class FileManager extends Vue {
       }
     }
   }) printerInfo!: IPrinterInfo
-  @Prop({ type: String, default: '' }) currentPath!: string
+  @Prop({ type: String, default: '' }) currentPathProp!: string
   @PropSync('options', {
     type: Object, default: () => {
       return {
@@ -817,7 +820,8 @@ export default class FileManager extends Vue {
     inputFieldCreateDirectory: HTMLInputElement,
     inputFieldRenameDirectory: HTMLInputElement,
   }
-  initialPath = this.currentPath
+
+  currentPath = this.currentPathProp
   printMode = ''
   private search = ''
   private files: FileStateFile[] | null = []
@@ -1287,10 +1291,10 @@ export default class FileManager extends Vue {
     }, { action: 'switchToDashboard' })
   }
   isUsb (item: FileStateFile) {
-    return this.currentPath === this.initialPath && item.isDirectory && item.filename === 'USB'
+    return this.currentPath === this.currentPathProp && item.isDirectory && item.filename === 'USB'
   }
   isUsbInDialog (item: FileStateFile) {
-    return this.dialogCopy.currentPath === this.initialPath && item.isDirectory && item.filename === 'USB'
+    return this.dialogCopy.currentPath === this.currentPathProp && item.isDirectory && item.filename === 'USB'
   }
   // copy
   copyFile (item: FileStateFile, action: 'copy' | 'move') {
@@ -1341,10 +1345,6 @@ export default class FileManager extends Vue {
         return this.$helpers.formatDate(item.modified, 0)
       }
     }
-  }
-  mounted () {
-    console.log('---!--- nuxt-common-Module diskUsage:', this.diskUsage);
-
   }
 }
 </script>
