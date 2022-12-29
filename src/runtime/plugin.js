@@ -4,7 +4,7 @@ import FileManager from '~common/components/FileManager.vue'
 import CardTitle from '~common/components/CardTitle.vue'
 // import PrintQueue from '~common/components/dashboard/PrintQueue'
 // import CreatePrintjobDialog from '~common/components/dashboard/CreatePrintjobDialog'
-import WebcamCard from '~common/components/webcam/WebcamCard'
+// import WebcamCard from '~common/components/webcam/WebcamCard'
 // import StatsAllPrintStatus from '~common/components/stats/AllPrintStatus'
 // import StatsAllPrintStatusTime from '~common/components/stats/AllPrintStatusTime'
 // import StatsAllPrintStatusMaterial from '~common/components/stats/AllPrintStatusMaterial'
@@ -25,7 +25,7 @@ Vue.component(FileManager.name, FileManager)
 Vue.component(CardTitle.name, CardTitle)
 // Vue.component(PrintQueue.name, PrintQueue)
 // Vue.component(CreatePrintjobDialog.name, CreatePrintjobDialog)
-Vue.component(WebcamCard.name, WebcamCard)
+// Vue.component(WebcamCard.name, WebcamCard)
 // Vue.component(StatsAllPrintStatus.name, StatsAllPrintStatus)
 // Vue.component(StatsAllPrintStatusTime.name, StatsAllPrintStatusTime)
 // Vue.component(StatsAllPrintStatusMaterial.name, StatsAllPrintStatusMaterial)
