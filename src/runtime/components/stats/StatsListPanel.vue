@@ -88,6 +88,8 @@
     </v-card-text>
     <!--Print history table-->
     <v-data-table
+      v-bind="$attrs"
+      v-on="$listeners"
       :items="jobs"
       class="files-table"
       :headers="filteredHeaders"
@@ -95,7 +97,6 @@
       :custom-sort="sortFiles"
       :sort-by.sync="sortBy"
       :sort-desc.sync="sortDesc"
-      :items-per-page.sync="countPerPage"
       :footer-props="{
         itemsPerPageText: $t('Statistics.History.Jobs'),
         itemsPerPageAllText: $t('Statistics.History.AllJobs'),
@@ -573,7 +574,8 @@
               'metadata' in detailsDialog.item &&
               'settings' in detailsDialog.item.metadata &&
               'printing_mode' in
-                detailsDialog.item.metadata.settings.global_quality.values
+                (detailsDialog.item.metadata.settings.global_quality.values ??
+                  {})
             "
           >
             <v-divider class="my-3"></v-divider>
@@ -608,7 +610,6 @@ export default class StatsListPanel extends Vue {
   @Prop({ type: Array, default: () => [] }) statusInfo!: []
   @Prop({ type: Array, default: () => [] }) priorityInfo!: []
   @PropSync('hideColums', { type: Array, default: () => [''] }) hideColumsSync!: String[]
-  @PropSync('countPerPage', { type: Number, default: 10 }) countPerPageSync!: number
 
   search = "";
   options = {};
