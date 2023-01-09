@@ -609,6 +609,7 @@ export default class StatsListPanel extends Vue {
   @Prop({ type: Array, default: () => [] }) jobs!: []
   @Prop({ type: Array, default: () => [] }) statusInfo!: []
   @Prop({ type: Array, default: () => [] }) priorityInfo!: []
+  @Prop({ type: String, default: '' }) printerName!: string
   @PropSync('hideColums', { type: Array, default: () => [''] }) hideColumsSync!: String[]
 
   search = "";
@@ -1108,11 +1109,10 @@ export default class StatsListPanel extends Vue {
     this.tableToCSV()
 
     let href = "data:text/csv;charset=utf-8,\ufeff" + this.textCSV;
-    var link = document.createElement("a");
+    let link = document.createElement("a");
     link.setAttribute("href", href);
-    var date = new Date();
-    var filename = 'print_history_' + date.getTime();
-    link.setAttribute("download", filename + ".csv");
+    let filename = `print_history_${this.printerName}_${new Date().toLocaleDateString()}.csv`
+    link.setAttribute("download", filename);
     link.click();
   }
 
