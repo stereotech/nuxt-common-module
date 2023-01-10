@@ -72,7 +72,7 @@
                   :valid-gcode-extensions="validGcodeExtensions"
                   :params="params"
                   :printer-info="printerInfo"
-                  :current-path="`gcodes`"
+                  :current-path-prop="`gcodes`"
                   v-model="filetree"
                   :options.sync="optionsSync"
                   :files-for-copy-dialog.sync="filesForCopyDialogSync"

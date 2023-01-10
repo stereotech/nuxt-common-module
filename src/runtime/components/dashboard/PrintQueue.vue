@@ -172,7 +172,7 @@ import { Vue, Component, Watch, Prop, PropSync, Model } from 'nuxt-property-deco
 import { DataTableHeader } from 'vuetify'
 import { ServerPrintjobsStatePrintjob } from '../../../types/printjobs'
 import { IParams, IPrinterInfo } from '../../../types/common'
-import DashboardCreatePrintjobDialog from '../dashboard/CreatePrintjobDialog.vue'
+import DashboardCreatePrintjobDialog from './CreatePrintjobDialog.vue'
 
 interface createDialog {
   bool: boolean
