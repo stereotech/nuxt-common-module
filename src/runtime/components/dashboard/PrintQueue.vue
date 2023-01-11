@@ -146,11 +146,14 @@
     </v-menu>
     <dashboard-create-printjob-dialog
       :create-dialog.sync="createDialog"
-      v-bind="fileManagerPropsEvents"
+      :file-manager-props-events="fileManagerPropsEvents"
       v-on="fileManagerPropsEvents"
       :options.sync="optionsSync"
       :files-for-copy-dialog.sync="filesForCopyDialogSync"
       v-model="filetree"
+    />
+    <!-- @updatePrintjob="updatePrintjob"
+      v-bind="fileManagerPropsEvents"
       @socketAddLoading="socketAddLoading"
       @socketRemoveLoading="socketRemoveLoading"
       @postDirectory="postDirectory"
@@ -163,8 +166,7 @@
       @serverFilesDeleteDirectory="serverFilesDeleteDirectory"
       @serverPrintjobsPostJob="serverPrintjobsPostJob"
       @setGcodefilesMetadata="setGcodefilesMetadata"
-    />
-    <!-- @updatePrintjob="updatePrintjob" -->
+    -->
   </v-card>
 </template>
 
