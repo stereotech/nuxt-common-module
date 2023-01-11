@@ -234,7 +234,7 @@ export default class DashboardCreatePrintjobDialog extends Vue {
       return {
         closeable: false,
         noPrint: false,
-        loadings!: [],
+        loadings: [],
         diskUsage: { free: 0, total: 0, used: 0 },
         validGcodeExtensions: [],
         params: {
