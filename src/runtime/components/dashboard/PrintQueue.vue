@@ -478,7 +478,6 @@ export default class DashboardPrintQueue extends Vue {
   //---------------for FileManager component---------------}
   mounted () {
     console.log('PrintQueue fileManagerPropsEvents: ', this.fileManagerPropsEvents);
-
   }
 }
 

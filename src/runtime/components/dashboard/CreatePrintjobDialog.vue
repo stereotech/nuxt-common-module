@@ -445,7 +445,6 @@ export default class DashboardCreatePrintjobDialog extends Vue {
   //---------------for FileManager component---------------}
   mounted () {
     console.log('PrintjobDialog fileManagerPropsEvents: ', this.fileManagerPropsEvents);
-
   }
 }
 
