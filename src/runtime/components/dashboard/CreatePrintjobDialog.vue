@@ -67,10 +67,24 @@
                   </v-btn></template
                 >
                 <file-manager
-                  :file-manager-props-events="fileManagerPropsEvents"
+                  v-bind="fileManagerPropsEvents"
+                  v-on="fileManagerPropsEvents"
                   :options.sync="optionsSync"
                   :files-for-copy-dialog.sync="filesForCopyDialogSync"
                   v-model="filetree"
+                  @updatePrintjob="updatePrintjob"
+                  @socketAddLoading="socketAddLoading"
+                  @socketRemoveLoading="socketRemoveLoading"
+                  @postDirectory="postDirectory"
+                  @getDirectory="getDirectory"
+                  @serverFilesMetadata="serverFilesMetadata"
+                  @serverFilesMove="serverFilesMove"
+                  @serverFilesCopy="serverFilesCopy"
+                  @printerGcodeScript="printerGcodeScript"
+                  @serverFilesDeleteFile="serverFilesDeleteFile"
+                  @serverFilesDeleteDirectory="serverFilesDeleteDirectory"
+                  @serverPrintjobsPostJob="serverPrintjobsPostJob"
+                  @setGcodefilesMetadata="setGcodefilesMetadata"
                   @closeFileManagerDialog="closeFileManagerDialog"
                 />
               </v-dialog>
@@ -212,36 +226,31 @@ export default class DashboardCreatePrintjobDialog extends Vue {
   }) createDialogSync!: ICreateDialog
 
   //---------------for FileManager component---------------{
+  @Prop({ type: Boolean, default: false }) closeable!: boolean
+  @Prop({ type: Boolean, default: false }) noPrint!: boolean
+
+  @Prop({ type: Array, default: () => [] }) loadings!: string[]
+  @Prop({ type: Object, default: () => { return { free: 0, total: 0, used: 0 } } }) diskUsage!: {}
+  @Prop({ type: Array, default: () => [] }) validGcodeExtensions!: string[]
   @Prop({
-    type: Object, default: () => { }
-    //   return {
-    //     closeable: false,
-    //     noPrint: false,
-    //     loadings!: [],
-    //     diskUsage: { free: 0, total: 0, used: 0 },
-    //     validGcodeExtensions: [],
-    //     params: {
-    //       timezoneOffset: 0,
-    //       apiUrl: '',
-    //       isPanel: true
-    //     },
-    //     printerInfo: {
-    //       axisMode: '',
-    //       printerIsPrinting: false,
-    //     },
-    //     currentPathProp: ''
-    //   }
-    // }
-  }) fileManagerPropsEvents!: {
-    // closeable: boolean,
-    // noPrint: boolean,
-    // loadings: string[],
-    // diskUsage: {},
-    // validGcodeExtensions: string[],
-    // params: IParams,
-    // printerInfo: IPrinterInfo,
-    // currentPathProp: string,
-  }
+    type: Object, default: () => {
+      return {
+        timezoneOffset: 0,
+        apiUrl: '',
+        isPanel: true
+      }
+    }
+  }) params!: IParams
+  @Prop({ type: String, default: 'gcodes' }) currentPathProp!: string
+  @Prop({
+    type: Object, default: () => {
+      return {
+        axisMode: '',
+        printerIsPrinting: false,
+      }
+    }
+  }) printerInfo!: IPrinterInfo
+
   @PropSync('options', {
     type: Object, default: () => {
       return {
@@ -444,7 +453,8 @@ export default class DashboardCreatePrintjobDialog extends Vue {
   }
   //---------------for FileManager component---------------}
   mounted () {
-    console.log('PrintjobDialog fileManagerPropsEvents: ', this.fileManagerPropsEvents);
+    console.log('PrintjobDialog diskUsage: ', this.diskUsage);
+    console.log('PrintjobDialog filetree: ', this.filetree);
   }
 }
 
