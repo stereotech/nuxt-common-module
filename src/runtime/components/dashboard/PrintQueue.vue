@@ -210,7 +210,7 @@ export default class DashboardPrintQueue extends Vue {
         printerGcodeScript: (options: any, settings: any) => { },
         serverFilesDeleteFile: (options: any, settings: any) => { },
         serverFilesDeleteDirectory: (options: any, settings: any) => { },
-        serverPrintjobsPostJob: (options: any, settings: any) => { },
+        // serverPrintjobsPostJob: (options: any, settings: any) => { },
         setGcodefilesMetadata: (obj: any) => { },
       }
     }
@@ -233,7 +233,7 @@ export default class DashboardPrintQueue extends Vue {
     printerGcodeScript: (options: any, settings: any) => void,
     serverFilesDeleteFile: (options: any, settings: any) => void,
     serverFilesDeleteDirectory: (options: any, settings: any) => void,
-    serverPrintjobsPostJob: (options: any, settings: any) => void,
+    // serverPrintjobsPostJob: (options: any, settings: any) => void,
     setGcodefilesMetadata: (obj: any) => void
   }
 

@@ -243,7 +243,7 @@ export default class DashboardCreatePrintjobDialog extends Vue {
         printerGcodeScript: (options: any, settings: any) => { },
         serverFilesDeleteFile: (options: any, settings: any) => { },
         serverFilesDeleteDirectory: (options: any, settings: any) => { },
-        serverPrintjobsPostJob: (options: any, settings: any) => { },
+        // serverPrintjobsPostJob: (options: any, settings: any) => { },
         setGcodefilesMetadata: (obj: any) => { },
       }
     }
@@ -266,7 +266,7 @@ export default class DashboardCreatePrintjobDialog extends Vue {
     printerGcodeScript: (options: any, settings: any) => void,
     serverFilesDeleteFile: (options: any, settings: any) => void,
     serverFilesDeleteDirectory: (options: any, settings: any) => void,
-    serverPrintjobsPostJob: (options: any, settings: any) => void,
+    // serverPrintjobsPostJob: (options: any, settings: any) => void,
     setGcodefilesMetadata: (obj: any) => void
   }
 
@@ -436,9 +436,13 @@ export default class DashboardCreatePrintjobDialog extends Vue {
     // }
   }
 
+  closeFileManagerDialog () {
+    console.log('1 закроем fileManager по крестику');
+    this.fileSelectorDialog.bool = false
+  }
   serverPrintjobsPostJob (options: any, settings: any) {
     console.log('1 закроем fileManager');
-    this.fileSelectorDialog.bool = false
+    this.closeFileManagerDialog()
   }
 
 }
