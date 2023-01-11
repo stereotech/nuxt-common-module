@@ -67,11 +67,13 @@
                   </v-btn></template
                 >
                 <file-manager
-                  v-bind="$attrs"
-                  v-on="$listeners"
+                  v-bind="fileManagerPropsEvents"
+                  v-on="fileManagerPropsEvents"
                   :options.sync="optionsSync"
                   :files-for-copy-dialog.sync="filesForCopyDialogSync"
                   v-model="filetree"
+                />
+                <!--
                   @updatePrintjob="updatePrintjob"
                   @socketAddLoading="socketAddLoading"
                   @socketRemoveLoading="socketRemoveLoading"
@@ -86,7 +88,7 @@
                   @serverPrintjobsPostJob="serverPrintjobsPostJob"
                   @setGcodefilesMetadata="setGcodefilesMetadata"
                   @closeFileManagerDialog="closeFileManagerDialog"
-                />
+                  -->
               </v-dialog>
             </v-col>
             <v-col cols="12">
@@ -96,9 +98,10 @@
                 outlined
                 type="warning"
                 v-if="
-                  (printerInfo.axisMode === 'three' &&
+                  (fileManagerPropsEvents.printerInfo.axisMode === 'three' &&
                     printMode !== ('classic' && '')) ||
-                  (printerInfo.axisMode === 'five' && printMode === 'classic')
+                  (fileManagerPropsEvents.printerInfo.axisMode === 'five' &&
+                    printMode === 'classic')
                 "
                 >{{ $t("Dashboard.Printqueue.AnotherModule") }}</v-alert
               >
@@ -225,30 +228,62 @@ export default class DashboardCreatePrintjobDialog extends Vue {
   }) createDialogSync!: ICreateDialog
 
   //---------------for FileManager component---------------{
-  @Prop({ type: Boolean, default: false }) closeable!: boolean
-  @Prop({ type: Boolean, default: false }) noPrint!: boolean
 
-  @Prop({ type: Array, default: () => [] }) loadings!: string[]
-  @Prop({ type: Object, default: () => { return { free: 0, total: 0, used: 0 } } }) diskUsage!: {}
-  @Prop({ type: Array, default: () => [] }) validGcodeExtensions!: string[]
   @Prop({
     type: Object, default: () => {
       return {
-        timezoneOffset: 0,
-        apiUrl: '',
-        isPanel: true
+        closeable: false,
+        noPrint: false,
+        loadings!: [],
+        diskUsage: { free: 0, total: 0, used: 0 },
+        validGcodeExtensions: [],
+        params: {
+          timezoneOffset: 0,
+          apiUrl: '',
+          isPanel: true
+        },
+        currentPathProp: '',
+        printerInfo: {
+          axisMode: '',
+          printerIsPrinting: false,
+        },
+        socketAddLoading: (obj: any) => { },
+        socketRemoveLoading: (obj: any) => { },
+        postDirectory: (options: any, settings: any) => { },
+        getDirectory: (options: any, settings: any) => { },
+        serverFilesMove: (options: any, settings: any) => { },
+        serverFilesCopy: (options: any, settings: any) => { },
+        serverFilesMetadata: (options: any, settings: any) => { },
+        printerGcodeScript: (options: any, settings: any) => { },
+        serverFilesDeleteFile: (options: any, settings: any) => { },
+        serverFilesDeleteDirectory: (options: any, settings: any) => { },
+        serverPrintjobsPostJob: (options: any, settings: any) => { },
+        setGcodefilesMetadata: (obj: any) => { },
       }
     }
-  }) params!: IParams
-  @Prop({ type: String, default: 'gcodes' }) currentPathProp!: string
-  @Prop({
-    type: Object, default: () => {
-      return {
-        axisMode: '',
-        printerIsPrinting: false,
-      }
-    }
-  }) printerInfo!: IPrinterInfo
+  }) fileManagerPropsEvents!: {
+    closeable: boolean,
+    noPrint: boolean,
+    loadings: string[],
+    diskUsage: {},
+    validGcodeExtensions: string[],
+    params: IParams,
+    printerInfo: IPrinterInfo,
+    currentPathProp: string,
+    socketAddLoading: (obj: any) => void,
+    socketRemoveLoading: (obj: any) => void,
+    postDirectory: (options: any, settings: any) => void,
+    getDirectory: (options: any, settings: any) => void,
+    serverFilesMove: (options: any, settings: any) => void,
+    serverFilesCopy: (options: any, settings: any) => void,
+    serverFilesMetadata: (options: any, settings: any) => void,
+    printerGcodeScript: (options: any, settings: any) => void,
+    serverFilesDeleteFile: (options: any, settings: any) => void,
+    serverFilesDeleteDirectory: (options: any, settings: any) => void,
+    serverPrintjobsPostJob: (options: any, settings: any) => void,
+    setGcodefilesMetadata: (obj: any) => void
+  }
+
 
   @PropSync('options', {
     type: Object, default: () => {
@@ -452,8 +487,7 @@ export default class DashboardCreatePrintjobDialog extends Vue {
   }
   //---------------for FileManager component---------------}
   mounted () {
-    console.log('PrintjobDialog diskUsage: ', this.diskUsage);
-    console.log('PrintjobDialog filetree: ', this.filetree);
+    console.log('PrintjobDialog fileManagerPropsEvents: ', this.fileManagerPropsEvents);
   }
 }
 
