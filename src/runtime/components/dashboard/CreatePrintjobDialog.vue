@@ -67,8 +67,8 @@
                   </v-btn></template
                 >
                 <file-manager
-                  v-bind="fileManagerPropsEvents"
-                  v-on="fileManagerPropsEvents"
+                  v-bind="$attrs"
+                  v-on="$listeners"
                   :options.sync="optionsSync"
                   :files-for-copy-dialog.sync="filesForCopyDialogSync"
                   v-model="filetree"
@@ -96,10 +96,9 @@
                 outlined
                 type="warning"
                 v-if="
-                  (fileManagerPropsEvents.printerInfo.axisMode === 'three' &&
+                  (printerInfo.axisMode === 'three' &&
                     printMode !== ('classic' && '')) ||
-                  (fileManagerPropsEvents.printerInfo.axisMode === 'five' &&
-                    printMode === 'classic')
+                  (printerInfo.axisMode === 'five' && printMode === 'classic')
                 "
                 >{{ $t("Dashboard.Printqueue.AnotherModule") }}</v-alert
               >

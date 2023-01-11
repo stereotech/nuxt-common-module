@@ -17,11 +17,7 @@
     </card-title>
     <v-card-text>
       <template
-        v-if="
-          ['complete', 'cancelled'].includes(
-            fileManagerPropsEvents.printerInfo.printerState
-          )
-        "
+        v-if="['complete', 'cancelled'].includes(printerInfo.printerState)"
       >
         <v-data-table
           :items="lastPrintedSync"
@@ -80,7 +76,7 @@
               {{
                 $helpers.formatDate(
                   item.creation_time * 1000,
-                  fileManagerPropsEvents.params.timezoneOffset
+                  params.timezoneOffset
                 )
               }}
             </td>
@@ -146,8 +142,8 @@
     </v-menu>
     <dashboard-create-printjob-dialog
       :create-dialog.sync="createDialog"
-      v-bind="fileManagerPropsEvents"
-      v-on="fileManagerPropsEvents"
+      v-bind="$attrs"
+      v-on="$listeners"
       :options.sync="optionsSync"
       :files-for-copy-dialog.sync="filesForCopyDialogSync"
       v-model="filetree"
@@ -165,8 +161,6 @@
       @serverPrintjobsPostJob="serverPrintjobsPostJob"
       @setGcodefilesMetadata="setGcodefilesMetadata"
     />
-    <!--
-    -->
   </v-card>
 </template>
 
@@ -379,9 +373,9 @@ export default class DashboardPrintQueue extends Vue {
     this.isStartPrintPress = true;
   }
 
-  @Watch('fileManagerPropsEvents.printerInfo.printerState')
+  @Watch('printerInfo.printerState')
   printStateChanged (newVal: string) {
-    if (['cancelled', 'completed'].includes(this.fileManagerPropsEvents.printerInfo.printerState)) {
+    if (['cancelled', 'completed'].includes(this.printerInfo.printerState)) {
       this.isStartPrintPress = false;
     }
   }
