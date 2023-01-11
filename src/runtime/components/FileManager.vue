@@ -793,7 +793,7 @@ export default class FileManager extends Vue {
       }
     }
   }) printerInfo!: IPrinterInfo
-  @Prop({ type: String, default: '' }) currentPathProp!: string
+  @Prop({ type: String, default: 'gcodes' }) currentPathProp!: string
   @PropSync('options', {
     type: Object, default: () => {
       return {

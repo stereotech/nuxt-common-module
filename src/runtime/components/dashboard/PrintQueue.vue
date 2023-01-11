@@ -17,7 +17,11 @@
     </card-title>
     <v-card-text>
       <template
-        v-if="['complete', 'cancelled'].includes(this.printerInfo.printerState)"
+        v-if="
+          ['complete', 'cancelled'].includes(
+            fileManagerPropsEvents.printerInfo.printerState
+          )
+        "
       >
         <v-data-table
           :items="lastPrintedSync"
@@ -76,7 +80,7 @@
               {{
                 $helpers.formatDate(
                   item.creation_time * 1000,
-                  params.timezoneOffset
+                  fileManagerPropsEvents.params.timezoneOffset
                 )
               }}
             </td>
@@ -142,15 +146,11 @@
     </v-menu>
     <dashboard-create-printjob-dialog
       :create-dialog.sync="createDialog"
-      @updatePrintjob="updatePrintjob"
-      :loadings="loadings"
-      :disk-usage="diskUsage"
-      :valid-gcode-extensions="validGcodeExtensions"
-      :params="params"
-      :printer-info="printerInfo"
-      v-model="filetree"
+      v-bind="fileManagerPropsEvents"
+      v-on="fileManagerPropsEvents"
       :options.sync="optionsSync"
       :files-for-copy-dialog.sync="filesForCopyDialogSync"
+      v-model="filetree"
       @socketAddLoading="socketAddLoading"
       @socketRemoveLoading="socketRemoveLoading"
       @postDirectory="postDirectory"
@@ -164,6 +164,7 @@
       @serverPrintjobsPostJob="serverPrintjobsPostJob"
       @setGcodefilesMetadata="setGcodefilesMetadata"
     />
+    <!-- @updatePrintjob="updatePrintjob" -->
   </v-card>
 </template>
 
@@ -192,20 +193,61 @@ export default class DashboardPrintQueue extends Vue {
   @PropSync('last-printed', { type: Array, default: () => [] }) lastPrintedSync!: ServerPrintjobsStatePrintjob
 
   //---------------for FileManager component---------------{
-  @Prop({ type: Array, default: () => [] }) loadings!: string[]
-  @Prop({ type: Object, default: { free: 0, total: 0, used: 0 } }) diskUsage!: {}
-  @Prop({ type: Array, default: () => [] }) validGcodeExtensions!: string[]
-  @Prop({ type: Object, default: () => { return { timezoneOffset: 0, apiUrl: '', isPanel: true } } }) params!: IParams
-  @Prop({
-    type: Object, default: () => {
-      return {
-        axisMode: '',
-        printerIsPrinting: false,
-        printerState: '',
-      }
-    }
-  }) printerInfo!: IPrinterInfo
 
+  @Prop({
+    type: Object, default: () => { }
+    // return {
+    //   loadings!: [],
+    //   diskUsage: { free: 0, total: 0, used: 0 },
+    //   validGcodeExtensions: [],
+    //   params: {
+    //     timezoneOffset: 0,
+    //     apiUrl: '',
+    //     isPanel: true
+    //   },
+    //   currentPathProp: '',
+    //   closeable: false,
+    //   noPrint: false,
+    //   printerInfo: {
+    //     axisMode: '',
+    //     printerIsPrinting: false,
+    //   },
+    //   socketAddLoading: (obj: any) => { },
+    //   socketRemoveLoading: (obj: any) => { },
+    //   postDirectory: (options: any, settings: any) => { },
+    //   getDirectory: (options: any, settings: any) => { },
+    //   serverFilesMove: (options: any, settings: any) => { },
+    //   serverFilesCopy: (options: any, settings: any) => { },
+    //   serverFilesMetadata: (options: any, settings: any) => { },
+    //   printerGcodeScript: (options: any, settings: any) => { },
+    //   serverFilesDeleteFile: (options: any, settings: any) => { },
+    //   serverFilesDeleteDirectory: (options: any, settings: any) => { },
+    //   serverPrintjobsPostJob: (options: any, settings: any) => { },
+    //   setGcodefilesMetadata: (obj: any) => { },
+    // }
+    // }
+  }) fileManagerPropsEvents!: {
+    // closeable: boolean,
+    // noPrint: boolean,
+    // loadings: string[],
+    // diskUsage: {},
+    // validGcodeExtensions: string[],
+    // params: IParams,
+    // printerInfo: IPrinterInfo,
+    // currentPathProp: string,
+    // socketAddLoading: (obj: any) => void,
+    // socketRemoveLoading: (obj: any) => void,
+    // postDirectory: (options: any, settings: any) => void,
+    // getDirectory: (options: any, settings: any) => void,
+    // serverFilesMove: (options: any, settings: any) => void,
+    // serverFilesCopy: (options: any, settings: any) => void,
+    // serverFilesMetadata: (options: any, settings: any) => void,
+    // printerGcodeScript: (options: any, settings: any) => void,
+    // serverFilesDeleteFile: (options: any, settings: any) => void,
+    // serverFilesDeleteDirectory: (options: any, settings: any) => void,
+    // serverPrintjobsPostJob: (options: any, settings: any) => void,
+    // setGcodefilesMetadata: (obj: any) => void
+  }
 
   @PropSync('options', {
     type: Object, default: () => {
@@ -227,6 +269,7 @@ export default class DashboardPrintQueue extends Vue {
   }) optionsSync!: { sortBy: string[], sortDesc: boolean[], showHiddenFiles: boolean, itemsPerPage: number, hideMetadataColums: String[] }
   @PropSync('filesForCopyDialog', { type: Array, default: () => [] }) filesForCopyDialogSync!: []
   @Model('', { type: Array, default: () => [] }) filetree!: []
+
   //---------------for FileManager component---------------}
 
   isStartPrintPress = false;
@@ -352,9 +395,9 @@ export default class DashboardPrintQueue extends Vue {
     this.isStartPrintPress = true;
   }
 
-  @Watch('printerInfo.printerState')
+  @Watch('fileManagerPropsEvents.printerInfo.printerState')
   printStateChanged (newVal: string) {
-    if (['cancelled', 'completed'].includes(this.printerInfo.printerState)) {
+    if (['cancelled', 'completed'].includes(this.fileManagerPropsEvents.printerInfo.printerState)) {
       this.isStartPrintPress = false;
     }
   }
@@ -395,44 +438,48 @@ export default class DashboardPrintQueue extends Vue {
 
   //---------------for FileManager component---------------{
 
-  postDirectory (options: any, settings: any) {
-    this.$emit('postDirectory', options, settings)
-  }
-  getDirectory (options: any, settings: any) {
-    this.$emit('getDirectory', options, settings)
-  }
-  socketAddLoading (obj: any) {
-    this.$emit('socketAddLoading', obj)
-  }
-  socketRemoveLoading (obj: any) {
-    this.$emit('socketRemoveLoading', obj)
-  }
-  setGcodefilesMetadata (obj: any) {
-    this.$emit("setGcodefilesMetadata", obj);
-  }
-  serverFilesMove (options: any, settings: any) {
-    this.$emit('serverFilesMove', options, settings)
-  }
-  serverFilesCopy (options: any, settings: any) {
-    this.$emit('serverFilesCopy', options, settings)
-  }
-  serverFilesMetadata (options: any, settings: any) {
-    this.$emit('serverFilesMetadata', options, settings)
-  }
-  printerGcodeScript (options: any, settings: any) {
-    this.$emit('printerGcodeScript', options, settings)
-  }
-  serverFilesDeleteFile (options: any, settings: any) {
-    this.$emit('serverFilesDeleteFile', options, settings)
-  }
-  serverFilesDeleteDirectory (options: any, settings: any) {
-    this.$emit('serverFilesDeleteDirectory', options, settings)
-  }
-  serverPrintjobsPostJob (options: any, settings: any) {
-    this.$emit('serverPrintjobsPostJob', options, settings)
-  }
+  // postDirectory (options: any, settings: any) {
+  //   this.$emit('postDirectory', options, settings)
+  // }
+  // getDirectory (options: any, settings: any) {
+  //   this.$emit('getDirectory', options, settings)
+  // }
+  // socketAddLoading (obj: any) {
+  //   this.$emit('socketAddLoading', obj)
+  // }
+  // socketRemoveLoading (obj: any) {
+  //   this.$emit('socketRemoveLoading', obj)
+  // }
+  // setGcodefilesMetadata (obj: any) {
+  //   this.$emit("setGcodefilesMetadata", obj);
+  // }
+  // serverFilesMove (options: any, settings: any) {
+  //   this.$emit('serverFilesMove', options, settings)
+  // }
+  // serverFilesCopy (options: any, settings: any) {
+  //   this.$emit('serverFilesCopy', options, settings)
+  // }
+  // serverFilesMetadata (options: any, settings: any) {
+  //   this.$emit('serverFilesMetadata', options, settings)
+  // }
+  // printerGcodeScript (options: any, settings: any) {
+  //   this.$emit('printerGcodeScript', options, settings)
+  // }
+  // serverFilesDeleteFile (options: any, settings: any) {
+  //   this.$emit('serverFilesDeleteFile', options, settings)
+  // }
+  // serverFilesDeleteDirectory (options: any, settings: any) {
+  //   this.$emit('serverFilesDeleteDirectory', options, settings)
+  // }
+  // serverPrintjobsPostJob (options: any, settings: any) {
+  //   this.$emit('serverPrintjobsPostJob', options, settings)
+  // }
 
   //---------------for FileManager component---------------}
+  mounted () {
+    console.log('PrintQueue fileManagerPropsEvents: ', this.fileManagerPropsEvents);
+
+  }
 }
 
 </script>

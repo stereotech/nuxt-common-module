@@ -67,28 +67,10 @@
                   </v-btn></template
                 >
                 <file-manager
-                  :loadings="loadings"
-                  :disk-usage="diskUsage"
-                  :valid-gcode-extensions="validGcodeExtensions"
-                  :params="params"
-                  :printer-info="printerInfo"
-                  :current-path-prop="`gcodes`"
-                  v-model="filetree"
+                  :file-manager-props-events="fileManagerPropsEvents"
                   :options.sync="optionsSync"
                   :files-for-copy-dialog.sync="filesForCopyDialogSync"
-                  :closeable="true"
-                  @socketAddLoading="socketAddLoading"
-                  @socketRemoveLoading="socketRemoveLoading"
-                  @postDirectory="postDirectory"
-                  @getDirectory="getDirectory"
-                  @serverFilesMetadata="serverFilesMetadata"
-                  @serverFilesMove="serverFilesMove"
-                  @serverFilesCopy="serverFilesCopy"
-                  @printerGcodeScript="printerGcodeScript"
-                  @serverFilesDeleteFile="serverFilesDeleteFile"
-                  @serverFilesDeleteDirectory="serverFilesDeleteDirectory"
-                  @serverPrintjobsPostJob="serverPrintjobsPostJob"
-                  @setGcodefilesMetadata="setGcodefilesMetadata"
+                  v-model="filetree"
                   @closeFileManagerDialog="closeFileManagerDialog"
                 />
               </v-dialog>
@@ -100,9 +82,10 @@
                 outlined
                 type="warning"
                 v-if="
-                  (printerInfo.axisMode === 'three' &&
+                  (fileManagerPropsEvents.printerInfo.axisMode === 'three' &&
                     printMode !== ('classic' && '')) ||
-                  (printerInfo.axisMode === 'five' && printMode === 'classic')
+                  (fileManagerPropsEvents.printerInfo.axisMode === 'five' &&
+                    printMode === 'classic')
                 "
                 >{{ $t("Dashboard.Printqueue.AnotherModule") }}</v-alert
               >
@@ -229,27 +212,36 @@ export default class DashboardCreatePrintjobDialog extends Vue {
   }) createDialogSync!: ICreateDialog
 
   //---------------for FileManager component---------------{
-  @Prop({ type: Array, default: () => [] }) loadings!: string[]
-  @Prop({ type: Object, default: () => { return { free: 0, total: 0, used: 0 } } }) diskUsage!: {}
-  @Prop({ type: Array, default: () => [] }) validGcodeExtensions!: string[]
   @Prop({
-    type: Object, default: () => {
-      return {
-        timezoneOffset: 0,
-        apiUrl: '',
-        isPanel: true
-      }
-    }
-  }) params!: IParams
-  @Prop({
-    type: Object, default: () => {
-      return {
-        axisMode: '',
-        printerIsPrinting: false,
-      }
-    }
-  }) printerInfo!: IPrinterInfo
-
+    type: Object, default: () => { }
+    //   return {
+    //     closeable: false,
+    //     noPrint: false,
+    //     loadings!: [],
+    //     diskUsage: { free: 0, total: 0, used: 0 },
+    //     validGcodeExtensions: [],
+    //     params: {
+    //       timezoneOffset: 0,
+    //       apiUrl: '',
+    //       isPanel: true
+    //     },
+    //     printerInfo: {
+    //       axisMode: '',
+    //       printerIsPrinting: false,
+    //     },
+    //     currentPathProp: ''
+    //   }
+    // }
+  }) fileManagerPropsEvents!: {
+    // closeable: boolean,
+    // noPrint: boolean,
+    // loadings: string[],
+    // diskUsage: {},
+    // validGcodeExtensions: string[],
+    // params: IParams,
+    // printerInfo: IPrinterInfo,
+    // currentPathProp: string,
+  }
   @PropSync('options', {
     type: Object, default: () => {
       return {
@@ -408,49 +400,53 @@ export default class DashboardCreatePrintjobDialog extends Vue {
 
   //---------------for FileManager component---------------{
 
-  postDirectory (options: any, settings: any) {
-    this.$emit('postDirectory', options, settings)
-  }
-  getDirectory (options: any, settings: any) {
-    this.$emit('getDirectory', options, settings)
-  }
-  socketAddLoading (obj: any) {
-    this.$emit('socketAddLoading', obj)
-  }
-  socketRemoveLoading (obj: any) {
-    this.$emit('socketRemoveLoading', obj)
-  }
-  setGcodefilesMetadata (obj: any) {
-    this.$emit("setGcodefilesMetadata", obj);
-  }
-  serverFilesMove (options: any, settings: any) {
-    this.$emit('serverFilesMove', options, settings)
-  }
-  serverFilesCopy (options: any, settings: any) {
-    this.$emit('serverFilesCopy', options, settings)
-  }
-  serverFilesMetadata (options: any, settings: any) {
-    this.$emit('serverFilesMetadata', options, settings)
-  }
-  printerGcodeScript (options: any, settings: any) {
-    this.$emit('printerGcodeScript', options, settings)
-  }
-  serverFilesDeleteFile (options: any, settings: any) {
-    this.$emit('serverFilesDeleteFile', options, settings)
-  }
-  serverFilesDeleteDirectory (options: any, settings: any) {
-    this.$emit('serverFilesDeleteDirectory', options, settings)
-  }
-  serverPrintjobsPostJob (options: any, settings: any) {
-    this.createDialogSync.item.description = options.description
-    this.createDialogSync.item.filename = options.filename
-    this.createDialogSync.item.name = options.name
-  }
+  // postDirectory (options: any, settings: any) {
+  //   this.$emit('postDirectory', options, settings)
+  // }
+  // getDirectory (options: any, settings: any) {
+  //   this.$emit('getDirectory', options, settings)
+  // }
+  // socketAddLoading (obj: any) {
+  //   this.$emit('socketAddLoading', obj)
+  // }
+  // socketRemoveLoading (obj: any) {
+  //   this.$emit('socketRemoveLoading', obj)
+  // }
+  // setGcodefilesMetadata (obj: any) {
+  //   this.$emit("setGcodefilesMetadata", obj);
+  // }
+  // serverFilesMove (options: any, settings: any) {
+  //   this.$emit('serverFilesMove', options, settings)
+  // }
+  // serverFilesCopy (options: any, settings: any) {
+  //   this.$emit('serverFilesCopy', options, settings)
+  // }
+  // serverFilesMetadata (options: any, settings: any) {
+  //   this.$emit('serverFilesMetadata', options, settings)
+  // }
+  // printerGcodeScript (options: any, settings: any) {
+  //   this.$emit('printerGcodeScript', options, settings)
+  // }
+  // serverFilesDeleteFile (options: any, settings: any) {
+  //   this.$emit('serverFilesDeleteFile', options, settings)
+  // }
+  // serverFilesDeleteDirectory (options: any, settings: any) {
+  //   this.$emit('serverFilesDeleteDirectory', options, settings)
+  // }
+  // serverPrintjobsPostJob (options: any, settings: any) {
+  //   this.createDialogSync.item.description = options.description
+  //   this.createDialogSync.item.filename = options.filename
+  //   this.createDialogSync.item.name = options.name
+  // }
 
   closeFileManagerDialog () {
     this.fileSelectorDialog.bool = false
   }
   //---------------for FileManager component---------------}
+  mounted () {
+    console.log('PrintjobDialog fileManagerPropsEvents: ', this.fileManagerPropsEvents);
+
+  }
 }
 
 </script>
