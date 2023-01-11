@@ -382,6 +382,10 @@ export default class DashboardPrintQueue extends Vue {
     );
     this.isStartPrintPress = true;
   }
+  serverPrintjobsPostJob (options: any, settings: any) {
+    console.log('2 эмитим событие в index');
+    this.$emit('serverPrintjobsPostJob', options, settings)
+  }
 
   @Watch('fileManagerPropsEvents.printerInfo.printerState')
   printStateChanged (newVal: string) {
