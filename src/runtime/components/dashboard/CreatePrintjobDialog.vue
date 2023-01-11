@@ -73,6 +73,7 @@
                   :files-for-copy-dialog.sync="filesForCopyDialogSync"
                   v-model="filetree"
                   @serverPrintjobsPostJob="serverPrintjobsPostJob"
+                  @closeFileManagerDialog="closeFileManagerDialog"
                 />
                 <!-- @updatePrintjob="updatePrintjob" -->
               </v-dialog>
@@ -437,11 +438,15 @@ export default class DashboardCreatePrintjobDialog extends Vue {
   }
 
   closeFileManagerDialog () {
-    console.log('1 закроем fileManager по крестику');
+    console.log('1 закроем fileManager');
     this.fileSelectorDialog.bool = false
   }
   serverPrintjobsPostJob (options: any, settings: any) {
-    console.log('1 закроем fileManager');
+    this.createDialogSync.item.name = options.name
+    this.createDialogSync.item.description = options.description
+    this.createDialogSync.item.filename = options.filename
+    console.log('1 item before lose', this.createDialogSync.item);
+
     this.closeFileManagerDialog()
   }
 
