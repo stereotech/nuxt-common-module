@@ -72,23 +72,9 @@
                   :options.sync="optionsSync"
                   :files-for-copy-dialog.sync="filesForCopyDialogSync"
                   v-model="filetree"
-                />
-                <!--
-                  @updatePrintjob="updatePrintjob"
-                  @socketAddLoading="socketAddLoading"
-                  @socketRemoveLoading="socketRemoveLoading"
-                  @postDirectory="postDirectory"
-                  @getDirectory="getDirectory"
-                  @serverFilesMetadata="serverFilesMetadata"
-                  @serverFilesMove="serverFilesMove"
-                  @serverFilesCopy="serverFilesCopy"
-                  @printerGcodeScript="printerGcodeScript"
-                  @serverFilesDeleteFile="serverFilesDeleteFile"
-                  @serverFilesDeleteDirectory="serverFilesDeleteDirectory"
                   @serverPrintjobsPostJob="serverPrintjobsPostJob"
-                  @setGcodefilesMetadata="setGcodefilesMetadata"
-                  @closeFileManagerDialog="closeFileManagerDialog"
-                  -->
+                />
+                <!-- @updatePrintjob="updatePrintjob" -->
               </v-dialog>
             </v-col>
             <v-col cols="12">
@@ -434,61 +420,27 @@ export default class DashboardCreatePrintjobDialog extends Vue {
     this.createDialogSync.item.delay_time = times[0] * 60 + times[1]
   }
 
+  // создать/редактировать задание на печать
   createPrintjob () {
+    console.log('1 createPrintjob');
+
     const item = { ...this.createDialogSync.item, copies: this.copies > 0 ? this.copies - 1 : 0 }
-    if (this.createDialogSync.item.filename)
+    if (this.createDialogSync.item.filename) {
+      console.log('1 item --?--', item);
       this.$emit('serverPrintjobsPostJob', item, { action: "server/printjobs/getPrintjobs" })
+    }
     this.closeCreateDialog()
+
+    // if (this.createDialogSync.edit) {
+    //   this.$emit('updatePrintjob', item)
+    // }
   }
 
-  //---------------for FileManager component---------------{
-
-  // postDirectory (options: any, settings: any) {
-  //   this.$emit('postDirectory', options, settings)
-  // }
-  // getDirectory (options: any, settings: any) {
-  //   this.$emit('getDirectory', options, settings)
-  // }
-  // socketAddLoading (obj: any) {
-  //   this.$emit('socketAddLoading', obj)
-  // }
-  // socketRemoveLoading (obj: any) {
-  //   this.$emit('socketRemoveLoading', obj)
-  // }
-  // setGcodefilesMetadata (obj: any) {
-  //   this.$emit("setGcodefilesMetadata", obj);
-  // }
-  // serverFilesMove (options: any, settings: any) {
-  //   this.$emit('serverFilesMove', options, settings)
-  // }
-  // serverFilesCopy (options: any, settings: any) {
-  //   this.$emit('serverFilesCopy', options, settings)
-  // }
-  // serverFilesMetadata (options: any, settings: any) {
-  //   this.$emit('serverFilesMetadata', options, settings)
-  // }
-  // printerGcodeScript (options: any, settings: any) {
-  //   this.$emit('printerGcodeScript', options, settings)
-  // }
-  // serverFilesDeleteFile (options: any, settings: any) {
-  //   this.$emit('serverFilesDeleteFile', options, settings)
-  // }
-  // serverFilesDeleteDirectory (options: any, settings: any) {
-  //   this.$emit('serverFilesDeleteDirectory', options, settings)
-  // }
-  // serverPrintjobsPostJob (options: any, settings: any) {
-  //   this.createDialogSync.item.description = options.description
-  //   this.createDialogSync.item.filename = options.filename
-  //   this.createDialogSync.item.name = options.name
-  // }
-
-  closeFileManagerDialog () {
+  serverPrintjobsPostJob (options: any, settings: any) {
+    console.log('1 закроем fileManager');
     this.fileSelectorDialog.bool = false
   }
-  //---------------for FileManager component---------------}
-  mounted () {
-    console.log('PrintjobDialog fileManagerPropsEvents: ', this.fileManagerPropsEvents);
-  }
+
 }
 
 </script>

@@ -150,25 +150,9 @@
       :options.sync="optionsSync"
       :files-for-copy-dialog.sync="filesForCopyDialogSync"
       v-model="filetree"
+      @serverPrintjobsPostJob="serverPrintjobsPostJob"
     />
-    <!--
-      @socketAddLoading="fileManagerPropsEvents.socketAddLoading"
-      @socketRemoveLoading="fileManagerPropsEvents.socketRemoveLoading"
-      @postDirectory="fileManagerPropsEvents.postDirectory"
-      @getDirectory="fileManagerPropsEvents.getDirectory"
-      @serverFilesMetadata="fileManagerPropsEvents.serverFilesMetadata"
-      @serverFilesMove="fileManagerPropsEvents.serverFilesMove"
-      @serverFilesCopy="fileManagerPropsEvents.serverFilesCopy"
-      @printerGcodeScript="fileManagerPropsEvents.printerGcodeScript"
-      @serverFilesDeleteFile="fileManagerPropsEvents.serverFilesDeleteFile"
-      @serverFilesDeleteDirectory="
-        fileManagerPropsEvents.serverFilesDeleteDirectory
-      "
-      @serverPrintjobsPostJob="fileManagerPropsEvents.serverPrintjobsPostJob"
-      @setGcodefilesMetadata="fileManagerPropsEvents.setGcodefilesMetadata"
-      v-on="fileManagerPropsEvents"
-
-    -->
+    <!-- @updatePrintjob="updatePrintjob" -->
   </v-card>
 </template>
 
@@ -422,12 +406,12 @@ export default class DashboardPrintQueue extends Vue {
 
   setPriority (item: ServerPrintjobsStatePrintjob, priority: 'NORMAL' | 'HIGH' | 'LOW' | 'DELAY' = 'NORMAL') {
     item.priority = priority
-    this.updatePrintjob(item)
+    // this.updatePrintjob(item)
   }
 
-  updatePrintjob (item: {}) {
-    this.$emit('updatePrintjob', item) // обновить это задание
-  }
+  // updatePrintjob (item: {}) {
+  //   this.$emit('updatePrintjob', item) // обновить это задание
+  // }
 
   @Watch('printjobsSync') changePrintjobsSync (newVal: any) {
     this.createDialog.bool = false
@@ -440,9 +424,6 @@ export default class DashboardPrintQueue extends Vue {
     else return 0;
   }
 
-  mounted () {
-    console.log('PrintQueue fileManagerPropsEvents: ', this.fileManagerPropsEvents);
-  }
 }
 
 </script>
