@@ -102,6 +102,7 @@
             :klippy-message="klippyMessage"
             :klippy-is-connected="klippyIsConnected"
             :events="events"
+            :current-printjob="currentPrintjob"
           />
         </v-col>
         <v-col cols="12">

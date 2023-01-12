@@ -210,14 +210,7 @@ export default class DashboardPrinterActions extends Vue {
   @Prop({ type: String, default: '' }) klipperState!: string
   @Prop({ type: Boolean, default: false }) klippyIsConnected!: boolean
   @PropSync('queueStatus', { type: String, default: '' }) queueStatusSync!: string
-  @Prop({
-    type: Object, default: () => {
-      return {
-        name: '',
-        metadata: { thumbnails: [] }
-      }
-    }
-  }) currentPrintjob!: { name: '', metadata: { thumbnails: [] } }
+  @Prop({ type: Object, default: () => { } }) currentPrintjob!: {}
 
   @Prop({
     type: Object, default: () => {
