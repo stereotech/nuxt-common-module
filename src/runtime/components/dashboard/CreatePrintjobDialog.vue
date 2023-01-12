@@ -423,29 +423,20 @@ export default class DashboardCreatePrintjobDialog extends Vue {
 
   // создать/редактировать задание на печать
   createPrintjob () {
-    console.log('1 createPrintjob');
-
     const item = { ...this.createDialogSync.item, copies: this.copies > 0 ? this.copies - 1 : 0 }
     if (this.createDialogSync.item.filename) {
-      console.log('1 item --?--', item);
       this.$emit('serverPrintjobsPostJob', item, { action: "server/printjobs/getPrintjobs" })
     }
     this.closeCreateDialog()
-
-    // if (this.createDialogSync.edit) {
-    //   this.$emit('updatePrintjob', item)
-    // }
   }
 
   closeFileManagerDialog () {
-    console.log('1 закроем fileManager');
     this.fileSelectorDialog.bool = false
   }
   serverPrintjobsPostJob (options: any, settings: any) {
     this.createDialogSync.item.name = options.name
     this.createDialogSync.item.description = options.description
     this.createDialogSync.item.filename = options.filename
-    console.log('1 item before lose', this.createDialogSync.item);
 
     this.closeFileManagerDialog()
   }
