@@ -24,7 +24,7 @@
         "
       >
         <v-data-table
-          :items="lastPrintedSync"
+          :items="fileManagerPropsEvents.lastPrinted"
           :headers="lastFileheaders"
           hide-default-footer
           mobile-breakpoint="0"
@@ -177,7 +177,6 @@ interface createDialog {
 })
 export default class DashboardPrintQueue extends Vue {
   @PropSync('printjobs', { type: Array, default: () => [] }) printjobsSync!: []
-  @PropSync('last-printed', { type: Array, default: () => [] }) lastPrintedSync!: ServerPrintjobsStatePrintjob
 
   //---------------for FileManager component---------------{
 
@@ -199,6 +198,7 @@ export default class DashboardPrintQueue extends Vue {
           axisMode: '',
           printerIsPrinting: false,
         },
+        lastPrinted: [],
         socketAddLoading: (obj: any) => { },
         socketRemoveLoading: (obj: any) => { },
         postDirectory: (options: any, settings: any) => { },
@@ -222,6 +222,7 @@ export default class DashboardPrintQueue extends Vue {
     params: IParams,
     printerInfo: IPrinterInfo,
     currentPathProp: string,
+    lastPrinted: [],
     socketAddLoading: (obj: any) => void,
     socketRemoveLoading: (obj: any) => void,
     postDirectory: (options: any, settings: any) => void,
