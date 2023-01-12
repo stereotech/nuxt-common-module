@@ -43,13 +43,7 @@ import { IParams, IPrinterInfo } from '../../../types/common'
 export default class DashboardPrinterAvatar extends Vue {
   @Prop({ type: String, default: '' }) klipperState!: string
   @Prop({ type: String, default: '' }) queueStatus!: string
-  @Prop({
-    type: Object, default: () => {
-      return {
-        metadata: { thumbnails: [] }
-      }
-    }
-  }) currentPrintjob!: { metadata: { thumbnails: [] } }
+  @Prop({ type: Object, default: () => { } }) currentPrintjob!: {}
   @Prop({ type: Object, default: () => { return { timezoneOffset: 0, apiUrl: '', isPanel: true } } }) params!: IParams
   @Prop({
     type: Object, default: () => {

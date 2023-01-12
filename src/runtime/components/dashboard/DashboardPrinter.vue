@@ -90,6 +90,7 @@
             :printer-info="printerInfo"
             :params="params"
             :queue-status="queueStatusSync"
+            :current-printjob="currentPrintjob"
           />
         </v-col>
         <v-col cols="8">
@@ -141,9 +142,9 @@
 <script lang="ts">
 import { Vue, Component, Prop, PropSync } from 'nuxt-property-decorator'
 import { IParams, IPrinterInfo } from '../../../types/common'
-import DashboardPrinterAvatar from '../dashboard/DashboardPrinterAvatar.vue'
-import DashboardPrinterActions from '../dashboard/DashboardPrinterActions.vue'
-import DashboardPrinterHeaters from '../dashboard/DashboardPrinterHeaters.vue'
+import DashboardPrinterAvatar from './DashboardPrinterAvatar.vue'
+import DashboardPrinterActions from './DashboardPrinterActions.vue'
+import DashboardPrinterHeaters from './DashboardPrinterHeaters.vue'
 
 @Component({
   name: 'DashboardPrinter',
@@ -157,6 +158,7 @@ export default class DashboardPrinter extends Vue {
   @Prop({ type: String, default: '' }) lightColor!: string
   @Prop({ type: String, default: '' }) klipperState!: string
   @Prop({ type: Boolean, default: false }) klippyIsConnected!: boolean
+  @Prop({ type: Object, default: () => { } }) currentPrintjob!: {}
   @PropSync('queueStatus', { type: String, default: '' }) queueStatusSync!: string
 
   @Prop({ type: Object, default: () => { return { timezoneOffset: 0, apiUrl: '', isPanel: true } } }) params!: IParams
