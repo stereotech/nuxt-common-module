@@ -75,7 +75,6 @@
                   @serverPrintjobsPostJob="serverPrintjobsPostJob"
                   @closeFileManagerDialog="closeFileManagerDialog"
                 />
-                <!-- @updatePrintjob="updatePrintjob" -->
               </v-dialog>
             </v-col>
             <v-col cols="12">
@@ -425,6 +424,8 @@ export default class DashboardCreatePrintjobDialog extends Vue {
   createPrintjob () {
     const item = { ...this.createDialogSync.item, copies: this.copies > 0 ? this.copies - 1 : 0 }
     if (this.createDialogSync.item.filename) {
+      console.log('1 emit Printjob => PrintQueue ', item, { action: "server/printjobs/getPrintjobs" });
+
       this.$emit('serverPrintjobsPostJob', item, { action: "server/printjobs/getPrintjobs" })
     }
     this.closeCreateDialog()
