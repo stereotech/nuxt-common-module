@@ -150,10 +150,8 @@
       :options.sync="optionsSync"
       :files-for-copy-dialog.sync="filesForCopyDialogSync"
       v-model="filetree"
-    />
-    <!--
       @serverPrintjobsPostJob="serverPrintjobsPostJob"
-    -->
+    />
   </v-card>
 </template>
 
@@ -211,7 +209,7 @@ export default class DashboardPrintQueue extends Vue {
         printerGcodeScript: (options: any, settings: any) => { },
         serverFilesDeleteFile: (options: any, settings: any) => { },
         serverFilesDeleteDirectory: (options: any, settings: any) => { },
-        serverPrintjobsPostJob: (options: any, settings: any) => { },
+        // serverPrintjobsPostJob: (options: any, settings: any) => { },
         setGcodefilesMetadata: (obj: any) => { },
       }
     }
@@ -234,7 +232,7 @@ export default class DashboardPrintQueue extends Vue {
     printerGcodeScript: (options: any, settings: any) => void,
     serverFilesDeleteFile: (options: any, settings: any) => void,
     serverFilesDeleteDirectory: (options: any, settings: any) => void,
-    serverPrintjobsPostJob: (options: any, settings: any) => void,
+    // serverPrintjobsPostJob: (options: any, settings: any) => void,
     setGcodefilesMetadata: (obj: any) => void
   }
 
@@ -372,15 +370,6 @@ export default class DashboardPrintQueue extends Vue {
   }
 
   startPrint (item: ServerPrintjobsStatePrintjob) {
-    console.log('2 emit PrintQueue => index ', {
-      name: item.name,
-      description: item.description,
-      filename: item.filename,
-      priority: item.priority
-    },
-      { action: "server/printjobs/getPrintjobs" }
-    );
-
     this.$emit("serverPrintjobsPostJob",
       {
         name: item.name,
@@ -388,14 +377,13 @@ export default class DashboardPrintQueue extends Vue {
         filename: item.filename,
         priority: item.priority
       },
-      { action: "server/printjobs/getPrintjobs" }
-      // { action: "switchToDashboard" }
+      { action: "switchToDashboard" }
     );
     this.isStartPrintPress = true;
   }
-  // serverPrintjobsPostJob (options: any, settings: any) {
-  //   this.$emit('serverPrintjobsPostJob', options, settings)
-  // }
+  serverPrintjobsPostJob (options: any, settings: any) {
+    this.$emit('serverPrintjobsPostJob', options, settings)
+  }
 
   @Watch('fileManagerPropsEvents.printerInfo.printerState')
   printStateChanged (newVal: string) {
@@ -420,8 +408,12 @@ export default class DashboardPrintQueue extends Vue {
 
   setPriority (item: ServerPrintjobsStatePrintjob, priority: 'NORMAL' | 'HIGH' | 'LOW' | 'DELAY' = 'NORMAL') {
     item.priority = priority
+    // this.updatePrintjob(item)
   }
 
+  // updatePrintjob (item: {}) {
+  //   this.$emit('updatePrintjob', item) // обновить это задание
+  // }
 
   @Watch('printjobsSync') changePrintjobsSync (newVal: any) {
     this.createDialog.bool = false
