@@ -408,12 +408,8 @@ export default class DashboardPrintQueue extends Vue {
 
   setPriority (item: ServerPrintjobsStatePrintjob, priority: 'NORMAL' | 'HIGH' | 'LOW' | 'DELAY' = 'NORMAL') {
     item.priority = priority
-    // this.updatePrintjob(item)
+    this.$emit('serverPrintjobsPostJob', item, { action: "server/printjobs/getPrintjobs" })
   }
-
-  // updatePrintjob (item: {}) {
-  //   this.$emit('updatePrintjob', item) // обновить это задание
-  // }
 
   @Watch('printjobsSync') changePrintjobsSync (newVal: any) {
     this.createDialog.bool = false
