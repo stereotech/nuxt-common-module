@@ -26,6 +26,14 @@ export default class CardTitle extends Vue {
   @Prop({ type: String, default: "" }) title!: string;
   @Prop({ type: String, default: "mdi-circle-small" }) icon!: string;
   @Prop({ type: Boolean, default: false }) closeable!: boolean;
+
+  mounted () {
+    console.log('new CardTitle');
+    console.log('title', this.title);
+    console.log('icon', this.icon);
+    console.log('closeable', this.closeable);
+  }
+
 }
 </script>
 
