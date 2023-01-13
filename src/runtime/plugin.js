@@ -1,7 +1,7 @@
 
 import Vue from 'vue'
 // import FileManager from '~common/components/FileManager.vue'
-import CardTitle from '~common/components/CardTitle.vue'
+// import CardTitle from '~common/components/CardTitle.vue'
 // import PrintQueue from '~common/components/dashboard/PrintQueue'
 // import CreatePrintjobDialog from '~common/components/dashboard/CreatePrintjobDialog'
 // import WebcamCard from '~common/components/webcam/WebcamCard'
@@ -22,7 +22,7 @@ import { Helpers } from '~common/plugins/helpers'
 // import { Notification } from '~common/plugins/notifications'
 
 // Vue.component(FileManager.name, FileManager)
-Vue.component(CardTitle.name, CardTitle)
+// Vue.component(CardTitle.name, CardTitle)
 // Vue.component(PrintQueue.name, PrintQueue)
 // Vue.component(CreatePrintjobDialog.name, CreatePrintjobDialog)
 // Vue.component(WebcamCard.name, WebcamCard)
@@ -41,8 +41,8 @@ Vue.component(CardTitle.name, CardTitle)
 // Vue.component(DashboardPrinterHeaters.name, DashboardPrinterHeaters)
 
 export default function (nuxtContext, inject) {
-  const $common = {}
-  inject('common', $common)
+  // const $common = {}
+  // inject('common', $common)
 
   const helpers = new Helpers()
   inject('helpers', helpers)
