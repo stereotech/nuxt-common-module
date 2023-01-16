@@ -23,9 +23,9 @@ const commonModule: Module<ModuleOptions> = function (moduleOptions) {
   addPlugin({
     filename: 'common.js',
     src: resolve(runtimeDir, 'plugin.js'),
-    options: {
-      defaults
-    }
+    // options: {
+    //   defaults
+    // }
   })
 }
 

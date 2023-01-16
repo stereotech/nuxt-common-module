@@ -19,7 +19,7 @@ import DashboardPrinterAvatar from '~common/components/dashboard/DashboardPrinte
 import DashboardPrinterActions from '~common/components/dashboard/DashboardPrinterActions'
 import DashboardPrinterHeaters from '~common/components/dashboard/DashboardPrinterHeaters'
 import { Helpers } from '~common/plugins/helpers'
-// import { Notification } from '~common/plugins/notifications'
+import { Notification } from '~common/plugins/notifications'
 
 Vue.component(FileManager.name, FileManager)
 Vue.component(CardTitle.name, CardTitle)
@@ -47,6 +47,6 @@ export default function (nuxtContext, inject) {
   const helpers = new Helpers()
   inject('helpers', helpers)
 
-  // const notify = new Notification(nuxtContext)
-  // inject('notify', notify)
+  const notify = new Notification(nuxtContext)
+  inject('notify', notify)
 }

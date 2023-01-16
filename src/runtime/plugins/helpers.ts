@@ -21,8 +21,6 @@ export class Helpers implements IHelpers {
   }
 
   caseInsensitiveSort (values: any[], orderType: string): any[] {
-    console.log('---!--- caseInsensitiveSort from common-module');
-
     return values.sort((a, b) => {
       const stringA = a[orderType].toLowerCase()
       const stringB = b[orderType].toLowerCase()
