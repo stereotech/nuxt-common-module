@@ -13,6 +13,9 @@ export class Notification {
 
   call (message: Message) {
 
+    console.log('---вызван метод notify.call из nuxt-common-module---');
+
+
     const closeAction = {
       text: '',
       icon: 'close',
