@@ -181,7 +181,7 @@
                 <v-icon :color="status.selected ? status.color : ''">{{
                   status.icon
                 }}</v-icon>
-                <font :color="status.selected ? status.color : ''">
+                <font :color="status.selected ? status.color : ''" class="font">
                   {{ status.text }}
                 </font>
               </template>
@@ -337,12 +337,8 @@ export default class DashboardPrinterActions extends Vue {
   selectedPrintStatusChanged (newVal: any) {
     this.switchStatus.forEach((item: any) => {
       item.selected = item.value === newVal ? true : false
-      // Установить крайнему заданию статус newVal
-      console.log('0 Установить крайнему заданию статус newVal');
-
-      this.$emit('printjobsPostJob',
-        Object.assign(this.currentPrintjob, { status: newVal }),
-        { action: "server/printjobs/getPrintjobs" }
+      // Передать статус newVal для установки его крайнему заданию
+      this.$emit('printjobsPostJob', { status: newVal }, { action: "server/printjobs/getPrintjobs" }
       );
     })
   }
@@ -357,6 +353,9 @@ export default class DashboardPrinterActions extends Vue {
 <style>
 .bold {
   font-weight: 600;
+}
+.font {
+  font-size: 14px;
 }
 .statusSelect .v-input--selection-controls__input {
   display: none;

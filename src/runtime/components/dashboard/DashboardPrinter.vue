@@ -203,8 +203,6 @@ export default class DashboardPrinter extends Vue {
     return this.printerInfo.model[1] === "F";
   }
   printjobsPostJob (options: any, settings: any) {
-    console.log('1 printjobsPostJob', options, settings);
-
     this.$emit('printjobsPostJob', options, settings)
   }
 }

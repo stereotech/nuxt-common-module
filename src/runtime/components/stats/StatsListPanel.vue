@@ -1094,8 +1094,6 @@ export default class StatsListPanel extends Vue {
   }
 
   changeStatus (item: ServerPrintjobsStatePrintjob, e: any) {
-    console.log('changeStatus', item, e);
-
     this.$emit('printjobsPostJob',
       {
         id: item.id,
