@@ -573,8 +573,10 @@
             v-if="
               'metadata' in detailsDialog.item &&
               'settings' in detailsDialog.item.metadata &&
+              detailsDialog.item.metadata.settings.global_quality !==
+                undefined &&
               'printing_mode' in
-                (detailsDialog.item.metadata.settings.global_quality.values ??
+                (detailsDialog.item.metadata.settings.global_quality?.values ??
                   {})
             "
           >
@@ -1092,6 +1094,8 @@ export default class StatsListPanel extends Vue {
   }
 
   changeStatus (item: ServerPrintjobsStatePrintjob, e: any) {
+    console.log('changeStatus', item, e);
+
     this.$emit('printjobsPostJob',
       {
         id: item.id,

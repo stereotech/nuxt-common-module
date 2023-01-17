@@ -103,6 +103,7 @@
             :klippy-is-connected="klippyIsConnected"
             :events="events"
             :current-printjob="currentPrintjob"
+            @printjobsPostJob="printjobsPostJob"
           />
         </v-col>
         <v-col cols="12">
@@ -200,6 +201,11 @@ export default class DashboardPrinter extends Vue {
   }
   get fiber () {
     return this.printerInfo.model[1] === "F";
+  }
+  printjobsPostJob (options: any, settings: any) {
+    console.log('1 printjobsPostJob', options, settings);
+
+    this.$emit('printjobsPostJob', options, settings)
   }
 }
 

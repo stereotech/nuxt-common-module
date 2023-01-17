@@ -1,5 +1,6 @@
 <template>
   <v-container class="py-0 py-md-3">
+    <!-- Загрузка системы... -->
     <v-row dense v-if="klipperState === 'disconnected' && !klippyIsConnected">
       <v-col cols="12" class="primary--text title">
         {{ $t("Dashboard.Printer.FirmwareLoading") }}
@@ -11,6 +12,7 @@
         ></v-progress-circular>
       </v-col>
     </v-row>
+    <!-- Системная ошибка -->
     <v-row
       dense
       v-else-if="klipperState !== 'ready' && socketInfo.socketIsConnected"
@@ -37,6 +39,7 @@
         >
       </v-col>
     </v-row>
+    <!-- Обслуживание -->
     <v-row
       no-gutters
       v-else-if="
@@ -62,6 +65,7 @@
         ></v-select>
       </v-col>
     </v-row>
+    <!-- Ожидание -->
     <v-row dense v-else-if="queueStatusSync === 'idle'">
       <v-col cols="12" class="accent--text title">
         {{ $t("Dashboard.Printer.Idle") }}
@@ -81,6 +85,7 @@
         ></v-select>
       </v-col>
     </v-row>
+    <!-- Печать... -->
     <v-row dense v-else-if="printerInfo.printerState === 'printing'">
       <v-col cols="12" class="accent--text title">
         {{ $t("Dashboard.Printer.Printing") }}
@@ -112,6 +117,7 @@
         <toolbar-printer-controls />
       </v-col>
     </v-row>
+    <!-- Пауза -->
     <v-row
       dense
       v-else-if="
@@ -149,12 +155,39 @@
         <toolbar-printer-controls />
       </v-col>
     </v-row>
+    <!-- Печать завершена -->
     <v-row dense v-else-if="printerInfo.printerState === 'complete'">
       <v-col cols="12" class="success--text title">
         {{ $t("Dashboard.Printer.Done") }}
       </v-col>
       <v-col cols="12" class="subtitle-2 text-truncate">
         {{ $t("Dashboard.Printer.DoneDescription") }}
+      </v-col>
+      <v-col>
+        <v-radio-group
+          v-model="selectedPrintStatus"
+          column
+          class="statusSelect"
+        >
+          <template v-for="status in switchStatus">
+            <v-radio
+              :value="status.value"
+              :key="status.value"
+              :class="{ bold: status.selected }"
+              :color="status.selected ? status.color : ''"
+            >
+              <template v-slot:default>default slot</template>
+              <template v-slot:label>
+                <v-icon :color="status.selected ? status.color : ''">{{
+                  status.icon
+                }}</v-icon>
+                <font :color="status.selected ? status.color : ''">
+                  {{ status.text }}
+                </font>
+              </template>
+            </v-radio>
+          </template>
+        </v-radio-group>
       </v-col>
       <v-col cols="12">
         <v-select
@@ -168,6 +201,7 @@
         ></v-select>
       </v-col>
     </v-row>
+    <!-- Ошибка печати -->
     <v-row
       dense
       v-else-if="
@@ -242,13 +276,12 @@ export default class DashboardPrinterActions extends Vue {
   @Prop({ type: String, default: '' }) klippyMessage!: ''
   @Prop({ type: Array, default: () => [{ formatMessage: '' }] }) events!: [{ formatMessage: '' }]
 
-
   get lastErrorEventMessage () {
     return this.events.find((e: any) => e.message.startsWith('!!'))?.formatMessage ?? ''
   }
 
   get stateActions () {
-    const states = ['maintenance', 'idle']
+    const states = this.selectedPrintStatus !== null ? ['maintenance', 'idle'] : ['maintenance']
     return states.map(s => {
       return {
         name: this.$t(this.$helpers.convertName(s)),
@@ -258,6 +291,7 @@ export default class DashboardPrinterActions extends Vue {
   }
 
   firmwareRestart () {
+    //todo ошибка. не должно быть сокета?
     this.$socket.emit('printer.firmware_restart', {}, { loading: 'firmwareRestart' })
   }
 
@@ -280,9 +314,51 @@ export default class DashboardPrinterActions extends Vue {
     return `${h}:${m}:${s}`
   }
 
+  get switchStatus () {
+    return [
+      {
+        text: 'Completed',
+        icon: 'mdi-checkbox-marked-circle-outline',
+        value: 'completed',
+        color: 'green',
+        selected: false
+      },
+      {
+        text: 'Failed',
+        icon: 'mdi-close-circle-outline',
+        value: 'failed',
+        color: 'red',
+        selected: false
+      },
+    ]
+  }
+
+  @Watch('selectedPrintStatus')
+  selectedPrintStatusChanged (newVal: any) {
+    this.switchStatus.forEach((item: any) => {
+      item.selected = item.value === newVal ? true : false
+      // Установить крайнему заданию статус newVal
+      console.log('0 Установить крайнему заданию статус newVal');
+
+      this.$emit('printjobsPostJob',
+        Object.assign(this.currentPrintjob, { status: newVal }),
+        { action: "server/printjobs/getPrintjobs" }
+      );
+    })
+  }
+
+  selectedPrintStatus = null
+
+
 }
 
 </script>
 
 <style>
+.bold {
+  font-weight: 600;
+}
+.statusSelect .v-input--selection-controls__input {
+  display: none;
+}
 </style>
