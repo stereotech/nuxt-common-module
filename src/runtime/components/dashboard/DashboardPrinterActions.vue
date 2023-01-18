@@ -285,7 +285,7 @@ export default class DashboardPrinterActions extends Vue {
   }
 
   get stateActions () {
-    const states = this.selectedPrintStatus !== null ? ['maintenance', 'idle'] : ['maintenance']
+    const states = this.selectedPrintStatus ? ['maintenance', 'idle'] : ['maintenance']
     return states.map(s => {
       return {
         name: this.$t(this.$helpers.convertName(s)),
@@ -339,8 +339,6 @@ export default class DashboardPrinterActions extends Vue {
 
   @Watch('selectedPrintStatus')
   selectedPrintStatusChanged (newVal: any) {
-    console.log('-----@Watch selectedPrintStatus', newVal);
-
     this.switchStatus.forEach((item: any) => {
       item.selected = item.value === newVal ? true : false
       // Передать статус newVal для установки его крайнему заданию
@@ -357,14 +355,10 @@ export default class DashboardPrinterActions extends Vue {
     }
     else {
       let tmpStatus = ''
-      this.switchStatus.forEach((item: any, index: number) => {
+      this.switchStatus.forEach((item: any) => {
         if (item.value === this.lastPrintjob.status) {
           item.selected = true
-          this.switchStatus[index].selected = true
           tmpStatus = item.value
-          console.log('lastPrintjob.status есть в массиве; ', tmpStatus);
-          console.log('switchStatus', this.switchStatus);
-
         } else {
           item.selected = false
         }
