@@ -245,7 +245,7 @@ export default class DashboardPrinterActions extends Vue {
   @Prop({ type: Boolean, default: false }) klippyIsConnected!: boolean
   @PropSync('queueStatus', { type: String, default: '' }) queueStatusSync!: string
   @Prop({ type: Object, default: () => { } }) currentPrintjob!: {}
-  @Prop({ type: Object, default: () => { } }) lastPrintjob!: {}
+  @Prop({ type: Object, default: () => { } }) lastPrintjob!: { [key: string]: any }
 
   @Prop({
     type: Object, default: () => {
