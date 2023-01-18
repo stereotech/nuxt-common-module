@@ -229,6 +229,8 @@
             </template>
           </td>
 
+          <td class="">{{ item.id }}</td>
+          <!-- test -->
           <td class="">{{ item.name }}</td>
           <td class="text-center">
             <v-tooltip top>

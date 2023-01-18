@@ -352,7 +352,6 @@ export default class DashboardPrinterActions extends Vue {
   }
 
   get lastPrintjobStatus () {
-    console.log('lastPrintjob', this.lastPrintjob);
 
     if (this.lastPrintjob === null || this.lastPrintjob === undefined) {
       console.log('lastPrintjob is null || undefined');
@@ -360,9 +359,10 @@ export default class DashboardPrinterActions extends Vue {
     }
     else {
       let tmpStatus = ''
-      this.switchStatus.forEach((item: any) => {
+      this.switchStatus.forEach((item: any, index: number) => {
         if (item.value === this.lastPrintjob.status) {
           item.selected = true
+          this.switchStatus[index].selected = true
           tmpStatus = item.value
           console.log('lastPrintjob.status есть в массиве; ', tmpStatus);
           console.log('switchStatus', this.switchStatus);
@@ -371,7 +371,6 @@ export default class DashboardPrinterActions extends Vue {
           item.selected = false
         }
       });
-      console.log('статус последнего задания ', tmpStatus ?? '');
 
       return tmpStatus ?? ''
     }
