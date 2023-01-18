@@ -335,6 +335,8 @@ export default class DashboardPrinterActions extends Vue {
     ]
   }
 
+  selectedPrintStatus = null
+
   @Watch('selectedPrintStatus')
   selectedPrintStatusChanged (newVal: any) {
     console.log('@Watch selectedPrintStatus', newVal);
@@ -347,34 +349,29 @@ export default class DashboardPrinterActions extends Vue {
     })
   }
 
-  get lastPrintjobStatus () {
-    console.log('this.lastPrintjob', this.lastPrintjob);
-    console.log('this.jobs', this.jobs);
+  // get lastPrintjobStatus () {
+  //   console.log('this.lastPrintjob', this.lastPrintjob);
+  //   console.log('this.jobs', this.jobs);
 
-    if (this.lastPrintjob === null) {
-      console.log('2 lastPrintjob is null');
-      return ''
-    }
-    else {
-      let tmpStatus = ''
-      this.switchStatus.forEach((item: any) => {
-        if (item.value === this.lastPrintjob.status) {
-          item.selected = true
-          tmpStatus = item.value
-          console.log('2 lastPrintjob.status есть в массиве; ', tmpStatus);
-        } else {
-          item.selected = false
-        }
-      });
-      return tmpStatus !== '' ? tmpStatus : ''
-    }
-  }
-  selectedPrintStatus = this.lastPrintjobStatus
+  //   if (this.lastPrintjob === null) {
+  //     console.log('2 lastPrintjob is null');
+  //     return ''
+  //   }
+  //   else {
+  //     let tmpStatus = ''
+  //     this.switchStatus.forEach((item: any) => {
+  //       if (item.value === this.lastPrintjob.status) {
+  //         item.selected = true
+  //         tmpStatus = item.value
+  //         console.log('2 lastPrintjob.status есть в массиве; ', tmpStatus);
+  //       } else {
+  //         item.selected = false
+  //       }
+  //     });
+  //     return tmpStatus !== '' ? tmpStatus : ''
+  //   }
+  // }
 
-  @Watch('lastPrintjob')
-  aaa (newVal: any) {
-    console.log('Watch lastPrintjob', newVal);
-  }
 
 }
 
