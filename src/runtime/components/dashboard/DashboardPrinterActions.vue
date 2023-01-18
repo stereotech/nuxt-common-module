@@ -318,24 +318,22 @@ export default class DashboardPrinterActions extends Vue {
     return `${h}:${m}:${s}`
   }
 
-  get switchStatus () {
-    return [
-      {
-        text: this.$t('completed').toString(),
-        icon: 'mdi-checkbox-marked-circle-outline',
-        value: 'completed',
-        color: 'green',
-        selected: false
-      },
-      {
-        text: this.$t('failed').toString(),
-        icon: 'mdi-close-circle-outline',
-        value: 'failed',
-        color: 'red',
-        selected: false
-      },
-    ]
-  }
+  switchStatus = [
+    {
+      text: this.$t('completed').toString(),
+      icon: 'mdi-checkbox-marked-circle-outline',
+      value: 'completed',
+      color: 'green',
+      selected: false
+    },
+    {
+      text: this.$t('failed').toString(),
+      icon: 'mdi-close-circle-outline',
+      value: 'failed',
+      color: 'red',
+      selected: false
+    },
+  ]
 
   selectedPrintStatus = this.lastPrintjobStatus
 
