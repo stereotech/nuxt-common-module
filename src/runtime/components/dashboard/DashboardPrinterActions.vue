@@ -335,6 +335,8 @@ export default class DashboardPrinterActions extends Vue {
 
   @Watch('selectedPrintStatus')
   selectedPrintStatusChanged (newVal: any) {
+    console.log('@Watch selectedPrintStatus', newVal);
+
     this.switchStatus.forEach((item: any) => {
       item.selected = item.value === newVal ? true : false
       // Передать статус newVal для установки его крайнему заданию
@@ -345,7 +347,7 @@ export default class DashboardPrinterActions extends Vue {
 
   get serverCurrentPrintjobStatus () {
     if (this.currentPrintjob === null) {
-      console.log('currentPrintjob is null');
+      console.log('2 currentPrintjob is null');
       return ''
     }
     else {
@@ -354,7 +356,7 @@ export default class DashboardPrinterActions extends Vue {
         if (item.value === this.currentPrintjob.status) {
           item.selected = true
           tmpStatus = item.value
-          console.log('currentPrintjob.status есть в массиве; ', tmpStatus);
+          console.log('2 currentPrintjob.status есть в массиве; ', tmpStatus);
         } else {
           item.selected = false
         }
@@ -362,12 +364,11 @@ export default class DashboardPrinterActions extends Vue {
       return tmpStatus !== '' ? tmpStatus : ''
     }
   }
-  selectedPrintStatus = ''
+  selectedPrintStatus = this.serverCurrentPrintjobStatus
 
-  mounted () {
-    //todo статус последней задачи
-    this.selectedPrintStatus = this.serverCurrentPrintjobStatus
-    console.log('mounted selectedPrintStatus = ', this.selectedPrintStatus);
+  @Watch('currentPrintjob')
+  aaa (newVal: any) {
+    console.log('1 Watch currentPrintjob', newVal);
 
   }
 
