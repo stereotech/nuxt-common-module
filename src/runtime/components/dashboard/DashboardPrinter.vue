@@ -104,6 +104,7 @@
             :events="events"
             :current-printjob="currentPrintjob"
             @printjobsPostJob="printjobsPostJob"
+            @firmwareRestart="firmwareRestart"
           />
         </v-col>
         <v-col cols="12">
@@ -204,6 +205,10 @@ export default class DashboardPrinter extends Vue {
   }
   printjobsPostJob (options: any, settings: any) {
     this.$emit('printjobsPostJob', options, settings)
+  }
+
+  firmwareRestart (options: any, settings: any) {
+    this.$emit('firmwareRestart', options, settings)
   }
 }
 

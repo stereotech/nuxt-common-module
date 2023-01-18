@@ -181,7 +181,7 @@
                 <v-icon :color="status.selected ? status.color : ''">{{
                   status.icon
                 }}</v-icon>
-                <font :color="status.selected ? status.color : ''" class="font">
+                <font :color="status.selected ? status.color : ''">
                   {{ status.text }}
                 </font>
               </template>
@@ -189,7 +189,7 @@
           </template>
         </v-radio-group>
       </v-col>
-      <v-col cols="12">
+      <v-col cols="12" v-if="selectedPrintStatus">
         <v-select
           hide-details="always"
           :items="stateActions"
@@ -291,9 +291,9 @@ export default class DashboardPrinterActions extends Vue {
   }
 
   firmwareRestart () {
-    //todo ошибка. не должно быть сокета?
-    this.$socket.emit('printer.firmware_restart', {}, { loading: 'firmwareRestart' })
+    this.$emit('firmwareRestart', {}, { loading: 'firmwareRestart' })
   }
+
 
   get estimatedPrintTime () {
     const time_left = this.printerInfo.estimatedTimeAvg
@@ -343,8 +343,33 @@ export default class DashboardPrinterActions extends Vue {
     })
   }
 
-  selectedPrintStatus = null
+  get serverCurrentPrintjobStatus () {
+    if (this.currentPrintjob === null) {
+      console.log('currentPrintjob is null');
+      return ''
+    }
+    else {
+      let tmpStatus = ''
+      this.switchStatus.forEach((item: any) => {
+        if (item.value === this.currentPrintjob.status) {
+          item.selected = true
+          tmpStatus = item.value
+          console.log('currentPrintjob.status есть в массиве; ', tmpStatus);
+        } else {
+          item.selected = false
+        }
+      });
+      return tmpStatus !== '' ? tmpStatus : ''
+    }
+  }
+  selectedPrintStatus = ''
 
+  mounted () {
+    //todo статус последней задачи
+    this.selectedPrintStatus = this.serverCurrentPrintjobStatus
+    console.log('mounted selectedPrintStatus = ', this.selectedPrintStatus);
+
+  }
 
 }
 
@@ -354,9 +379,7 @@ export default class DashboardPrinterActions extends Vue {
 .bold {
   font-weight: 600;
 }
-.font {
-  font-size: 14px;
-}
+
 .statusSelect .v-input--selection-controls__input {
   display: none;
 }
