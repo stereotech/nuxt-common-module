@@ -103,6 +103,7 @@
             :klippy-is-connected="klippyIsConnected"
             :events="events"
             :current-printjob="currentPrintjob"
+            :lastPrintjob-printjob="lastPrintjob"
             @printjobsPostJob="printjobsPostJob"
             @firmwareRestart="firmwareRestart"
           />
@@ -162,6 +163,7 @@ export default class DashboardPrinter extends Vue {
   @Prop({ type: String, default: '' }) klipperState!: string
   @Prop({ type: Boolean, default: false }) klippyIsConnected!: boolean
   @Prop({ type: Object, default: () => { } }) currentPrintjob!: {}
+  @Prop({ type: Object, default: () => { } }) lastPrintjob!: {}
   @PropSync('queueStatus', { type: String, default: '' }) queueStatusSync!: string
 
   @Prop({ type: Object, default: () => { return { timezoneOffset: 0, apiUrl: '', isPanel: true } } }) params!: IParams

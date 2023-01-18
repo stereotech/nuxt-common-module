@@ -245,6 +245,7 @@ export default class DashboardPrinterActions extends Vue {
   @Prop({ type: Boolean, default: false }) klippyIsConnected!: boolean
   @PropSync('queueStatus', { type: String, default: '' }) queueStatusSync!: string
   @Prop({ type: Object, default: () => { } }) currentPrintjob!: {}
+  @Prop({ type: Object, default: () => { } }) lastPrintjob!: {}
 
   @Prop({
     type: Object, default: () => {
@@ -345,18 +346,18 @@ export default class DashboardPrinterActions extends Vue {
     })
   }
 
-  get serverCurrentPrintjobStatus () {
-    if (this.currentPrintjob === null) {
-      console.log('2 currentPrintjob is null');
+  get serverLastPrintjobStatus () {
+    if (this.lastPrintjob === null) {
+      console.log('2 lastPrintjob is null');
       return ''
     }
     else {
       let tmpStatus = ''
       this.switchStatus.forEach((item: any) => {
-        if (item.value === this.currentPrintjob.status) {
+        if (item.value === this.lastPrintjob.status) {
           item.selected = true
           tmpStatus = item.value
-          console.log('2 currentPrintjob.status есть в массиве; ', tmpStatus);
+          console.log('2 lastPrintjob.status есть в массиве; ', tmpStatus);
         } else {
           item.selected = false
         }
@@ -364,11 +365,11 @@ export default class DashboardPrinterActions extends Vue {
       return tmpStatus !== '' ? tmpStatus : ''
     }
   }
-  selectedPrintStatus = this.serverCurrentPrintjobStatus
+  selectedPrintStatus = this.serverLastPrintjobStatus
 
-  @Watch('currentPrintjob')
+  @Watch('lastPrintjob')
   aaa (newVal: any) {
-    console.log('1 Watch currentPrintjob', newVal);
+    console.log('1 Watch lastPrintjob', newVal);
 
   }
 
