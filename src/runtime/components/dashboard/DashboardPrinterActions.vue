@@ -163,8 +163,9 @@
       <v-col cols="12" class="subtitle-2 text-truncate">
         {{ $t("Dashboard.Printer.DoneDescription") }}
       </v-col>
-      <v-col>currentPrintjob: {{ currentPrintjob }}</v-col>
-      <v-col>lastPrintjob: {{ lastPrintjob }}</v-col>
+      <v-col
+        >lastPrintjob: {{ lastPrintjob.id }} {{ lastPrintjob.status }}</v-col
+      >
       <v-col>
         <v-radio-group
           v-model="selectedPrintStatus"
@@ -345,7 +346,7 @@ export default class DashboardPrinterActions extends Vue {
     this.switchStatus.forEach((item: any) => {
       item.selected = item.value === newVal ? true : false
       // Передать статус newVal для установки его крайнему заданию
-      this.$emit('printjobsPostJob', { status: newVal, id: this.currentPrintjob.id }, { action: "server/printjobs/getPrintjobs" }
+      this.$emit('printjobsPostJob', { status: newVal, id: this.lastPrintjob.id }, { action: "server/printjobs/getPrintjobs" }
       );
     })
   }
@@ -364,6 +365,8 @@ export default class DashboardPrinterActions extends Vue {
           item.selected = true
           tmpStatus = item.value
           console.log('lastPrintjob.status есть в массиве; ', tmpStatus);
+          console.log('switchStatus', this.switchStatus);
+
         } else {
           item.selected = false
         }
