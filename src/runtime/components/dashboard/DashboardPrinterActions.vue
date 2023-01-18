@@ -246,7 +246,6 @@ export default class DashboardPrinterActions extends Vue {
   @PropSync('queueStatus', { type: String, default: '' }) queueStatusSync!: string
   @Prop({ type: Object, default: () => { } }) currentPrintjob!: {}
   @Prop({ type: Object, default: () => { } }) lastPrintjob!: { [key: string]: any }
-  @Prop({ type: Array, default: () => [] }) jobs!: [] //todo test
 
   @Prop({
     type: Object, default: () => {
@@ -335,11 +334,11 @@ export default class DashboardPrinterActions extends Vue {
     ]
   }
 
-  selectedPrintStatus = null
+  selectedPrintStatus = this.lastPrintjobStatus
 
   @Watch('selectedPrintStatus')
   selectedPrintStatusChanged (newVal: any) {
-    console.log('@Watch selectedPrintStatus', newVal);
+    console.log('-----@Watch selectedPrintStatus', newVal);
 
     this.switchStatus.forEach((item: any) => {
       item.selected = item.value === newVal ? true : false
@@ -349,28 +348,29 @@ export default class DashboardPrinterActions extends Vue {
     })
   }
 
-  // get lastPrintjobStatus () {
-  //   console.log('this.lastPrintjob', this.lastPrintjob);
-  //   console.log('this.jobs', this.jobs);
+  get lastPrintjobStatus () {
+    console.log('lastPrintjob', this.lastPrintjob);
 
-  //   if (this.lastPrintjob === null) {
-  //     console.log('2 lastPrintjob is null');
-  //     return ''
-  //   }
-  //   else {
-  //     let tmpStatus = ''
-  //     this.switchStatus.forEach((item: any) => {
-  //       if (item.value === this.lastPrintjob.status) {
-  //         item.selected = true
-  //         tmpStatus = item.value
-  //         console.log('2 lastPrintjob.status есть в массиве; ', tmpStatus);
-  //       } else {
-  //         item.selected = false
-  //       }
-  //     });
-  //     return tmpStatus !== '' ? tmpStatus : ''
-  //   }
-  // }
+    if (this.lastPrintjob === null) {
+      console.log('lastPrintjob is null');
+      return ''
+    }
+    else {
+      let tmpStatus = ''
+      this.switchStatus.forEach((item: any) => {
+        if (item.value === this.lastPrintjob.status) {
+          item.selected = true
+          tmpStatus = item.value
+          console.log('lastPrintjob.status есть в массиве; ', tmpStatus);
+        } else {
+          item.selected = false
+        }
+      });
+      console.log('статус последнего задания ', tmpStatus ?? '');
+
+      return tmpStatus ?? ''
+    }
+  }
 
 
 }
