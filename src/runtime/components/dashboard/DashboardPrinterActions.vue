@@ -353,8 +353,8 @@ export default class DashboardPrinterActions extends Vue {
   get lastPrintjobStatus () {
     console.log('lastPrintjob', this.lastPrintjob);
 
-    if (this.lastPrintjob === null) {
-      console.log('lastPrintjob is null');
+    if (this.lastPrintjob === null || this.lastPrintjob === undefined) {
+      console.log('lastPrintjob is null || undefined');
       return ''
     }
     else {
