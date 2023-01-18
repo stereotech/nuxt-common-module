@@ -163,6 +163,8 @@
       <v-col cols="12" class="subtitle-2 text-truncate">
         {{ $t("Dashboard.Printer.DoneDescription") }}
       </v-col>
+      <v-col>currentPrintjob: {{ currentPrintjob }}</v-col>
+      <v-col>lastPrintjob: {{ lastPrintjob }}</v-col>
       <v-col>
         <v-radio-group
           v-model="selectedPrintStatus"
@@ -244,7 +246,7 @@ export default class DashboardPrinterActions extends Vue {
   @Prop({ type: String, default: '' }) klipperState!: string
   @Prop({ type: Boolean, default: false }) klippyIsConnected!: boolean
   @PropSync('queueStatus', { type: String, default: '' }) queueStatusSync!: string
-  @Prop({ type: Object, default: () => { } }) currentPrintjob!: {}
+  @Prop({ type: Object, default: () => { } }) currentPrintjob!: { [key: string]: any }
   @Prop({ type: Object, default: () => { } }) lastPrintjob!: { [key: string]: any }
 
   @Prop({
@@ -343,7 +345,7 @@ export default class DashboardPrinterActions extends Vue {
     this.switchStatus.forEach((item: any) => {
       item.selected = item.value === newVal ? true : false
       // Передать статус newVal для установки его крайнему заданию
-      this.$emit('printjobsPostJob', { status: newVal }, { action: "server/printjobs/getPrintjobs" }
+      this.$emit('printjobsPostJob', { status: newVal, id: this.currentPrintjob.id }, { action: "server/printjobs/getPrintjobs" }
       );
     })
   }

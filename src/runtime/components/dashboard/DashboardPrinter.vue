@@ -106,7 +106,6 @@
             :last-printjob="lastPrintjob"
             @printjobsPostJob="printjobsPostJob"
             @firmwareRestart="firmwareRestart"
-            :jobs="jobs"
           />
         </v-col>
         <v-col cols="12">
