@@ -103,9 +103,10 @@
             :klippy-is-connected="klippyIsConnected"
             :events="events"
             :current-printjob="currentPrintjob"
-            :lastPrintjob-printjob="lastPrintjob"
+            :last-printjob="lastPrintjob"
             @printjobsPostJob="printjobsPostJob"
             @firmwareRestart="firmwareRestart"
+            :jobs="jobs"
           />
         </v-col>
         <v-col cols="12">
@@ -164,6 +165,7 @@ export default class DashboardPrinter extends Vue {
   @Prop({ type: Boolean, default: false }) klippyIsConnected!: boolean
   @Prop({ type: Object, default: () => { } }) currentPrintjob!: {}
   @Prop({ type: Object, default: () => { } }) lastPrintjob!: {}
+  @Prop({ type: Array, default: () => [] }) jobs!: []
   @PropSync('queueStatus', { type: String, default: '' }) queueStatusSync!: string
 
   @Prop({ type: Object, default: () => { return { timezoneOffset: 0, apiUrl: '', isPanel: true } } }) params!: IParams

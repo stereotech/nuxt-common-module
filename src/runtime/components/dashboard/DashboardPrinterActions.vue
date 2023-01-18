@@ -246,6 +246,7 @@ export default class DashboardPrinterActions extends Vue {
   @PropSync('queueStatus', { type: String, default: '' }) queueStatusSync!: string
   @Prop({ type: Object, default: () => { } }) currentPrintjob!: {}
   @Prop({ type: Object, default: () => { } }) lastPrintjob!: { [key: string]: any }
+  @Prop({ type: Array, default: () => [] }) jobs!: [] //todo test
 
   @Prop({
     type: Object, default: () => {
@@ -346,7 +347,10 @@ export default class DashboardPrinterActions extends Vue {
     })
   }
 
-  get serverLastPrintjobStatus () {
+  get lastPrintjobStatus () {
+    console.log('this.lastPrintjob', this.lastPrintjob);
+    console.log('this.jobs', this.jobs);
+
     if (this.lastPrintjob === null) {
       console.log('2 lastPrintjob is null');
       return ''
@@ -365,12 +369,11 @@ export default class DashboardPrinterActions extends Vue {
       return tmpStatus !== '' ? tmpStatus : ''
     }
   }
-  selectedPrintStatus = this.serverLastPrintjobStatus
+  selectedPrintStatus = this.lastPrintjobStatus
 
   @Watch('lastPrintjob')
   aaa (newVal: any) {
-    console.log('1 Watch lastPrintjob', newVal);
-
+    console.log('Watch lastPrintjob', newVal);
   }
 
 }
