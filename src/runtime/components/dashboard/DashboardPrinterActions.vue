@@ -189,10 +189,7 @@
           </template>
         </v-radio-group>
       </v-col>
-      <v-col
-        cols="12"
-        v-if="['completed', 'failed'].includes(lastPrintjobStatus)"
-      >
+      <v-col cols="12" v-if="selectedPrintStatus">
         <v-select
           hide-details="always"
           :items="stateActions"
@@ -285,10 +282,7 @@ export default class DashboardPrinterActions extends Vue {
   }
 
   get stateActions () {
-    let states = ['maintenance', 'idle']
-    if (this.printerInfo.printerState === 'complete' && !['completed', 'failed'].includes(this.lastPrintjobStatus)) {
-      states = ['maintenance']
-    }
+    const states = this.selectedPrintStatus ? ['maintenance', 'idle'] : ['maintenance']
     return states.map(s => {
       return {
         name: this.$t(this.$helpers.convertName(s)),
