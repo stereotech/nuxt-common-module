@@ -163,9 +163,6 @@
       <v-col cols="12" class="subtitle-2 text-truncate">
         {{ $t("Dashboard.Printer.DoneDescription") }}
       </v-col>
-      <v-col
-        >lastPrintjob: {{ lastPrintjob.id }} {{ lastPrintjob.status }}</v-col
-      >
       <v-col>
         <v-radio-group
           v-model="selectedPrintStatus"
@@ -350,7 +347,6 @@ export default class DashboardPrinterActions extends Vue {
   get lastPrintjobStatus () {
 
     if (this.lastPrintjob === null || this.lastPrintjob === undefined) {
-      console.log('lastPrintjob is null || undefined');
       return ''
     }
     else {
