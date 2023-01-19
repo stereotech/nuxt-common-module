@@ -282,7 +282,7 @@ export default class DashboardPrinterActions extends Vue {
   }
 
   get stateActions () {
-    const states = this.selectedPrintStatus ? ['maintenance', 'idle'] : ['maintenance']
+    const states = (this.printerInfo.printerState === 'complete' && !this.selectedPrintStatus) ? ['maintenance'] : ['maintenance', 'idle']
     return states.map(s => {
       return {
         name: this.$t(this.$helpers.convertName(s)),
