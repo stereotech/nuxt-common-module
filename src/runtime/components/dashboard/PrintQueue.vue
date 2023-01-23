@@ -161,6 +161,7 @@ import { DataTableHeader } from 'vuetify'
 import { ServerPrintjobsStatePrintjob } from '../../../types/printjobs'
 import { IParams, IPrinterInfo } from '../../../types/common'
 import DashboardCreatePrintjobDialog from './CreatePrintjobDialog.vue'
+import  CardTitle from '~common/components/CardTitle.vue'
 
 interface createDialog {
   bool: boolean
@@ -172,7 +173,8 @@ interface createDialog {
 @Component({
   name: 'PrintQueue',
   components: {
-    DashboardCreatePrintjobDialog
+    DashboardCreatePrintjobDialog,
+    CardTitle
   }
 })
 export default class DashboardPrintQueue extends Vue {

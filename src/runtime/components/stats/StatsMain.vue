@@ -90,13 +90,14 @@
 import { Vue, Component, mixins, Prop } from "nuxt-property-decorator";
 import StatsFilamentUsage from '../stats/FilamentUsage.vue'
 import StatsPrintTimeAvg from '../stats/PrintTimeAvg.vue'
-
+import  CardTitle from '~common/components/CardTitle.vue'
 
 @Component({
   name: 'StatsMain',
   components: {
     StatsFilamentUsage,
-    StatsPrintTimeAvg
+    StatsPrintTimeAvg,
+    CardTitle
   }
 })
 export default class StatsMain extends Vue {

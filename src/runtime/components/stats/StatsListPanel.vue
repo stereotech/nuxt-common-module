@@ -599,9 +599,13 @@
 <script lang="ts">
 import { Vue, Component, Prop, PropSync } from "nuxt-property-decorator";
 import { ServerPrintjobsStatePrintjob } from '../../../types/printjobs'
+import  CardTitle from '~common/components/CardTitle.vue'
 
 @Component({
-  name: 'StatsListPanel'
+  name: 'StatsListPanel',
+  components:{
+    CardTitle
+  }
 })
 export default class StatsListPanel extends Vue {
   @Prop({ type: String, default: '' }) apiUrl!: string

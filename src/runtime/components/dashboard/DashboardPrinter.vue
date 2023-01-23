@@ -149,13 +149,15 @@ import { IParams, IPrinterInfo } from '../../../types/common'
 import DashboardPrinterAvatar from './DashboardPrinterAvatar.vue'
 import DashboardPrinterActions from './DashboardPrinterActions.vue'
 import DashboardPrinterHeaters from './DashboardPrinterHeaters.vue'
+import  CardTitle from '../CardTitle.vue'
 
 @Component({
   name: 'DashboardPrinter',
   components: {
     DashboardPrinterAvatar,
     DashboardPrinterActions,
-    DashboardPrinterHeaters
+    DashboardPrinterHeaters,
+    CardTitle
   }
 })
 export default class DashboardPrinter extends Vue {

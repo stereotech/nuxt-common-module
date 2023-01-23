@@ -724,6 +724,8 @@
 import { Vue, Component, Watch, Prop, PropSync, Model } from 'nuxt-property-decorator'
 import { IParams, IPrinterInfo } from '../../types/common'
 import { FileStateFile } from '../../types/helpers'
+import  CardTitle from '../components/CardTitle.vue'
+
 interface draggingFile {
   status: boolean
   item: FileStateFile
@@ -768,7 +770,8 @@ interface dialogCopyObject {
   item: FileStateFile
 }
 @Component({
-  name: "FileManager"
+  name: "FileManager",
+  components: {CardTitle}
 })
 export default class FileManager extends Vue {
   @Prop({ type: Boolean, default: false }) closeable!: boolean

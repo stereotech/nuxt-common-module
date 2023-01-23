@@ -94,6 +94,7 @@ import { Vue, Component, Prop } from "nuxt-property-decorator";
 import StatsAllPrintStatus from '../stats/AllPrintStatus.vue'
 import StatsAllPrintStatusTime from '../stats/AllPrintStatusTime.vue'
 import StatsAllPrintStatusMaterial from '../stats/AllPrintStatusMaterial.vue'
+import  CardTitle from '~common/components/CardTitle.vue'
 
 @Component(
   {
@@ -101,7 +102,8 @@ import StatsAllPrintStatusMaterial from '../stats/AllPrintStatusMaterial.vue'
     components: {
       StatsAllPrintStatus,
       StatsAllPrintStatusTime,
-      StatsAllPrintStatusMaterial
+      StatsAllPrintStatusMaterial,
+      CardTitle
     }
   }
 )

@@ -46,9 +46,13 @@
 
 <script lang="ts">
 import { Vue, Component, mixins, Prop } from "nuxt-property-decorator";
+import CardTitle from '~common/components/CardTitle.vue'
 
 @Component({
-  name: 'WebcamCard'
+  name: 'WebcamCard',
+  components: {
+    CardTitle
+  }
 })
 export default class WebcamCard extends Vue {
   @Prop({

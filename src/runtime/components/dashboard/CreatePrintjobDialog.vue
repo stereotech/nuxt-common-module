@@ -193,6 +193,7 @@ import { Vue, Component, Model, Prop, PropSync } from 'nuxt-property-decorator'
 import { IParams, IPrinterInfo } from '../../../types/common'
 import { ServerPrintjobsStatePrintjob } from '../../../types/printjobs'
 import FileManager from '../FileManager.vue'
+import CardTitle from '../CardTitle.vue'
 
 interface ICreateDialog {
   bool: boolean
@@ -204,7 +205,8 @@ interface ICreateDialog {
 @Component({
   name: 'CreatePrintjobDialog',
   components: {
-    FileManager
+    FileManager,
+    CardTitle
   }
 })
 export default class DashboardCreatePrintjobDialog extends Vue {

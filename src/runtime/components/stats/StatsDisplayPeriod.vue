@@ -75,11 +75,13 @@
 <script lang="ts">
 import { Vue, Component, Prop, PropSync, Watch, Model } from "nuxt-property-decorator";
 import StatsFilter from '../stats/StatsFilter.vue'
+import  CardTitle from '~common/components/CardTitle.vue'
 
 @Component({
   name: 'StatsDisplayPeriod',
   components: {
-    StatsFilter
+    StatsFilter,
+    CardTitle
   }
 })
 export default class StatsDisplayPeriod extends Vue {
