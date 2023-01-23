@@ -65,7 +65,8 @@
       </v-col>
     </v-row>
     <!-- Ожидание -->
-    <v-row dense v-else-if="queueStatusSync === 'idle'">
+    <v-row dense v-else-if=" printerInfo.printerState === 'standby' &&
+        queueStatusSync === 'idle'">
       <v-col cols="12" class="accent--text title">
         {{ $t("Dashboard.Printer.Idle") }}
       </v-col>
