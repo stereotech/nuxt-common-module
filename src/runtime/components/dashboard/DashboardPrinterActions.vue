@@ -17,7 +17,6 @@
       dense
       v-else-if="klipperState !== 'ready' && socketInfo.socketIsConnected"
     >
-      klipperState{{ klipperState }}
       <v-col cols="12" class="error--text title">
         {{ $t("Dashboard.Printer.FirmwareError") }}
       </v-col>
