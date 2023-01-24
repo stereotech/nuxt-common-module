@@ -115,6 +115,7 @@
       </v-col>
       <v-col cols="12">
         <toolbar-printer-controls
+         :printer-state="printerInfo.printerState"
           @printerPrintPause="printerPrintPause"
           @printerPrintResume="printerPrintResume"
           @printerPrintCancel="printerPrintCancel"/>
