@@ -14,6 +14,7 @@ import StatsFilamentUsage from "~common/components/stats/FilamentUsage"
 import StatsPrintTimeAvg from '~common/components/stats/PrintTimeAvg'
 import StatsMain from '~common/components/stats/StatsMain'
 import StatsListPanel from '~common/components/stats/StatsListPanel'
+import StatsEchartsGauge from '~common/components/stats/StatsEchartsGauge'
 import DashboardPrinter from '~common/components/dashboard/DashboardPrinter'
 import DashboardPrinterAvatar from '~common/components/dashboard/DashboardPrinterAvatar'
 import DashboardPrinterActions from '~common/components/dashboard/DashboardPrinterActions'
@@ -35,6 +36,7 @@ Vue.component(StatsFilamentUsage.name, StatsFilamentUsage)
 Vue.component(StatsPrintTimeAvg.name, StatsPrintTimeAvg)
 Vue.component(StatsMain.name, StatsMain)
 Vue.component(StatsListPanel.name, StatsListPanel)
+Vue.component(StatsEchartsGauge.name, StatsEchartsGauge)
 Vue.component(DashboardPrinter.name, DashboardPrinter)
 Vue.component(DashboardPrinterAvatar.name, DashboardPrinterAvatar)
 Vue.component(DashboardPrinterActions.name, DashboardPrinterActions)
