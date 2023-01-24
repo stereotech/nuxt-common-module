@@ -65,10 +65,9 @@
   </v-container>
 </template>
 
-<script>
-import { Component, mixins } from 'nuxt-property-decorator'
-import BaseMixin from '../mixins/base';
-import CardTitle from "@stereotech/nuxt-common-module/dist/runtime/components/CardTitle.vue"
+<script lang="ts">
+import { Vue, Component, Prop } from "nuxt-property-decorator";
+import CardTitle from '~common/components/CardTitle.vue'
 
 @Component
 (
@@ -79,7 +78,9 @@ import CardTitle from "@stereotech/nuxt-common-module/dist/runtime/components/Ca
       }
     }
   )
-export default class ToolbarPrinterControls extends mixins(BaseMixin) {
+export default class ToolbarPrinterControls extends Vue {
+  @Prop({ type: String, default: '' }) printerState!: string
+
   toggleNone = null;
   cancelDialog = false
 
