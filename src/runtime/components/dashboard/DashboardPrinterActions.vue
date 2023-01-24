@@ -66,7 +66,7 @@
     </v-row>
     <!-- Ожидание -->
     <v-row dense v-else-if=" printerInfo.printerState === 'standby' &&
-        queueStatusSync === 'idle'">
+    queueStatusSync === 'idle'">
       <v-col cols="12" class="accent--text title">
         {{ $t("Dashboard.Printer.Idle") }}
       </v-col>
@@ -114,7 +114,10 @@
         ></v-progress-linear>
       </v-col>
       <v-col cols="12">
-        <toolbar-printer-controls />
+        <toolbar-printer-controls
+          @printerPrintPause="printerPrintPause"
+          @printerPrintResume="printerPrintResume"
+          @printerPrintCancel="printerPrintCancel"/>
       </v-col>
     </v-row>
     <!-- Пауза -->
@@ -364,7 +367,17 @@ export default class DashboardPrinterActions extends Vue {
     }
   }
 
+  printerPrintPause (options: any, settings: any) {
+    this.$emit('printerPrintPause', options, settings)
+  }
 
+  printerPrintResume (options: any, settings: any) {
+    this.$emit('printerPrintResume', options, settings)
+  }
+
+  printerPrintCancel (options: any, settings: any) {
+    this.$emit('printerPrintCancel', options, settings)
+  }
 }
 
 </script>
