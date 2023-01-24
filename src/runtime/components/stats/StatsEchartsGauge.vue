@@ -109,7 +109,7 @@ export default class StatsEchartsGauge extends Vue {
         title: this.$t("Statistics." + this.data.name),
       }
     ];
-    console.log('arr', arr);
+    console.log('0 arr', arr);
     return arr
   }
 
@@ -135,11 +135,30 @@ export default class StatsEchartsGauge extends Vue {
 
   @Watch("allDataArray")
   allDataArrayChanged (newVal: any) {
+    console.log('1 allDataArrayChanged', newVal);
+
     this.chart?.setOption({
       series: {
         data: newVal
       }
     });
+
+    this.options.series[0].data = this.allDataArray;
+    this.chart?.setOption(this.options);
+  }
+
+  @Watch("allDataArray[0].value")
+  allDataArrayValueChanged (newVal: any) {
+    console.log('2 allDataArray[0].value changed', newVal);
+
+    this.chart?.setOption({
+      series: {
+        data: newVal
+      }
+    });
+
+    this.options.series[0].data = this.allDataArray;
+    this.chart?.setOption(this.options);
   }
 
   visibilityChanged (entries: any, observer: any) {
