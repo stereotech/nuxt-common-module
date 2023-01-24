@@ -63,6 +63,7 @@
                 :printer-name="printerName"
                 :is-panel="isPanel"
                 @refreshHistory="refreshHistory"
+                :oee-statistic="oeeStatistic"
               />
             </v-col>
           </v-row>
@@ -75,7 +76,7 @@
 <script lang="ts">
 import { Vue, Component, Prop, PropSync, Watch, Model } from "nuxt-property-decorator";
 import StatsFilter from '../stats/StatsFilter.vue'
-import  CardTitle from '~common/components/CardTitle.vue'
+import CardTitle from '~common/components/CardTitle.vue'
 
 @Component({
   name: 'StatsDisplayPeriod',
@@ -90,6 +91,7 @@ export default class StatsDisplayPeriod extends Vue {
   @Prop({ type: Array, default: () => [] }) materialStatusArray!: []
   @Prop({ type: String, default: '' }) printerName!: string
   @Prop({ type: Boolean, default: false }) isPanel!: boolean
+  @Prop({ type: Object, default: () => { } }) oeeStatistic!: {}
   @Model('change', { type: String, default: '' }) displayPeriod!: string;
   @PropSync('dates', { type: Array, default: () => [] }) datesSync!: []
 

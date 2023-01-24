@@ -5,7 +5,6 @@
       :title="$t('Statistics.FilterStatistics')"
     >
       <v-spacer />
-
       <template v-if="!isPanel">
         <v-btn
           v-if="$vuetify.breakpoint.smAndUp"
@@ -29,24 +28,37 @@
       >
     </card-title>
     <v-container>
+      <!-- OEE statistics -->
       <v-row align="center">
-        <!-- Statistic table  -->
-        <v-col cols="12">
-          <v-simple-table>
-            <tbody>
-              <tr>
-                <td>{{ $t("Statistics.wihtoutIdle") }}</td>
-                <td class="text-right">{{ withoutIdle }} %</td>
-              </tr>
-              <tr>
-                <td>{{ $t("Statistics.SuccessfulDetailss") }}</td>
-                <td class="text-right">{{ successfulDetails }} %</td>
-              </tr>
-            </tbody>
-          </v-simple-table></v-col
-        >
+        <v-col cols="2">
+          <stats-echarts-gauge :data="oeeStatistic.oeeArray" />
+          <!-- ref="oeeDiagram" -->
+        </v-col>
+        <v-col cols="1" class="display-1 d-flex align-center justify-center">
+          =
+        </v-col>
+        <v-col cols="2">
+          <stats-echarts-gauge :data="oeeStatistic.availabilityArray" />
+          <!-- ref="availabilityDiagram" -->
+        </v-col>
+        <v-col cols="1" class="display-1 d-flex align-center justify-center"
+          >x
+        </v-col>
+        <v-col cols="2" class="text-sm-center">
+          <stats-echarts-gauge :data="oeeStatistic.performanceArray" />
+          <!-- ref="performanceDiagram" -->
+        </v-col>
+        <v-col cols="1" class="display-1 d-flex align-center justify-center"
+          >x
+        </v-col>
+        <v-col cols="2" xs2 class="text-sm-center">
+          <stats-echarts-gauge :data="oeeStatistic.qualityArray" />
+          <!-- ref="qualityDiagram" -->
+        </v-col>
+      </v-row>
 
-        <!-- Diagrams -->
+      <!-- Diagrams -->
+      <v-row align="center">
         <v-col cols="12" md="6" sm="6">
           <stats-all-print-status
             ref="allPrintStatus"
@@ -94,7 +106,8 @@ import { Vue, Component, Prop } from "nuxt-property-decorator";
 import StatsAllPrintStatus from '../stats/AllPrintStatus.vue'
 import StatsAllPrintStatusTime from '../stats/AllPrintStatusTime.vue'
 import StatsAllPrintStatusMaterial from '../stats/AllPrintStatusMaterial.vue'
-import  CardTitle from '~common/components/CardTitle.vue'
+import StatsEchartsGauge from '../stats/StatsEchartsGauge.vue'
+import CardTitle from '~common/components/CardTitle.vue'
 
 @Component(
   {
@@ -103,6 +116,7 @@ import  CardTitle from '~common/components/CardTitle.vue'
       StatsAllPrintStatus,
       StatsAllPrintStatusTime,
       StatsAllPrintStatusMaterial,
+      StatsEchartsGauge,
       CardTitle
     }
   }
@@ -113,6 +127,8 @@ export default class StatsFilter extends Vue {
   @Prop({ type: Array, default: () => [] }) materialStatusArray!: []
   @Prop({ type: String, default: '' }) printerName!: string
   @Prop({ type: Boolean, default: false }) isPanel!: boolean
+  @Prop({ type: Object, default: () => { } }) oeeStatistic!: {}
+
   $refs!: {
     allPrintStatus: any;
     allPrintStatusTime: any;
@@ -126,34 +142,6 @@ export default class StatsFilter extends Vue {
 
   formatTime (totalSeconds: number) {
     return this.$helpers.formatPrintTime(totalSeconds)
-  }
-  get withoutIdle () {
-    let allTime = 0;
-    let idleTime = 0;
-    this.printStatusTime.forEach((item: any) => {
-      allTime += item.value > 0 ? item.value : 0;
-      idleTime += (item.name === 'idle') && item.value > 0 ? item.value : 0;
-    })
-    let itog = allTime
-      ? (allTime - idleTime) / allTime * 100
-      : 0;
-
-    return Math.floor(itog)
-  }
-
-  get successfulDetails () {
-
-    let allTime = 0;
-    let completedTime = 0;
-    this.printStatusTime.forEach((item: any) => {
-      allTime += item.value > 0 ? item.value : 0;
-      completedTime += (item.name === 'completed') && item.value > 0 ? item.value : 0;
-    })
-    let itog = allTime
-      ? completedTime / allTime * 100
-      : 0;
-
-    return Math.floor(itog)
   }
 
   refreshHistory () {
