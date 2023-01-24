@@ -106,6 +106,9 @@
             :last-printjob="lastPrintjob"
             @printjobsPostJob="printjobsPostJob"
             @firmwareRestart="firmwareRestart"
+            @printerPrintPause="printerPrintPause"
+            @printerPrintResume="printerPrintResume"
+            @printerPrintCancel="printerPrintCancel"
           />
         </v-col>
         <v-col cols="12">
@@ -213,6 +216,18 @@ export default class DashboardPrinter extends Vue {
 
   firmwareRestart (options: any, settings: any) {
     this.$emit('firmwareRestart', options, settings)
+  }
+
+  printerPrintPause (options: any, settings: any) {
+    this.$emit('printerPrintPause', options, settings)
+  }
+
+  printerPrintResume (options: any, settings: any) {
+    this.$emit('printerPrintResume', options, settings)
+  }
+
+  printerPrintCancel (options: any, settings: any) {
+    this.$emit('printerPrintCancel', options, settings)
   }
 }
 

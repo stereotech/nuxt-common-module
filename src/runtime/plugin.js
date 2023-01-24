@@ -18,6 +18,7 @@ import StatsEchartsGauge from '~common/components/stats/StatsEchartsGauge'
 import DashboardPrinter from '~common/components/dashboard/DashboardPrinter'
 import DashboardPrinterAvatar from '~common/components/dashboard/DashboardPrinterAvatar'
 import DashboardPrinterActions from '~common/components/dashboard/DashboardPrinterActions'
+import ToolbarPrinterControls from '~common/components/dashboard/ToolbarPrinterControls'
 import DashboardPrinterHeaters from '~common/components/dashboard/DashboardPrinterHeaters'
 import { Helpers } from '~common/plugins/helpers'
 import { Notification } from '~common/plugins/notifications'
@@ -40,6 +41,7 @@ Vue.component(StatsEchartsGauge.name, StatsEchartsGauge)
 Vue.component(DashboardPrinter.name, DashboardPrinter)
 Vue.component(DashboardPrinterAvatar.name, DashboardPrinterAvatar)
 Vue.component(DashboardPrinterActions.name, DashboardPrinterActions)
+Vue.component(ToolbarPrinterControls.name, ToolbarPrinterControls)
 Vue.component(DashboardPrinterHeaters.name, DashboardPrinterHeaters)
 
 export default function (nuxtContext, inject) {
