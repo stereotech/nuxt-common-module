@@ -1,6 +1,6 @@
 {
   "name": "@stereotech/nuxt-common-module",
-  "version": "1.48.2",
+  "version": "1.48.3",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/stereotech/nuxt-common-module.git"
@@ -50,6 +50,5 @@
     "url": "https://github.com/stereotech/nuxt-common-module/issues"
   },
   "readme": "ERROR: No README data found!",
-  "homepage": "https://github.com/stereotech/nuxt-common-module#readme",
-  "_id": "@stereotech/nuxt-common-module@1.48.2"
+  "homepage": "https://github.com/stereotech/nuxt-common-module#readme"
 }
