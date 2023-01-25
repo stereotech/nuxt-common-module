@@ -17,7 +17,7 @@
             <v-btn
               text
               depressed
-              :disabled="printer_state === 'printing'"
+              :disabled="printerState === 'printing'"
               @click="resumeJob"
             >
               <v-icon color="success">mdi-play</v-icon>
@@ -26,7 +26,7 @@
               text
               depressed
               :disabled="
-                printer_state === 'paused' || printer_state === 'cancelled'
+                printerState === 'paused' || printerState === 'cancelled'
               "
               @click="pauseJob"
             >
@@ -35,7 +35,7 @@
             <v-btn
               text
               depressed
-              :disabled="printer_state === 'cancelled'"
+              :disabled="printerState === 'cancelled'"
               @click="cancelJob"
             >
               <v-icon color="error">mdi-stop</v-icon>
@@ -80,6 +80,7 @@ import CardTitle from '~common/components/CardTitle.vue'
   )
 export default class ToolbarPrinterControls extends Vue {
   @Prop({ type: String, default: '' }) printerState!: string
+  @Prop({ type: Array, default: ()=>[] }) loadings!: string
 
   toggleNone = null;
   cancelDialog = false
