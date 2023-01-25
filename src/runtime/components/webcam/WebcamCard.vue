@@ -1,21 +1,17 @@
 <template>
   <div>
     <v-card>
-      <card-title
-        icon="mdi-webcam"
-        :title="$t('Camera.Camera')"
-        :id="'webcam-card'"
-      >
+      <card-title icon="mdi-webcam" :title="title">
         <v-spacer></v-spacer>
-        <v-btn v-if="lighting.enableLightControl" @click="zoomInImage" icon>
+        <v-btn v-if="zoomable" @click="zoomInImage" icon>
           <v-icon v-if="isZoomed">mdi-magnify-minus-outline</v-icon>
           <v-icon v-else>mdi-magnify-plus-outline</v-icon>
         </v-btn>
         <v-btn
-          v-if="lighting.enableLightControl"
+          v-if="lighting.enable"
           icon
           @click="lightControl"
-          :color="lighting.lightColor"
+          :color="lighting.color"
         >
           <v-icon v-if="lightIsOff">mdi-lightbulb-outline</v-icon>
           <v-icon v-else>mdi-lightbulb-off-outline</v-icon>
@@ -46,49 +42,50 @@
 
 <script lang="ts">
 import { Vue, Component, mixins, Prop } from "nuxt-property-decorator";
-import CardTitle from '~common/components/CardTitle.vue'
+import CardTitle from "../CardTitle.vue";
 
 @Component({
-  name: 'WebcamCard',
+  name: "WebcamCard",
   components: {
-    CardTitle
-  }
+    CardTitle,
+  },
 })
 export default class WebcamCard extends Vue {
   @Prop({
-    type: Object, default: () => {
+    type: Object,
+    default: () => {
       return {
-        enableLightControl: false,
-        lightColor: '',
-      }
-    }
-  }) lighting!: { enableLightControl: Boolean, lightColor: String }
-  @Prop({ type: String, default: '' }) url!: string
+        enable: false,
+        color: "",
+      };
+    },
+  })
+  lighting!: { enable: Boolean; color: String };
+  @Prop({ type: String, default: "" }) url!: string;
+  @Prop({ type: String, default: "" }) title!: string;
+  @Prop({ type: Boolean, default: false }) zoomable!: boolean;
 
   isVisible = false;
   refresh = Math.ceil(Math.random() * Math.pow(10, 12));
-  private isLoaded = true;
-  private timer: any = undefined;
-  private request_start_time = performance.now();
-  private start_time = performance.now();
-  private time = 0;
-  private request_time = 0;
-  private time_smoothing = 0.6;
-  private request_time_smoothing = 0.1;
-  private currentFPS = 0;
-  showFps = true;
-  isLightTurnOn = false;
+  isLoaded = true;
+  timer: any = undefined;
+  request_start_time = performance.now();
+  start_time = performance.now();
+  time = 0;
+  request_time = 0;
+  time_smoothing = 0.6;
+  request_time_smoothing = 0.1;
 
   isZoomed = false;
-  zoomInImage () {
-    this.isZoomed = !this.isZoomed
+  zoomInImage() {
+    this.isZoomed = !this.isZoomed;
   }
 
   $refs!: {
     mjpegstreamerAdaptive: any;
   };
 
-  onIntersect (
+  onIntersect(
     entries: IntersectionObserverEntry[],
     observer: IntersectionObserver
   ) {
@@ -105,27 +102,22 @@ export default class WebcamCard extends Vue {
   device: any = null;
   deviceId: any = null;
 
-  onCameras (cameras: any) {
+  onCameras(cameras: any) {
     this.device = cameras.length > 0 ? cameras[0] : null;
     this.deviceId = this.device.deviceId;
   }
 
-  refreshFrame () {
+  refreshFrame() {
     if (this.isVisible) {
       this.refresh = new Date().getTime();
       this.setFrame();
     }
   }
 
-  async setFrame () {
+  async setFrame() {
     const url = new URL(this.url);
 
-    url.searchParams.append("bypassCache", this.refresh.toString());
-    url.searchParams.set("action", "snapshot");
-
     this.request_start_time = performance.now();
-    this.currentFPS = Math.round(1000 / this.time);
-
     let canvas = this.$refs.mjpegstreamerAdaptive;
     if (canvas) {
       const ctx = canvas.getContext("2d");
@@ -134,7 +126,7 @@ export default class WebcamCard extends Vue {
       canvas.width = canvas.clientWidth;
       canvas.height = canvas.clientWidth * (frame.height / frame.width);
 
-      ctx?.drawImage(
+      ctx.drawImage(
         frame,
         0,
         0,
@@ -153,8 +145,8 @@ export default class WebcamCard extends Vue {
     });
   }
 
-  loadImage (url: string) {
-    return new Promise(r => {
+  loadImage(url: string) {
+    return new Promise((r) => {
       let image = new Image();
       image.onload = () => r(image);
       image.onerror = () => setTimeout(this.refreshFrame, 1000);
@@ -162,7 +154,7 @@ export default class WebcamCard extends Vue {
     });
   }
 
-  onLoad () {
+  onLoad() {
     this.isLoaded = true;
 
     const end_time = performance.now();
@@ -185,13 +177,12 @@ export default class WebcamCard extends Vue {
     });
   }
 
-  get lightIsOff () {
-    return this.lighting.lightColor === 'rgb(0, 0, 0)'
+  get lightIsOff() {
+    return this.lighting.lightColor === "rgb(0, 0, 0)";
   }
 
-  lightControl () {
-    const gcode = 'TOGGLE_LIGHT'
-    this.$emit('lightControl', { script: gcode }, { message: gcode, type: 'command' })
+  lightControl() {
+    this.$emit("light");
   }
 }
 </script>
