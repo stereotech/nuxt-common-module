@@ -1,7 +1,8 @@
 <template>
   <v-container class="py-0 py-md-3">
     <!-- Загрузка системы... -->
-    <v-row dense v-if="klipperState === 'disconnected' && !klippyIsConnected">
+    <template> </template>
+    <v-row dense v-if="state === 'loading'">
       <v-col cols="12" class="primary--text title">
         {{ $t("Dashboard.Printer.FirmwareLoading") }}
       </v-col>
@@ -13,10 +14,7 @@
       </v-col>
     </v-row>
     <!-- Системная ошибка -->
-    <v-row
-      dense
-      v-else-if="klipperState !== 'ready' && socketInfo.socketIsConnected"
-    >
+    <v-row dense v-else-if="state === 'error'">
       <v-col cols="12" class="error--text title">
         {{ $t("Dashboard.Printer.FirmwareError") }}
       </v-col>
@@ -39,13 +37,7 @@
       </v-col>
     </v-row>
     <!-- Обслуживание -->
-    <v-row
-      no-gutters
-      v-else-if="
-        printerInfo.printerState === 'standby' &&
-        queueStatusSync === 'maintenance'
-      "
-    >
+    <v-row no-gutters v-else-if="state === 'maintanance'">
       <v-col cols="12" class="warning--text title">
         {{ $t("Dashboard.Printer.Maintenance") }}
       </v-col>
@@ -55,7 +47,7 @@
       <v-col cols="12" class="mt-1">
         <v-select
           hide-details="always"
-          :items="stateActions"
+          :items="queueStatusItems"
           v-model="queueStatusSync"
           outlined
           item-text="name"
@@ -65,8 +57,7 @@
       </v-col>
     </v-row>
     <!-- Ожидание -->
-    <v-row dense v-else-if=" printerInfo.printerState === 'standby' &&
-    queueStatusSync === 'idle'">
+    <v-row dense v-else-if="state === 'idle'">
       <v-col cols="12" class="accent--text title">
         {{ $t("Dashboard.Printer.Idle") }}
       </v-col>
@@ -76,7 +67,7 @@
       <v-col cols="12">
         <v-select
           hide-details="always"
-          :items="stateActions"
+          :items="queueStatusItems"
           v-model="queueStatusSync"
           outlined
           item-text="name"
@@ -86,7 +77,7 @@
       </v-col>
     </v-row>
     <!-- Печать... -->
-    <v-row dense v-else-if="printerInfo.printerState === 'printing'">
+    <v-row dense v-else-if="state === 'printing'">
       <v-col cols="12" class="accent--text title">
         {{ $t("Dashboard.Printer.Printing") }}
         {{ printerInfo.printPercent }}%
@@ -115,19 +106,15 @@
       </v-col>
       <v-col cols="12">
         <toolbar-printer-controls
-         :printer-state="printerInfo.printerState"
+          :printer-state="printerInfo.printerState"
           @printerPrintPause="printerPrintPause"
           @printerPrintResume="printerPrintResume"
-          @printerPrintCancel="printerPrintCancel"/>
+          @printerPrintCancel="printerPrintCancel"
+        />
       </v-col>
     </v-row>
     <!-- Пауза -->
-    <v-row
-      dense
-      v-else-if="
-        printerInfo.printerState === 'paused' && klipperState === 'ready'
-      "
-    >
+    <v-row dense v-else-if="state === 'pause'">
       <v-col cols="12" class="warning--text title">
         {{ $t("Dashboard.Printer.Paused") }}
         {{ printerInfo.printPercent }}%
@@ -160,7 +147,7 @@
       </v-col>
     </v-row>
     <!-- Печать завершена -->
-    <v-row dense v-else-if="printerInfo.printerState === 'complete'">
+    <v-row dense v-else-if="state === 'completed'">
       <v-col cols="12" class="success--text title">
         {{ $t("Dashboard.Printer.Done") }}
       </v-col>
@@ -196,7 +183,7 @@
       <v-col cols="12" v-if="selectedPrintStatus">
         <v-select
           hide-details="always"
-          :items="stateActions"
+          :items="queueStatusItems"
           v-model="queueStatusSync"
           outlined
           item-text="name"
@@ -206,13 +193,7 @@
       </v-col>
     </v-row>
     <!-- Ошибка печати -->
-    <v-row
-      dense
-      v-else-if="
-        printerInfo.printerState === 'cancelled' ||
-        printerInfo.printerState === 'error'
-      "
-    >
+    <v-row dense v-else-if="state === 'cancelled'">
       <v-col cols="12" class="error--text title">
         {{ $t("Dashboard.Printer.Error") }}
       </v-col>
@@ -225,7 +206,7 @@
       <v-col cols="12">
         <v-select
           hide-details="always"
-          :items="stateActions"
+          :items="queueStatusItems"
           v-model="queueStatusSync"
           outlined
           item-text="name"
@@ -238,157 +219,169 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Watch, PropSync } from 'nuxt-property-decorator'
-import { IPrinterInfo } from '../../../types/common'
+import { Vue, Component, Prop, Watch, PropSync } from "nuxt-property-decorator";
+import { IPrinterInfo } from "../../../types/common";
+import LastJobStatus from "./LastJobStatus.vue";
+import ToolbarPrinterControls from "./ToolbarPrinterControls.vue";
 
 @Component({
-  name: 'DashboardPrinterActions'
+  name: "DashboardPrinterActions",
+  components: {
+    LastJobStatus,
+    ToolbarPrinterControls,
+  },
 })
 export default class DashboardPrinterActions extends Vue {
-  @Prop({ type: String, default: '' }) klipperState!: string
-  @Prop({ type: Boolean, default: false }) klippyIsConnected!: boolean
-  @PropSync('queueStatus', { type: String, default: '' }) queueStatusSync!: string
-  @Prop({ type: Object, default: () => { } }) currentPrintjob!: { [key: string]: any }
-  @Prop({ type: Object, default: () => { } }) lastPrintjob!: { [key: string]: any }
+  @Prop({ type: String, default: "loading" }) state!:
+    | "loading"
+    | "error"
+    | "maintanance"
+    | "idle"
+    | "printing"
+    | "pause"
+    | "completed"
+    | "cancelled";
+  @PropSync("queueStatus", { type: String, default: "" })
+  queueStatusSync!: string;
+  @Prop({ type: Array, default: () => [] }) queueStatusItems!: {
+    name: string;
+    key: string;
+  }[];
+  @Prop({ type: String, default: "" })
+  klipperState!: string;
+  @Prop({ type: Boolean, default: false }) klippyIsConnected!: boolean;
+
+  @Prop({ type: Object, default: () => {} }) currentPrintjob!: {
+    [key: string]: any;
+  };
+  @Prop({ type: Object, default: () => {} }) lastPrintjob!: {
+    [key: string]: any;
+  };
 
   @Prop({
-    type: Object, default: () => {
+    type: Object,
+    default: () => {
       return {
-        axisMode: '',
-        printerName: '',
-        printerState: '',
+        axisMode: "",
+        printerName: "",
+        printerState: "",
         printerIsPrinting: false,
-        currentExtruder: '',
-        model: '',
+        currentExtruder: "",
+        model: "",
         showSensor: false,
         filamentPresent: false,
         hasFilamentSensors: false,
         printPercent: 0,
         estimatedTimeAvg: 0,
         totalDuration: 0,
-      }
-    }
-  }) printerInfo!: IPrinterInfo
+      };
+    },
+  })
+  printerInfo!: IPrinterInfo;
 
   @Prop({
-    type: Object, default: () => {
+    type: Object,
+    default: () => {
       return {
         socketIsConnected: false,
-        loadings: []
-      }
-    }
-  }) socketInfo!: {}
-  @Prop({ type: String, default: '' }) klippyMessage!: ''
-  @Prop({ type: Array, default: () => [{ formatMessage: '' }] }) events!: [{ formatMessage: '' }]
+        loadings: [],
+      };
+    },
+  })
+  socketInfo!: {};
+  @Prop({ type: String, default: "" }) klippyMessage!: "";
+  @Prop({ type: Array, default: () => [{ formatMessage: "" }] }) events!: [
+    { formatMessage: "" }
+  ];
 
-  get lastErrorEventMessage () {
-    return this.events.find((e: any) => e.message.startsWith('!!'))?.formatMessage ?? ''
+  get lastErrorEventMessage() {
+    return (
+      this.events.find((e: any) => e.message.startsWith("!!"))?.formatMessage ??
+      ""
+    );
   }
 
-  get stateActions () {
-    const states = (this.printerInfo.printerState === 'complete' && !this.selectedPrintStatus) ? ['maintenance'] : ['maintenance', 'idle']
-    return states.map(s => {
-      return {
-        name: this.$t(this.$helpers.convertName(s)),
-        key: s
-      }
-    })
+  firmwareRestart() {
+    this.$emit("firmwareRestart", {}, { loading: "firmwareRestart" });
   }
 
-  firmwareRestart () {
-    this.$emit('firmwareRestart', {}, { loading: 'firmwareRestart' })
-  }
-
-
-  get estimatedPrintTime () {
-    const time_left = this.printerInfo.estimatedTimeAvg
+  get estimatedPrintTime() {
+    const time_left = this.printerInfo.estimatedTimeAvg;
     if (time_left < 0) {
-      return undefined
+      return undefined;
     }
-    const h = Math.floor(time_left / 3600)
-    const m = Math.floor((time_left - h * 3600) / 60)
-    const s = Math.floor(time_left - h * 3600 - m * 60)
-    return `${h}:${m}:${s}`
+    const h = Math.floor(time_left / 3600);
+    const m = Math.floor((time_left - h * 3600) / 60);
+    const s = Math.floor(time_left - h * 3600 - m * 60);
+    return `${h}:${m}:${s}`;
   }
 
-  get timeSpent () {
-    const time = this.printerInfo.totalDuration
-    const h = Math.floor(time / 3600)
-    const m = Math.floor((time - h * 3600) / 60)
-    const s = Math.floor(time - h * 3600 - m * 60)
-    return `${h}:${m}:${s}`
+  get timeSpent() {
+    const time = this.printerInfo.totalDuration;
+    const h = Math.floor(time / 3600);
+    const m = Math.floor((time - h * 3600) / 60);
+    const s = Math.floor(time - h * 3600 - m * 60);
+    return `${h}:${m}:${s}`;
   }
 
   switchStatus = [
     {
-      text: this.$t('completed').toString(),
-      icon: 'mdi-checkbox-marked-circle-outline',
-      value: 'completed',
-      color: 'green',
-      selected: false
+      text: this.$t("completed").toString(),
+      icon: "mdi-checkbox-marked-circle-outline",
+      value: "completed",
+      color: "green",
     },
     {
-      text: this.$t('failed').toString(),
-      icon: 'mdi-close-circle-outline',
-      value: 'failed',
-      color: 'red',
-      selected: false
+      text: this.$t("failed").toString(),
+      icon: "mdi-close-circle-outline",
+      value: "failed",
+      color: "red",
     },
-  ]
+  ];
 
-  selectedPrintStatus = this.lastPrintjobStatus
+  selectedPrintStatus = this.lastPrintjobStatus;
 
-  @Watch('selectedPrintStatus')
-  selectedPrintStatusChanged (newVal: any) {
+  @Watch("selectedPrintStatus")
+  selectedPrintStatusChanged(newVal: any) {
     this.switchStatus.forEach((item: any) => {
-      item.selected = item.value === newVal ? true : false
+      item.selected = item.value === newVal ? true : false;
       // Передать статус newVal для установки его крайнему заданию
-      this.$emit('printjobsPostJob', { status: newVal, id: this.lastPrintjob.id }, { action: "server/printjobs/getPrintjobs" }
+      this.$emit(
+        "printjobsPostJob",
+        { status: newVal, id: this.lastPrintjob.id },
+        { action: "server/printjobs/getPrintjobs" }
       );
-    })
+    });
   }
 
-  get lastPrintjobStatus () {
-
+  get lastPrintjobStatus() {
     if (this.lastPrintjob === null || this.lastPrintjob === undefined) {
-      return ''
-    }
-    else {
-      let tmpStatus = ''
+      return "";
+    } else {
+      let tmpStatus = "";
       this.switchStatus.forEach((item: any) => {
         if (item.value === this.lastPrintjob.status) {
-          item.selected = true
-          tmpStatus = item.value
+          item.selected = true;
+          tmpStatus = item.value;
         } else {
-          item.selected = false
+          item.selected = false;
         }
       });
 
-      return tmpStatus ?? ''
+      return tmpStatus ?? "";
     }
   }
 
-  printerPrintPause (options: any, settings: any) {
-    this.$emit('printerPrintPause', options, settings)
+  printerPrintPause(options: any, settings: any) {
+    this.$emit("printerPrintPause", options, settings);
   }
 
-  printerPrintResume (options: any, settings: any) {
-    this.$emit('printerPrintResume', options, settings)
+  printerPrintResume(options: any, settings: any) {
+    this.$emit("printerPrintResume", options, settings);
   }
 
-  printerPrintCancel (options: any, settings: any) {
-    this.$emit('printerPrintCancel', options, settings)
+  printerPrintCancel(options: any, settings: any) {
+    this.$emit("printerPrintCancel", options, settings);
   }
 }
-
 </script>
-
-<style>
-.bold {
-  font-weight: 600;
-}
-
-.statusSelect .v-input--selection-controls__input {
-  display: none;
-}
-</style>

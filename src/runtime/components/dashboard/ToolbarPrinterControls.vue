@@ -1,23 +1,20 @@
 <template>
   <v-container>
-    <template v-if="loadings.includes('statusPrintCancel')">
+    <template v-if="loading">
       <v-row align="center" class="text-center">
         <v-col cols="12">
-          <v-progress-circular
-            indeterminate
-            color="primary"
-          />
+          <v-progress-circular indeterminate color="primary" />
         </v-col>
       </v-row>
     </template>
     <template v-else>
       <v-row align="center" class="text-center">
         <v-col cols="12">
-          <v-btn-toggle v-model="toggleNone">
+          <v-btn-toggle>
             <v-btn
               text
               depressed
-              :disabled="printer_state === 'printing'"
+              :disabled="state === 'printing'"
               @click="resumeJob"
             >
               <v-icon color="success">mdi-play</v-icon>
@@ -25,9 +22,7 @@
             <v-btn
               text
               depressed
-              :disabled="
-                printer_state === 'paused' || printer_state === 'cancelled'
-              "
+              :disabled="state === 'paused' || state === 'cancelled'"
               @click="pauseJob"
             >
               <v-icon color="warning">mdi-pause</v-icon>
@@ -35,7 +30,7 @@
             <v-btn
               text
               depressed
-              :disabled="printer_state === 'cancelled'"
+              :disabled="state === 'cancelled'"
               @click="cancelJob"
             >
               <v-icon color="error">mdi-stop</v-icon>
@@ -47,16 +42,16 @@
         <v-card>
           <card-title
             icon="mdi-stop"
-            :title="$t('Dashboard.Printer.CancelJob')"
+            :title="cancelDialogProps.title"
             closeable
             @close="cancelDialog = false"
           />
           <v-card-actions>
             <v-btn text color="success" @click="cancelDialog = false">
-              {{ $t("Dashboard.Printer.No") }}
+              {{ cancelDialogProps.cancel }}
             </v-btn>
             <v-btn text color="error" @click="cancelJobAction">
-              {{ $t("Dashboard.Printer.Yes") }}
+              {{ cancelDialogProps.accept }}
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -67,42 +62,53 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "nuxt-property-decorator";
-import CardTitle from '~common/components/CardTitle.vue'
+import { title } from "process";
+import CardTitle from "../CardTitle.vue";
 
-@Component
-(
-  {
-    name: 'ToolbarPrinterControls',
-    components: {
-      CardTitle
-      }
-    }
-  )
+@Component({
+  name: "ToolbarPrinterControls",
+  components: {
+    CardTitle,
+  },
+})
 export default class ToolbarPrinterControls extends Vue {
-  @Prop({ type: String, default: '' }) printerState!: string
+  @Prop({ type: String, default: "printing" }) state!:
+    | "printing"
+    | "paused"
+    | "cancelled";
+  @Prop({ type: Boolean, default: false }) loading!: boolean;
+  @Prop({
+    type: Object,
+    default: () => {
+      return {
+        title: "Cancel Job",
+        cancel: "No",
+        accept: "Yes",
+      };
+    },
+  })
+  cancelDialogProps!: { title: string; cancel: string; accept: string };
 
   toggleNone = null;
-  cancelDialog = false
+  cancelDialog = false;
 
-  pauseJob () {
-    this.$emit('printerPrintPause', {}, { loading: 'statusPrintPause' })
+  pauseJob() {
+    this.$emit("pause");
   }
 
   resumeJob() {
-    this.$emit('printerPrintResume', {}, { loading: 'statusPrintResume' })
+    this.$emit("resume");
   }
 
   cancelJob() {
-    this.cancelDialog = true
+    this.cancelDialog = true;
   }
 
   cancelJobAction() {
-    this.cancelDialog = false
-    this.$emit('printerPrintCancel', {}, { loading: 'statusPrintCancel' })
+    this.cancelDialog = false;
+    this.$emit("cancel");
   }
-
 }
 </script>
 
-<style>
-</style>
+<style></style>

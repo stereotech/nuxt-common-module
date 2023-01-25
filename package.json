@@ -3,7 +3,7 @@
   "version": "1.48.2",
   "repository": {
     "type": "git",
-    "url": "https://github.com/stereotech/nuxt-common-module.git"
+    "url": "git+https://github.com/stereotech/nuxt-common-module.git"
   },
   "main": "./dist/index.cjs",
   "types": "./dist/index.d.ts",
@@ -11,23 +11,45 @@
     "dist/"
   ],
   "scripts": {
-    "build": "unbuild"
+    "build": "unbuild",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook",
+    "chromatic": "npx chromatic --project-token=19ad2e27762b --exit-zero-on-changes"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },
   "dependencies": {
-    "nuxt-property-decorator": "^2.9.1",
-    "@nuxtjs/toast": "^3.3.1"
+    "@nuxtjs/toast": "^3.3.1",
+    "@socheatsok78/storybook-addon-vuetify": "^0.1.9",
+    "nuxt-property-decorator": "^2.9.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.20.12",
     "@nuxt/types": "latest",
     "@nuxt/typescript-build": "latest",
     "@nuxt/typescript-runtime": "latest",
     "@nuxtjs/vuetify": "^1.12.3",
+    "@storybook/addon-actions": "^6.5.15",
+    "@storybook/addon-essentials": "^6.5.15",
+    "@storybook/addon-interactions": "^6.5.15",
+    "@storybook/addon-links": "^6.5.15",
+    "@storybook/builder-webpack4": "^6.5.15",
+    "@storybook/manager-webpack4": "^6.5.15",
+    "@storybook/testing-library": "^0.0.13",
+    "@storybook/vue": "^6.5.15",
+    "babel-loader": "^8.3.0",
+    "chromatic": "^6.15.0",
     "unbuild": "^1.0.1",
     "upath": "^2.0.1",
-    "vuex": "^3.5.1",
-    "vue": "^2.6.12"
-  }
+    "vue": "^2.6.12",
+    "vue-loader": "^15.10.1",
+    "vuex": "^3.5.1"
+  },
+  "bugs": {
+    "url": "https://github.com/stereotech/nuxt-common-module/issues"
+  },
+  "readme": "ERROR: No README data found!",
+  "homepage": "https://github.com/stereotech/nuxt-common-module#readme",
+  "_id": "@stereotech/nuxt-common-module@1.48.2"
 }

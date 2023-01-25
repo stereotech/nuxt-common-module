@@ -17,9 +17,10 @@ import StatsListPanel from '~common/components/stats/StatsListPanel'
 import StatsEchartsGauge from '~common/components/stats/StatsEchartsGauge'
 import DashboardPrinter from '~common/components/dashboard/DashboardPrinter'
 import DashboardPrinterAvatar from '~common/components/dashboard/DashboardPrinterAvatar'
-import DashboardPrinterActions from '~common/components/dashboard/DashboardPrinterActions'
 import ToolbarPrinterControls from '~common/components/dashboard/ToolbarPrinterControls'
 import DashboardPrinterHeaters from '~common/components/dashboard/DashboardPrinterHeaters'
+import LastJobStatus from '~common/components/dashboard/LastJobStatus'
+import DashboardPrinterActionTitle from '~common/components/dashboard/DashboardPrinterActionTitle'
 import { Helpers } from '~common/plugins/helpers'
 import { Notification } from '~common/plugins/notifications'
 
@@ -40,9 +41,10 @@ Vue.component(StatsListPanel.name, StatsListPanel)
 Vue.component(StatsEchartsGauge.name, StatsEchartsGauge)
 Vue.component(DashboardPrinter.name, DashboardPrinter)
 Vue.component(DashboardPrinterAvatar.name, DashboardPrinterAvatar)
-Vue.component(DashboardPrinterActions.name, DashboardPrinterActions)
 Vue.component(ToolbarPrinterControls.name, ToolbarPrinterControls)
 Vue.component(DashboardPrinterHeaters.name, DashboardPrinterHeaters)
+Vue.component(LastJobStatus.name, LastJobStatus)
+Vue.component(DashboardPrinterActionTitle.name, DashboardPrinterActionTitle)
 
 export default function (nuxtContext, inject) {
   // const $common = {}
