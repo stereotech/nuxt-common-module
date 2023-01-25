@@ -5,16 +5,14 @@ import CardTitle from '~common/components/CardTitle.vue'
 import PrintQueue from '~common/components/dashboard/PrintQueue'
 import CreatePrintjobDialog from '~common/components/dashboard/CreatePrintjobDialog'
 import WebcamCard from '~common/components/webcam/WebcamCard'
-import StatsAllPrintStatus from '~common/components/stats/AllPrintStatus'
-import StatsAllPrintStatusTime from '~common/components/stats/AllPrintStatusTime'
-import StatsAllPrintStatusMaterial from '~common/components/stats/AllPrintStatusMaterial'
+//Stats
 import StatsFilter from "~common/components/stats/StatsFilter"
-import StatsDisplayPeriod from "~common/components/stats/StatsDisplayPeriod"
-import StatsFilamentUsage from "~common/components/stats/FilamentUsage"
-import StatsPrintTimeAvg from '~common/components/stats/PrintTimeAvg'
-import StatsMain from '~common/components/stats/StatsMain'
+import BarChart from "~common/components/stats/BarChart"
+import GaugeChart from "~common/components/stats/GaugeChart"
+import PieChart from "~common/components/stats/PieChart"
 import StatsListPanel from '~common/components/stats/StatsListPanel'
-import StatsEchartsGauge from '~common/components/stats/StatsEchartsGauge'
+import StatsTotalTable from '~common/components/stats/StatsTotalTable'
+
 import DashboardPrinter from '~common/components/dashboard/DashboardPrinter'
 import DashboardPrinterAvatar from '~common/components/dashboard/DashboardPrinterAvatar'
 import ToolbarPrinterControls from '~common/components/dashboard/ToolbarPrinterControls'
@@ -29,22 +27,21 @@ Vue.component(CardTitle.name, CardTitle)
 Vue.component(PrintQueue.name, PrintQueue)
 Vue.component(CreatePrintjobDialog.name, CreatePrintjobDialog)
 Vue.component(WebcamCard.name, WebcamCard)
-Vue.component(StatsAllPrintStatus.name, StatsAllPrintStatus)
-Vue.component(StatsAllPrintStatusTime.name, StatsAllPrintStatusTime)
-Vue.component(StatsAllPrintStatusMaterial.name, StatsAllPrintStatusMaterial)
+//Stats
 Vue.component(StatsFilter.name, StatsFilter)
-Vue.component(StatsDisplayPeriod.name, StatsDisplayPeriod)
-Vue.component(StatsFilamentUsage.name, StatsFilamentUsage)
-Vue.component(StatsPrintTimeAvg.name, StatsPrintTimeAvg)
-Vue.component(StatsMain.name, StatsMain)
+Vue.component(BarChart.name, BarChart)
+Vue.component(GaugeChart.name, GaugeChart)
+Vue.component(PieChart.name, PieChart)
 Vue.component(StatsListPanel.name, StatsListPanel)
-Vue.component(StatsEchartsGauge.name, StatsEchartsGauge)
+Vue.component(StatsTotalTable.name, StatsTotalTable)
+
 Vue.component(DashboardPrinter.name, DashboardPrinter)
 Vue.component(DashboardPrinterAvatar.name, DashboardPrinterAvatar)
 Vue.component(ToolbarPrinterControls.name, ToolbarPrinterControls)
 Vue.component(DashboardPrinterHeaters.name, DashboardPrinterHeaters)
 Vue.component(LastJobStatus.name, LastJobStatus)
 Vue.component(DashboardPrinterActionTitle.name, DashboardPrinterActionTitle)
+
 
 export default function (nuxtContext, inject) {
   // const $common = {}

@@ -15,12 +15,12 @@ import { ECharts } from "echarts/core";
 import { createComponent } from "echarts-for-vue";
 
 @Component({
-  name: "StatsEchartsGauge",
+  name: "GaugeChart",
   components: {
     ECharts: createComponent({ echarts }),
   },
 })
-export default class StatsEchartsGauge extends Vue {
+export default class GaugeChart extends Vue {
   @Prop({
     type: Object,
     default: () => {
