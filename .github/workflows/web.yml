@@ -24,20 +24,12 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         PACKAGEJSON_DIR:  ''
-    - name:  'Automated Version Bump'
-      uses:  'phips28/gh-action-bump-version@master'
-      if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        PACKAGEJSON_DIR:  ''
-      with:
-        tag-suffix: '-dev'
     - run: npm run build
     - uses: actions/setup-node@v2
       with:
         registry-url: 'https://npm.pkg.github.com'
     - name: Publish package
-      if: github.event_name == 'push'
+      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
       env:
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run:
