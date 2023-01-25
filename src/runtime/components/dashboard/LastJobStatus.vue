@@ -1,5 +1,5 @@
 <template>
-  <v-radio-group v-model="value" column class="statusSelect">
+  <v-radio-group v-model="value" column class="">
     <template v-for="status in items">
       <v-radio
         :key="status.value"
