@@ -194,7 +194,10 @@ export default class DashboardPrinter extends Vue {
         loadings: []
       }
     }
-  }) socketInfo!: {}
+  }) socketInfo!: {
+    socketIsConnected: Boolean,
+    loadings: Array<String>
+  }
   @Prop({ type: String, default: '' }) klippyMessage!: ''
   @Prop({ type: Array, default: () => [] }) events!: []
 

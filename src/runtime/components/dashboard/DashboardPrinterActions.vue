@@ -116,6 +116,7 @@
       <v-col cols="12">
         <toolbar-printer-controls
          :printer-state="printerInfo.printerState"
+         :loadings="socketInfo.loadings"
           @printerPrintPause="printerPrintPause"
           @printerPrintResume="printerPrintResume"
           @printerPrintCancel="printerPrintCancel"/>
@@ -156,8 +157,13 @@
         ></v-progress-linear>
       </v-col>
       <v-col cols="12" class="text-center">
-        <toolbar-printer-controls />
-      </v-col>
+        <toolbar-printer-controls
+          :printer-state="printerInfo.printerState"
+          :loadings="socketInfo.loadings"
+          @printerPrintResume="printerPrintResume"
+          @printerPrintCancel="printerPrintCancel"/>
+        </v-col>
+        <!-- @printerPrintPause="printerPrintPause" -->
     </v-row>
     <!-- Печать завершена -->
     <v-row dense v-else-if="printerInfo.printerState === 'complete'">
@@ -277,7 +283,10 @@ export default class DashboardPrinterActions extends Vue {
         loadings: []
       }
     }
-  }) socketInfo!: {}
+  }) socketInfo!: {
+    socketIsConnected: Boolean,
+    loadings: Array<String>
+  }
   @Prop({ type: String, default: '' }) klippyMessage!: ''
   @Prop({ type: Array, default: () => [{ formatMessage: '' }] }) events!: [{ formatMessage: '' }]
 

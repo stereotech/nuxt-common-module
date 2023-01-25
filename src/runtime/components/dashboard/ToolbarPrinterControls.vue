@@ -80,7 +80,7 @@ import CardTitle from '~common/components/CardTitle.vue'
   )
 export default class ToolbarPrinterControls extends Vue {
   @Prop({ type: String, default: '' }) printerState!: string
-  @Prop({ type: Array, default: ()=>[] }) loadings!: string
+  @Prop({ type: Array, default: () => [''] }) loadings!: Array<String>
 
   toggleNone = null;
   cancelDialog = false
