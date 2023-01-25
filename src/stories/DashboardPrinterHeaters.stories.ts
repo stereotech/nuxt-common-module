@@ -3,7 +3,7 @@ import DashboardPrinterHeaters from '../runtime/components/dashboard/DashboardPr
 import { Meta } from '@storybook/vue';
 
 export default {
-    title: 'DashboardPrinterHeaters',
+    title: 'Dashboard/DashboardPrinterHeaters',
     component: DashboardPrinterHeaters,
     args: {
       headers: [

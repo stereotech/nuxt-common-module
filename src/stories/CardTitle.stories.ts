@@ -3,7 +3,7 @@ import CardTitle from '../runtime/components/CardTitle.vue';
 import {Meta} from '@storybook/vue';
 
 export default {
-    title: 'CardTitle',
+    title: 'Root/CardTitle',
     component: CardTitle,
     args: {
         title: 'Card Title',

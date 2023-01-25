@@ -3,7 +3,7 @@ import DashboardPrinterActionTitle from '../runtime/components/dashboard/Dashboa
 import {Meta} from '@storybook/vue';
 
 export default {
-    title: 'DashboardPrinterActionTitle',
+    title: 'Dashboard/DashboardPrinterActionTitle',
     component: DashboardPrinterActionTitle,
     args: {
         title: 'Maintenance',

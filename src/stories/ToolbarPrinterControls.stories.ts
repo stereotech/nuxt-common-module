@@ -3,7 +3,7 @@ import ToolbarPrinterControls from '../runtime/components/dashboard/ToolbarPrint
 import {Meta} from '@storybook/vue';
 
 export default {
-    title: 'ToolbarPrinterControls',
+    title: 'Dashboard/ToolbarPrinterControls',
     component: ToolbarPrinterControls,
     argTypes: {
         state: {

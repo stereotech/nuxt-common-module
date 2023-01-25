@@ -3,7 +3,7 @@ import LastJobStatus from '../runtime/components/dashboard/LastJobStatus.vue'
 import {Meta} from '@storybook/vue';
 
 export default {
-    title: 'LastJobStatus',
+    title: 'Dashboard/LastJobStatus',
     component: LastJobStatus,
     argTypes: {
 value: {

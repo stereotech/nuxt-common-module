@@ -3,7 +3,7 @@ import DashboardPrinterAction from '../runtime/components/dashboard/DashboardPri
 import {Meta} from '@storybook/vue';
 
 export default {
-    title: 'DashboardPrinterAction',
+    title: 'Dashboard/DashboardPrinterAction',
     component: DashboardPrinterAction,
     argTypes: {
         type: {

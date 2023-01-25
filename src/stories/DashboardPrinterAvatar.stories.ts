@@ -2,7 +2,7 @@ import DashboardPrinterAvatar from '../runtime/components/dashboard/DashboardPri
 import { Meta } from '@storybook/vue';
 
 export default {
-    title: 'DashboardPrinterAvatar',
+    title: 'Dashboard/DashboardPrinterAvatar',
     component: DashboardPrinterAvatar,
     argTypes: {
         state: {

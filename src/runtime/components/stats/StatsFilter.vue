@@ -100,34 +100,31 @@
   </v-card>
 </template>
 
-
 <script lang="ts">
 import { Vue, Component, Prop } from "nuxt-property-decorator";
-import StatsAllPrintStatus from '../stats/AllPrintStatus.vue'
-import StatsAllPrintStatusTime from '../stats/AllPrintStatusTime.vue'
-import StatsAllPrintStatusMaterial from '../stats/AllPrintStatusMaterial.vue'
-import StatsEchartsGauge from '../stats/StatsEchartsGauge.vue'
-import CardTitle from '~common/components/CardTitle.vue'
+import StatsAllPrintStatus from "../stats/AllPrintStatus.vue";
+import StatsAllPrintStatusTime from "../stats/AllPrintStatusTime.vue";
+import StatsAllPrintStatusMaterial from "../stats/AllPrintStatusMaterial.vue";
+import StatsEchartsGauge from "./GaugeChart.vue";
+import CardTitle from "~common/components/CardTitle.vue";
 
-@Component(
-  {
-    name: 'StatsFilter',
-    components: {
-      StatsAllPrintStatus,
-      StatsAllPrintStatusTime,
-      StatsAllPrintStatusMaterial,
-      StatsEchartsGauge,
-      CardTitle
-    }
-  }
-)
+@Component({
+  name: "StatsFilter",
+  components: {
+    StatsAllPrintStatus,
+    StatsAllPrintStatusTime,
+    StatsAllPrintStatusMaterial,
+    StatsEchartsGauge,
+    CardTitle,
+  },
+})
 export default class StatsFilter extends Vue {
-  @Prop({ type: Array, default: () => [] }) printStatusTime!: []
-  @Prop({ type: Array, default: () => [] }) printStatusArray!: []
-  @Prop({ type: Array, default: () => [] }) materialStatusArray!: []
-  @Prop({ type: String, default: '' }) printerName!: string
-  @Prop({ type: Boolean, default: false }) isPanel!: boolean
-  @Prop({ type: Object, default: () => { } }) oeeStatistic!: {}
+  @Prop({ type: Array, default: () => [] }) printStatusTime!: [];
+  @Prop({ type: Array, default: () => [] }) printStatusArray!: [];
+  @Prop({ type: Array, default: () => [] }) materialStatusArray!: [];
+  @Prop({ type: String, default: "" }) printerName!: string;
+  @Prop({ type: Boolean, default: false }) isPanel!: boolean;
+  @Prop({ type: Object, default: () => {} }) oeeStatistic!: {};
 
   $refs!: {
     allPrintStatus: any;
@@ -140,22 +137,26 @@ export default class StatsFilter extends Vue {
     linkForDownload: HTMLLinkElement;
   };
 
-  formatTime (totalSeconds: number) {
-    return this.$helpers.formatPrintTime(totalSeconds)
+  formatTime(totalSeconds: number) {
+    return this.$helpers.formatPrintTime(totalSeconds);
   }
 
-  refreshHistory () {
-    this.$emit('refreshHistory', { start: 0, limit: 50 }, { action: "server/printjobs/getPrintjobs" });
+  refreshHistory() {
+    this.$emit(
+      "refreshHistory",
+      { start: 0, limit: 50 },
+      { action: "server/printjobs/getPrintjobs" }
+    );
   }
-  get imgGeometry () {
+  get imgGeometry() {
     // Find out the size of each of the square diagrams - it will be equal to the size of the FIRST diagram
     return this.$refs.allPrintStatus?.getGeometry();
   }
-  get canvasCTX () {
+  get canvasCTX() {
     return this.$refs.allDiadramsAsImage.getContext("2d");
   }
 
-  downloadStatisticty () {
+  downloadStatisticty() {
     let padding: number = 10;
     let paddingTop: number = 30;
 
@@ -186,7 +187,7 @@ export default class StatsFilter extends Vue {
       this.$refs.allDiadramsAsImage.width = width;
       this.$refs.allDiadramsAsImage.height = height;
 
-      this.canvasCTX.fillStyle = this.$vuetify.theme.dark ? "black" : "white"
+      this.canvasCTX.fillStyle = this.$vuetify.theme.dark ? "black" : "white";
       this.canvasCTX.fillRect(0, 0, width, height);
 
       this.canvasCTX.font = "18px Roboto";
@@ -220,7 +221,7 @@ export default class StatsFilter extends Vue {
     }, 20);
   }
 
-  drawImages (img: HTMLImageElement, src: string, x: number = 0, y: number = 0) {
+  drawImages(img: HTMLImageElement, src: string, x: number = 0, y: number = 0) {
     img.src = src;
     img.width = this.imgGeometry.width;
     img.height = this.imgGeometry.height;
@@ -230,7 +231,6 @@ export default class StatsFilter extends Vue {
     };
   }
 }
-
 </script>
 
 <style>
