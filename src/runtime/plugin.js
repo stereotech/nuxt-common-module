@@ -12,13 +12,14 @@ import GaugeChart from "~common/components/stats/GaugeChart"
 import PieChart from "~common/components/stats/PieChart"
 import StatsListPanel from '~common/components/stats/StatsListPanel'
 import StatsTotalTable from '~common/components/stats/StatsTotalTable'
-
-import DashboardPrinter from '~common/components/dashboard/DashboardPrinter'
+//Dashboard
+import DashboardPrinterAction from '~common/components/dashboard/DashboardPrinterAction'
 import DashboardPrinterAvatar from '~common/components/dashboard/DashboardPrinterAvatar'
 import ToolbarPrinterControls from '~common/components/dashboard/ToolbarPrinterControls'
 import DashboardPrinterHeaters from '~common/components/dashboard/DashboardPrinterHeaters'
 import LastJobStatus from '~common/components/dashboard/LastJobStatus'
 import DashboardPrinterActionTitle from '~common/components/dashboard/DashboardPrinterActionTitle'
+//Plugins
 import { Helpers } from '~common/plugins/helpers'
 import { Notification } from '~common/plugins/notifications'
 
@@ -34,13 +35,14 @@ Vue.component(GaugeChart.name, GaugeChart)
 Vue.component(PieChart.name, PieChart)
 Vue.component(StatsListPanel.name, StatsListPanel)
 Vue.component(StatsTotalTable.name, StatsTotalTable)
-
-Vue.component(DashboardPrinter.name, DashboardPrinter)
+//Dashboard
+Vue.component(DashboardPrinterAction.name, DashboardPrinterAction)
 Vue.component(DashboardPrinterAvatar.name, DashboardPrinterAvatar)
-Vue.component(ToolbarPrinterControls.name, ToolbarPrinterControls)
-Vue.component(DashboardPrinterHeaters.name, DashboardPrinterHeaters)
-Vue.component(LastJobStatus.name, LastJobStatus)
 Vue.component(DashboardPrinterActionTitle.name, DashboardPrinterActionTitle)
+Vue.component(DashboardPrinterHeaters.name, DashboardPrinterHeaters)
+Vue.component(ToolbarPrinterControls.name, ToolbarPrinterControls)
+Vue.component(LastJobStatus.name, LastJobStatus)
+
 
 
 export default function (nuxtContext, inject) {
