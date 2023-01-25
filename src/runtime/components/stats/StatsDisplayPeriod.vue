@@ -74,78 +74,83 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, PropSync, Watch, Model } from "nuxt-property-decorator";
-import StatsFilter from '../stats/StatsFilter.vue'
-import CardTitle from '~common/components/CardTitle.vue'
+import {
+  Vue,
+  Component,
+  Prop,
+  PropSync,
+  Watch,
+  Model,
+} from "nuxt-property-decorator";
+import StatsFilter from "./StatsFiltered.vue";
+import CardTitle from "~common/components/CardTitle.vue";
 
 @Component({
-  name: 'StatsDisplayPeriod',
+  name: "StatsDisplayPeriod",
   components: {
     StatsFilter,
-    CardTitle
-  }
+    CardTitle,
+  },
 })
 export default class StatsDisplayPeriod extends Vue {
-  @Prop({ type: Array, default: () => [] }) printStatusTime!: []
-  @Prop({ type: Array, default: () => [] }) printStatusArray!: []
-  @Prop({ type: Array, default: () => [] }) materialStatusArray!: []
-  @Prop({ type: String, default: '' }) printerName!: string
-  @Prop({ type: Boolean, default: false }) isPanel!: boolean
-  @Prop({ type: Object, default: () => { } }) oeeStatistic!: {}
-  @Model('change', { type: String, default: '' }) displayPeriod!: string;
-  @PropSync('dates', { type: Array, default: () => [] }) datesSync!: []
+  @Prop({ type: Array, default: () => [] }) printStatusTime!: [];
+  @Prop({ type: Array, default: () => [] }) printStatusArray!: [];
+  @Prop({ type: Array, default: () => [] }) materialStatusArray!: [];
+  @Prop({ type: String, default: "" }) printerName!: string;
+  @Prop({ type: Boolean, default: false }) isPanel!: boolean;
+  @Prop({ type: Object, default: () => {} }) oeeStatistic!: {};
+  @Model("change", { type: String, default: "" }) displayPeriod!: string;
+  @PropSync("dates", { type: Array, default: () => [] }) datesSync!: [];
 
-  period = this.displayPeriod
-  @Watch('period') periodChange (newVal: any) {
-    this.$emit('change', newVal)
+  period = this.displayPeriod;
+  @Watch("period") periodChange(newVal: any) {
+    this.$emit("change", newVal);
   }
 
   private showDialogSelectPeriod = false;
 
-  get showPicker (): boolean {
+  get showPicker(): boolean {
     return this.period === "period";
   }
 
   // initial data for select
-  get items (): { text: string; value: string }[] {
+  get items(): { text: string; value: string }[] {
     return [
       {
         text: this.$t("Statistics.DisplayPeriod.Day").toString(),
-        value: "day"
+        value: "day",
       },
       {
         text: this.$t("Statistics.DisplayPeriod.Month").toString(),
-        value: "month"
+        value: "month",
       },
       {
         text: this.$t("Statistics.DisplayPeriod.Year").toString(),
-        value: "year"
+        value: "year",
       },
       {
         text: this.$t("Statistics.DisplayPeriod.Period").toString(),
-        value: "period"
+        value: "period",
       },
       {
         text: this.$t("Statistics.DisplayPeriod.All").toString(),
-        value: "all"
-      }
+        value: "all",
+      },
     ];
   }
 
-
-  nowDate () {
+  nowDate() {
     let now = new Date();
     return `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
   }
 
-  get dateRangeText (): string {
+  get dateRangeText(): string {
     return this.datesSync.join(" ~ ");
   }
 
-  refreshHistory (options: any, settings: any) {
-    this.$emit('refreshHistory', options, settings);
+  refreshHistory(options: any, settings: any) {
+    this.$emit("refreshHistory", options, settings);
   }
-
 }
 </script>
 
