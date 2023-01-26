@@ -1,5 +1,11 @@
 <template>
-  <v-img class="elevation-1" alt="Avatar" aspect-ratio="1" v-bind="$attrs">
+  <v-img
+    class="elevation-1"
+    alt="Avatar"
+    aspect-ratio="1"
+    v-bind="$attrs"
+    v-on="$listeners"
+  >
     <div :class="style" />
   </v-img>
 </template>
