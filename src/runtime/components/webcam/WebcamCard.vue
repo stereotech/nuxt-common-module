@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card>
-      <v-card-title icon="mdi-webcam" :title="'new ' + title">
+      <card-title icon="mdi-webcam" :title="title">
         <v-spacer></v-spacer>
         <v-btn v-if="zoomable" @click="zoomInImage" icon>
           <v-icon v-if="isZoomed">mdi-magnify-minus-outline</v-icon>
@@ -16,7 +16,7 @@
           <v-icon v-if="lightIsOff">mdi-lightbulb-outline</v-icon>
           <v-icon v-else>mdi-lightbulb-off-outline</v-icon>
         </v-btn>
-      </v-card-title>
+      <card-title>
     </v-card>
 
     <div style="position: relative" class="rotate">
