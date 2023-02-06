@@ -26,7 +26,7 @@
         height="400"
         :class="
           'webcamImage ' +
-          (isLoaded ? '' : 'hiddenWebcam') +
+          (isLoaded ? '' : 'hiddenWebcam ') +
           (isZoomed ? 'zoomedWebcam' : '')
         "
       ></canvas>
