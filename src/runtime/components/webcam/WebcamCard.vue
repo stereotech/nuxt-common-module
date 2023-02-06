@@ -16,7 +16,7 @@
           <v-icon v-if="lightIsOff">mdi-lightbulb-outline</v-icon>
           <v-icon v-else>mdi-lightbulb-off-outline</v-icon>
         </v-btn>
-      <card-title>
+      </card-title>
     </v-card>
 
     <div style="position: relative" class="rotate">
