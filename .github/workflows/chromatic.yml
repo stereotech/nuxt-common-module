@@ -12,6 +12,8 @@ jobs:
     # Operating System
     runs-on: ubuntu-latest
     # Job steps
+    env:
+      NODE_OPTIONS: --openssl-legacy-provider
     steps:
       - uses: actions/checkout@v1
       - name: Install dependencies
