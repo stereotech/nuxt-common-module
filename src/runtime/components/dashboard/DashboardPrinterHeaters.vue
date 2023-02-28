@@ -5,6 +5,7 @@
         cols="4"
         :class="`text-caption ${index < 1 ? 'text-center' : ''}`"
         v-for="(header, index) in headers"
+        v-bind:key="index"
       >
         {{ header }}
       </v-col>
@@ -70,7 +71,7 @@ export interface PrinterStateAdditionSensor {
   name: "DashboardPrinterHeaters",
 })
 export default class DashboardPrinterHeaters extends Vue {
-  @Prop({ type: Array, default: () => {} }) headers!: string[];
+  @Prop({ type: Array, default: () => { } }) headers!: string[];
   @Prop({ type: Array, default: () => [] }) heaters!: PrinterHeater[];
 }
 </script>
