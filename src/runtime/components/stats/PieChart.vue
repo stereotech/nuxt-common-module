@@ -24,7 +24,7 @@ export default class PieChart extends Vue {
   @Prop({ type: Array, default: () => [] }) data!: [];
   @Prop({ type: Boolean, default: false }) dark!: boolean;
   @Prop({ type: String, default: "" }) title!: string;
-  @Prop({ type: Object, default: () => {} }) formatter!: (
+  @Prop({ type: Function, default: () => {} }) formatter!: (
     datasets: any
   ) => string;
 

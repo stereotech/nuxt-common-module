@@ -28,22 +28,27 @@ export default class GaugeChart extends Vue {
     },
   })
   data!: { name: String; value: Number; itemStyle: Object };
+  @Prop({ type: Function, default: () => { } }) formatter!: (
+    datasets: any
+  ) => string;
+  @Prop({ type: Boolean, default: false }) dark!: boolean;
 
   $refs!: {
     echartDiagram: any;
   };
 
-  get options(): any {
+  get options (): any {
     return {
-      darkMode: this.$vuetify.theme.dark,
+      darkMode: this.dark,
       tooltip: {
         trigger: "item",
-        borderWidth: 2,
+        borderWidth: 0,
+        formatter: this.formatter
       },
       title: {
         text: this.allDataArray[0].title,
         textStyle: {
-          color: this.$vuetify.theme.dark
+          color: this.dark
             ? this.$vuetify.theme.currentTheme.secondary
             : this.$vuetify.theme.currentTheme.accent,
           fontSize: 16,
@@ -109,7 +114,7 @@ export default class GaugeChart extends Vue {
     };
   }
 
-  get allDataArray() {
+  get allDataArray () {
     let arr = [
       {
         value: this.data.value,
@@ -124,51 +129,51 @@ export default class GaugeChart extends Vue {
     return arr;
   }
 
-  get chart(): ECharts {
+  get chart (): ECharts {
     return this.$refs.echartDiagram.inst;
   }
 
-  mounted() {
+  mounted () {
     this.options.series[0].data = this.allDataArray;
     this.chart.setOption(this.options);
 
     window.addEventListener("resize", this.eventListenerResize);
   }
 
-  destroyed() {
+  destroyed () {
     window.removeEventListener("resize", this.eventListenerResize);
   }
 
-  beforeDestroy() {
+  beforeDestroy () {
     if (typeof window === "undefined") return;
     if (this.chart) this.chart.dispose();
   }
 
   @Watch("allDataArray")
-  allDataArrayChanged(newVal: any) {
+  allDataArrayChanged (newVal: any) {
     this.options.series[0].data = this.allDataArray;
     this.chart.setOption(this.options);
   }
 
-  visibilityChanged(entries: any, observer: any) {
+  visibilityChanged (entries: any, observer: any) {
     const isVisible = entries[0].isIntersecting;
     if (isVisible) this.chart.resize();
   }
 
-  eventListenerResize(event: Event) {
+  eventListenerResize (event: Event) {
     this.chart.resize();
   }
 
-  getImage(): string | undefined {
+  getImage (): string | undefined {
     return (
       this.chart.getDataURL({
         pixelRatio: 2,
-        backgroundColor: this.$vuetify.theme.dark ? "black" : "white",
+        backgroundColor: this.dark ? "black" : "white",
       }) || "not results allPrintStatus"
     );
   }
 
-  getGeometry() {
+  getGeometry () {
     return {
       width: this.chart.getWidth() || 0,
       height: this.chart.getHeight() || 0,

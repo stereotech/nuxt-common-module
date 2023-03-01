@@ -18,7 +18,7 @@
     <v-card-text>
       <template
         v-if="
-          ['complete', 'cancelled'].includes(
+          ['completed', 'cancelled'].includes(
             fileManagerPropsEvents.printerInfo.printerState
           )
         "

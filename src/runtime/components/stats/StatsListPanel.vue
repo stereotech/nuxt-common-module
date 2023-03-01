@@ -569,15 +569,7 @@
             </v-row>
           </template>
           <template
-            v-if="
-              'metadata' in detailsDialog.item &&
-              'settings' in detailsDialog.item.metadata &&
-              detailsDialog.item.metadata.settings.global_quality !==
-                undefined &&
-              'printing_mode' in
-                (detailsDialog.item.metadata.settings.global_quality?.values ??
-                  {})
-            "
+            v-if="false"
           >
             <v-divider class="my-3"></v-divider>
             <v-row>

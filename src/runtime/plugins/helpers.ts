@@ -178,7 +178,7 @@ export class Helpers implements IHelpers {
 
     for (let i = 0; i < normalizedInput.length; i++) {
       const isUpperCaseOrWhatever = normalizedInput[i] === normalizedInput[i].toUpperCase();
-      let strLowerCase = normalizedInput[i]//.toLowerCase();
+      let strLowerCase = normalizedInput[i].toLowerCase();
 
       if (strLowerCase === " ") {
         newStr += spaceReplacement ? spaceReplacement : " ";

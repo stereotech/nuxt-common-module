@@ -1,24 +1,24 @@
 <template>
   <div>
     <v-card
-      :disabled="disabled"
+      :disabled="loadings.includes('fileMoving')"
       @dragover="dragOverUpload"
       @dragleave="dragLeaveUpload"
       @drop.prevent.stop="dragDropUpload"
     >
       <card-title
         icon="mdi-file-document-multiple-outline"
-        :title="title"
+        :title="$t('Files.GCodeFiles')"
         :closeable="closeable"
-        @close="$emit('close', $event)"
+        @close="$emit('closeFileManagerDialog', $event)"
       ></card-title>
       <v-card-text>
         <v-row>
-          <v-col cols="12" sm="6" md="4">
+          <v-col cols="12" sm="6" md="4" :id="'files-toppanel'">
             <text-input-keyboard
               v-model="search"
               append-icon="mdi-magnify"
-              :label="searchTitle"
+              :label="$t('Files.Search')"
               outlined
               clearable
               hide-details
@@ -31,24 +31,24 @@
               ref="fileUpload"
               style="display: none"
               multiple
-              :accept="accept"
+              :accept="validGcodeExtensions"
               @change="uploadFile"
             />
             <v-btn
-              v-if="enableUpload"
+              v-if="!params.isPanel"
               fab
               small
               depressed
               @click="clickUploadButton"
-              :title="uploadTitle"
+              :title="$t('Files.UploadNewGcode')"
               color="primary"
-              :loading="uploading"
+              :loading="loadings.includes('gcodeUpload')"
               ><v-icon>mdi-upload</v-icon></v-btn
             >
             <v-btn
               icon
               @click="createDirectory"
-              :title="createDirectoryTitle"
+              :title="$t('Files.CreateNewDirectory')"
               color="primary"
               large
               class="ml-2"
@@ -57,7 +57,7 @@
             <v-btn
               icon
               @click="refreshFileList"
-              :title="refreshTitle"
+              :title="$t('Files.RefreshCurrentDirectory')"
               color="primary"
               large
               class="ml-2"
@@ -66,6 +66,7 @@
             <v-menu
               offset-y
               :close-on-content-click="false"
+              :title="$t('Files.SetupCurrentList')"
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
@@ -81,13 +82,13 @@
               <v-list>
                 <v-list-item
                   v-for="header of configHeaders"
-                  v-bind:key="header.value"
+                  v-bind:key="header.key"
                 >
                   <v-checkbox
                     class="mt-0"
                     hide-details
                     v-model="header.visible"
-                    @change="changeHeaderVisible(header.value)"
+                    @change="changeMetadataVisible(header.value)"
                     :label="header.text"
                   ></v-checkbox>
                 </v-list-item>
@@ -100,73 +101,81 @@
         <v-row>
           <v-col class="col-12 py-2 d-flex align-center">
             <span
-              ><b>{{ pathTitle }}:</b>
+              ><b>{{ $t("Files.CurrentPath") }}:</b>
               {{
-               visiblePath
+                currentPath !== currentPathProp
+                  ? "/" + this.currentPath.substring(7)
+                  : "/"
               }}</span
             >
             <v-spacer></v-spacer>
-            <slot name="usage" v-bind:usage="diskUsage">
-            <template v-if="diskUsage !== null">
+            <template v-if="this.diskUsage !== null">
               <v-tooltip top>
                 <template v-slot:activator="{ on, attrs }">
                   <span v-bind="attrs" v-on="on">
-                    <b>{{ diskUsage.title }}:</b>
-                    {{ $helpers.formatFilesize(diskUsage.free.value) }}
+                    <b>{{ $t("Files.FreeDisk") }}:</b>
+                    {{ $helpers.formatFilesize(diskUsage.free) }}
                   </span>
                 </template>
                 <span>
-                  {{ diskUsage.used.title }}:
-                  {{ $helpers.formatFilesize(diskUsage.used.value) }}<br />
-                  {{  diskUsage.free.title }}:
-                  {{ $helpers.formatFilesize(diskUsage.free.value) }}<br />
-                  {{ diskUsage.total.title }}:
-                  {{ $helpers.formatFilesize(diskUsage.total.value) }}
+                  {{ $t("Files.Used") }}:
+                  {{ $helpers.formatFilesize(this.diskUsage.used) }}<br />
+                  {{ $t("Files.Free") }}:
+                  {{ $helpers.formatFilesize(this.diskUsage.free) }}<br />
+                  {{ $t("Files.Total") }}:
+                  {{ $helpers.formatFilesize(this.diskUsage.total) }}
                 </span>
               </v-tooltip>
             </template>
-            </slot>
           </v-col>
         </v-row>
       </v-card-text>
       <v-data-table
         :items="files"
-        :headers="visibleHeaders"
+        :headers="filteredHeaders"
         :custom-sort="$helpers.sortFiles"
+        :footer-props="{
+          itemsPerPageText: $t('Files.Files'),
+          itemsPerPageAllText: $t('Files.AllFiles'),
+          itemsPerPageOptions: [5, 10, 15, 20, 25],
+        }"
         item-key="name"
         :search="search"
         :custom-filter="advancedSearch"
         mobile-breakpoint="0"
         @pagination="refreshMetadata"
-        v-bind="$attrs"
-        v-on="$listeners"
+        :id="'files-main'"
+        :options.sync="optionsSync"
       >
         <template slot="items">
-          <td v-for="header in visibleHeaders" v-bind:key="header.value">
+          <td v-for="header in filteredHeaders" v-bind:key="header.value">
             {{ header.text }}
           </td>
         </template>
 
-        <slot name="body.prepend">
-          <template slot="body.prepend" v-if="pathSync !== rootSync">
-            <tr
-              class="file-list-cursor"
-              @click="clickRowGoBack"
-              @dragover="
-                dragOverFilelist($event, { isDirectory: true, filename: '..' })
-              "
-              @dragleave="dragLeaveFilelist"
-              @drop.prevent.stop="
-                dragDropFilelist($event, { isDirectory: true, filename: '..' })
-              "
-            >
-              <td class="pr-0 text-center" style="width: 32px">
-                <v-icon>mdi-folder-upload</v-icon>
-              </td>
-              <td class="" :colspan="visibleHeaders.length">..</td>
-            </tr>
-          </template>
-        </slot>
+        <template #no-data>
+          <div class="text-center">{{ $t("Files.Empty") }}</div>
+        </template>
+
+        <template slot="body.prepend" v-if="currentPath !== currentPathProp">
+          <tr
+            class="file-list-cursor"
+            @click="clickRowGoBack"
+            @dragover="
+              dragOverFilelist($event, { isDirectory: true, filename: '..' })
+            "
+            @dragleave="dragLeaveFilelist"
+            @drop.prevent.stop="
+              dragDropFilelist($event, { isDirectory: true, filename: '..' })
+            "
+          >
+            <td class="pr-0 text-center" style="width: 32px">
+              <v-icon>mdi-folder-upload</v-icon>
+            </td>
+            <td class="" :colspan="filteredHeaders.length">..</td>
+          </tr>
+        </template>
+
         <template #item="{ index, item }">
           <tr
             :key="`${index} ${item.filename}`"
@@ -236,6 +245,8 @@
                     :src="getSmallThumbnail(item)"
                     width="32"
                     height="32"
+                    v-bind="attrs"
+                    v-on="on"
                   >
                     <template v-slot:placeholder>
                       <v-row
@@ -272,7 +283,7 @@
               {{
                 isUsb(item)
                   ? "--"
-                  : item.modified
+                  : $helpers.formatDate(item.modified, params.timezoneOffset)
               }}
             </td>
             <td
@@ -342,7 +353,10 @@
                 "global_quality" in item.settings &&
                 "printing_mode" in item.settings.global_quality.values &&
                 item.settings
-                  ? item.settings.global_quality.values.printing_mode
+                  ? $t(
+                      "PrintingModeName." +
+                        item.settings.global_quality.values.printing_mode
+                    )
                   : "--"
               }}
             </td>
@@ -355,7 +369,7 @@
         :opacity="dropzone.opacity"
         :style="`visibility:${dropzone.visibility ? 'visible' : 'hidden'}`"
       >
-        <div>{{ dropzoneTitle }}</div>
+        <div>{{ $t("Files.DropFilesToAddGcode") }}</div>
       </v-overlay>
     </v-card>
     <v-snackbar
@@ -370,7 +384,7 @@
       <span v-if="uploadSnackbar.max > 1" class="mr-1"
         >({{ uploadSnackbar.number }}/{{ uploadSnackbar.max }})</span
       ><strong>{{
-        snackbarTitle + " " + uploadSnackbar.filename
+        $t("Files.Uploading") + " " + uploadSnackbar.filename
       }}</strong
       ><br />
       {{ Math.round(uploadSnackbar.percent) }} % @
@@ -404,47 +418,47 @@
           @click="clickRow(contextMenu.item, true)"
           v-if="!contextMenu.item.isDirectory"
         >
-          <v-icon class="mr-1">mdi-plus</v-icon> {{ createJobTitle }}
+          <v-icon class="mr-1">mdi-plus</v-icon> {{ $t("Files.CreateJob") }}
         </v-list-item>
         <v-list-item
           @click="downloadFile"
-          v-if="!contextMenu.item.isDirectory && enableDownload"
+          v-if="!contextMenu.item.isDirectory && !params.isPanel"
         >
           <v-icon class="mr-1">mdi-download</v-icon>
-          {{ downloadTitle }}
+          {{ $t("Files.Download") }}
         </v-list-item>
         <v-list-item
           :disabled="isUsb(contextMenu.item)"
           @click="renameDirectory(contextMenu.item)"
           v-if="contextMenu.item.isDirectory"
         >
-          <v-icon class="mr-1">mdi-rename-box</v-icon> {{ renameTitle }}
+          <v-icon class="mr-1">mdi-rename-box</v-icon> {{ $t("Files.Rename") }}
         </v-list-item>
         <v-list-item
           @click="renameFile(contextMenu.item)"
-          v-else
+          v-if="!contextMenu.item.isDirectory"
         >
-          <v-icon class="mr-1">mdi-rename-box</v-icon> {{ renameTitle }}
+          <v-icon class="mr-1">mdi-rename-box</v-icon> {{ $t("Files.Rename") }}
         </v-list-item>
         <v-list-item @click="removeFile" v-if="!contextMenu.item.isDirectory">
-          <v-icon class="mr-1">mdi-delete</v-icon> {{ deleteTitle }}
+          <v-icon class="mr-1">mdi-delete</v-icon> {{ $t("Files.Delete") }}
         </v-list-item>
         <v-list-item
           :disabled="isUsb(contextMenu.item)"
           @click="deleteDirectory(contextMenu.item)"
           v-if="contextMenu.item.isDirectory"
         >
-          <v-icon class="mr-1">mdi-delete</v-icon> {{ deleteTitle }}
+          <v-icon class="mr-1">mdi-delete</v-icon> {{ $t("Files.Delete") }}
         </v-list-item>
 
         <v-list-item @click="copyFile(contextMenu.item, 'copy')">
           <v-icon class="mr-1">mdi-content-copy</v-icon>
-          {{ copyTitle }}
+          {{ $t("Files.Copy") }}
         </v-list-item>
 
         <v-list-item @click="copyFile(contextMenu.item, 'move')">
           <v-icon class="mr-1">mdi-file-move-outline</v-icon>
-          {{ moveTitle }}
+          {{ $t("Files.Move") }}
         </v-list-item>
       </v-list>
     </v-menu>
@@ -455,26 +469,27 @@
     >
       <v-card>
         <v-card-title class="headline">{{
-          dialogCreateDirectory.title
+          $t("Files.NewDirectory")
         }}</v-card-title>
         <v-card-text>
-          {{ dialogCreateDirectory.description }}
+          {{ $t("Files.PleaseEnterANewDirectoryName") }}
           <text-input-keyboard
             label="Name"
-            :rules="dialogCreateDirectory.rules"
+            :rules="input_rules"
             @keypress.enter="createDirectoryAction"
             required
             outlined
             v-model="dialogCreateDirectory.name"
+            ref="inputFieldCreateDirectory"
           ></text-input-keyboard>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="" text @click="dialogCreateDirectory.show = false">{{
-           cancelTitle
+            $t("Files.Cancel")
           }}</v-btn>
           <v-btn color="primary" text @click="createDirectoryAction">{{
-            createDirectoryTitle
+            $t("Files.Create")
           }}</v-btn>
         </v-card-actions>
       </v-card>
@@ -486,27 +501,28 @@
     >
       <v-card>
         <v-card-title class="headline">{{
-          renameTitle
+          $t("Files.RenameFile")
         }}</v-card-title>
         <v-card-text>
           <text-input-keyboard
-            label="Name"
+            :label="$t('Files.Name')"
             required
             outlined
             v-model="dialogRenameFile.newName"
+            ref="inputFieldRenameFile"
           ></text-input-keyboard>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="" text @click="dialogRenameFile.show = false">{{
-            cancelTitle
+            $t("Files.Cancel")
           }}</v-btn>
           <v-btn
             color="primary"
             text
             @click="renameFileAction"
             @keypress.enter="renameFileAction"
-            >{{ renameTitle }}</v-btn
+            >{{ $t("Files.Rename") }}</v-btn
           >
         </v-card-actions>
       </v-card>
@@ -518,7 +534,7 @@
     >
       <v-card>
         <v-card-title class="headline">{{
-          renameTitle
+          $t("Files.RenameDirectory")
         }}</v-card-title>
         <v-card-text>
           <text-input-keyboard
@@ -526,19 +542,20 @@
             required
             outlined
             v-model="dialogRenameDirectory.newName"
+            ref="inputFieldRenameDirectory"
           ></text-input-keyboard>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="" text @click="dialogRenameDirectory.show = false">{{
-            cancelTitle
+            $t("Files.Cancel")
           }}</v-btn>
           <v-btn
             color="primary"
             text
             @click="renameDirectoryAction"
             @keypress.enter="renameDirectoryAction"
-            >{{ renameTitle }}</v-btn
+            >{{ $t("Files.Rename") }}</v-btn
           >
         </v-card-actions>
       </v-card>
@@ -550,33 +567,35 @@
     >
       <v-card>
         <v-card-title class="headline">{{
-          deleteTitle
-        }} : {{ dialogDeleteDirectory.item.filename }}</v-card-title>
+          $t("Files.DeleteDirectory")
+        }}</v-card-title>
         <v-card-text>
           <p class="mb-0">
             {{
-              confirmationTitle
+              $t("Files.DeleteDirectoryQuestion", {
+                name: dialogDeleteDirectory.item.filename,
+              })
             }}
           </p>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="" text @click="dialogDeleteDirectory.show = false">{{
-            cancelTitle
+            $t("Files.Cancel")
           }}</v-btn>
           <v-btn
             color="error"
             text
             @click="deleteDirectoryAction"
             @keypress.enter="deleteDirectoryAction"
-            >{{ deleteTitle }}</v-btn
+            >{{ $t("Files.Delete") }}</v-btn
           >
         </v-card-actions>
       </v-card>
     </v-dialog>
     <v-dialog width="380" v-model="dialogPrintFile.show" :transition="false">
       <v-card>
-        <v-card-title class="headline">{{ createJobTitle }} : {{ dialogPrintFile.item.filename }}</v-card-title>
+        <v-card-title class="headline">{{ $t("Files.StartJob") }}</v-card-title>
         <v-card-text>
           <v-container>
             <v-row>
@@ -590,41 +609,57 @@
                 ></v-img>
               </v-col>
               <v-col>
-                <slot name="alert"></slot>
+                <v-alert
+                  dense
+                  outlined
+                  type="warning"
+                  v-if="
+                    (printerInfo.axisMode === 'three' &&
+                      printMode !== ('classic' && '')) ||
+                    (printerInfo.axisMode === 'five' && printMode === 'classic')
+                  "
+                  >{{ $t("Dashboard.Printqueue.AnotherModule") }}</v-alert
+                >
               </v-col>
             </v-row>
           </v-container>
-        </v-card-text>
+
+          {{
+            $t("Files.DoYouWantToStartFilename", [
+              dialogPrintFile.item.filename,
+            ])
+          }}</v-card-text
+        >
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
             color="red darken-1"
             text
             @click="dialogPrintFile.show = false"
-            >{{ cancelTitle }}</v-btn
+            >{{ $t("Files.No") }}</v-btn
           >
           <v-btn
             color="green darken-1"
             text
             @click="startPrint(dialogPrintFile.item.filename)"
-            >{{ createJobTitle }}</v-btn
+            >{{ $t("Files.Yes") }}</v-btn
           >
         </v-card-actions>
       </v-card>
     </v-dialog>
 
-    <v-dialog v-model="copyDialog.show" max-width="500" :transition="false">
+    <v-dialog v-model="dialogCopy.show" max-width="500" :transition="false">
       <v-card>
         <v-card-title class="headline"
           >{{
-            copyDialog.action === "copy" ? copyTitle : moveTitle
+            dialogCopy.action === "copy" ? $t("Files.Copy") : $t("Files.Move")
           }}
-          {{ copyDialog.filename }}</v-card-title
+          {{ dialogCopy.filename }}</v-card-title
         >
         <v-card-text>
           <template>
             <span>
-              <b>{{ selectedPathTitle }} : {{ copyDialog.newPath }} </b>
+              <b>{{ $t("Files.SelectedPath") }} : {{ dialogCopy.newPath }} </b>
             </span>
           </template>
 
@@ -632,18 +667,18 @@
             <template v-slot:default>
               <tbody>
                 <tr
-                  v-if="copyDialog.newPath !== rootSync"
+                  v-if="dialogCopy.newPath !== currentPathProp"
                   @click="upClick"
                 >
                   <td class="px-1"><v-icon>mdi-folder-upload</v-icon></td>
                   <td class="px-1">..</td>
                 </tr>
                 <tr
-                  v-for="item in copyDialog.fileList"
+                  v-for="item in filesForCopyDialogSync"
                   :key="item.filename"
                   @click="clickCopyItem(item)"
                 >
-                  <template v-if="copyDialog.filename !== item.filename">
+                  <template v-if="dialogCopy.filename !== item.filename">
                     <td class="px-1">
                       <template v-if="isUsbInDialog(item)">
                         <v-icon>mdi-usb-flash-drive</v-icon>
@@ -667,16 +702,16 @@
 
         <v-card-actions>
           <v-spacer />
-          <v-btn color="" text @click="copyDialog.show = false">{{
-            cancelTitle
+          <v-btn color="" text @click="dialogCopy.show = false">{{
+            $t("Files.Cancel")
           }}</v-btn>
           <v-btn
             color="primary"
             text
             @click="copyFileAction"
-            :disabled="!copyDialog.newPath"
+            :disabled="!dialogCopy.newPath"
             >{{
-              copyDialog.action === "copy" ? copyTitle : moveTitle
+              dialogCopy.action === "copy" ? $t("Files.Copy") : $t("Files.Move")
             }}</v-btn
           >
         </v-card-actions>
@@ -687,12 +722,9 @@
 
 <script lang="ts">
 import { Vue, Component, Watch, Prop, PropSync, Model } from 'nuxt-property-decorator'
-import { Helpers } from '../plugins'
 import { IParams, IPrinterInfo } from '../../types/common'
 import { FileStateFile } from '../../types/helpers'
-import CardTitle from '../components/CardTitle.vue'
-import TextInputKeyboard from '../components/TextInputKeyboard.vue'
-import longpress from "../plugins/longpress";
+import  CardTitle from './CardTitle.vue'
 
 interface draggingFile {
   status: boolean
@@ -729,89 +761,50 @@ interface dialogRenameObject {
   newName: string
   item: FileStateFile
 }
-export interface dialogCopyObject {
+interface dialogCopyObject {
   action: 'copy' | 'move'
   show: boolean
   filename: string
   currentPath: string
   newPath: string
   item: FileStateFile
-  fileList: FileStateFile[]
 }
-
-export interface FileManagerHeader {
-    text: string;
-    value: string;
-    align: string;
-    configable: boolean;
-    visible: boolean;
-}
-
-export interface DiskUsageInfo {
-  title: string,
-  free: {
-    title: string,
-    value: number
-  },
-  used: {
-    title: string,
-    value: number
-  },
-  total: {
-    title: string,
-    value: number
-  }
-}
-
 @Component({
-  name: "FileManager",
-  components: {
-    CardTitle,
-    TextInputKeyboard
-  },
-  directives: {
-    'longpress' : longpress
-  }
+  name: "FileManagerOld",
+  components: {CardTitle}
 })
-export default class FileManager extends Vue {
-  @Prop({type: Boolean, default: false}) disabled!: boolean
+export default class FileManagerOld extends Vue {
   @Prop({ type: Boolean, default: false }) closeable!: boolean
-  @Prop({ type: Boolean, default: true }) enableUpload!: boolean
-  @Prop({ type: Boolean, default: true }) hasUsb!: boolean
-  @Prop({ type: Boolean, default: true }) enablePrintDialog!: boolean
-  @Prop({ type: Boolean, default: true }) enableDownload!: boolean
+  @Prop({ type: Boolean, default: false }) noPrint!: boolean
+  @Prop({ type: Array, default: () => [] }) loadings!: string[]
+  @Prop({ type: Object, default: () => { return { free: 0, total: 0, used: 0 } } }) diskUsage!: {}
   @Prop({ type: Array, default: () => [] }) validGcodeExtensions!: string[]
-  @Prop({ type: String, default: '' }) downloadUrl!: string
-  @Prop({ type: String, default: '' }) uploadUrl!: string
-  @Prop({ type: String, default: 'Search' }) searchTitle!: string
-  @Prop({ type: String, default: 'Files' }) title!: string
-  @Prop({ type: String, default: 'Upload File' }) uploadTitle!: string
-  @Prop({ type: String, default: 'Create Directory' }) createDirectoryTitle!: string
-  @Prop({ type: String, default: 'Create Printjob' }) createJobTitle!: string
-  @Prop({ type: String, default: 'Refresh' }) refreshTitle!: string
-  @Prop({ type: String, default: 'Download' }) downloadTitle!: string
-  @Prop({ type: String, default: 'Rename' }) renameTitle!: string
-  @Prop({ type: String, default: 'Delete' }) deleteTitle!: string
-  @Prop({ type: String, default: 'Move' }) moveTitle!: string
-  @Prop({ type: String, default: 'Copy' }) copyTitle!: string
-  @Prop({ type: String, default: 'Selected Path' }) selectedPathTitle!: string
-  @Prop({ type: String, default: 'Cancel' }) cancelTitle!: string
-  @Prop({ type: String, default: 'Are you sure?' }) confirmationTitle!: string
-  @Prop({ type: String, default: 'Drop files to upload' }) dropzoneTitle!: string
-  @Prop({ type: String, default: 'Uploading' }) snackbarTitle!: string
-  @PropSync('path', {type: String, default: 'gcodes'}) pathSync!: string
-  @Prop({type: String, default: 'Current Path'}) pathTitle!: string
-  @PropSync('root', {type: String, default: 'gcodes'}) rootSync!: string
-  @Prop({type: Array, default: (): FileManagerHeader[] => {
-    return [
-      { text: '', value: '', align: 'left', configable: false, visible: true},
-      { text: 'Name', value: 'filename', align: 'left', configable: false, visible: true },
-      { text: 'Filesize', value: 'size', align: 'right', configable: true, visible: true },
-      { text: 'Last Modified', value: 'modified', align: 'right', configable: true, visible: true },
-    ]
-  }}) headers!: FileManagerHeader[]
-  @Prop({type: Array, default: () => {
-    return  [
+  @Prop({
+    type: Object, default: () => {
+      return {
+        timezoneOffset: 0,
+        apiUrl: '',
+        isPanel: true
+      }
+    }
+  }) params!: IParams
+  @Prop({
+    type: Object, default: () => {
+      return {
+        axisMode: '',
+        printerIsPrinting: false,
+      }
+    }
+  }) printerInfo!: IPrinterInfo
+  @Prop({ type: String, default: 'gcodes' }) currentPathProp!: string
+  @PropSync('options', {
+    type: Object, default: () => {
+      return {
+        sortBy: ['modified'],
+        sortDesc: [true],
+        showHiddenFiles: false,
+        itemsPerPage: 10,
+        hideMetadataColums: [
           "object_height",
           "layer_height",
           "filament_total",
@@ -819,41 +812,27 @@ export default class FileManager extends Vue {
           "estimated_time",
           "slicer"
         ]
-  }}) hiddenColums!: string[]
-  @Prop({ type: Object, default: () => { return null } }) diskUsage!: DiskUsageInfo
-  @Prop({ type: Array, default: () => [] }) filetree!: FileStateFile[]
-
-
-  copyDialog: dialogCopyObject = {
-    action: 'copy',
-    show: false,
-    filename: '',
-    currentPath: '',
-    newPath: '/',
-    item: {
-      settings: {},
-      isDirectory: false,
-      filename: "",
-      modified: (new Date()).getTime()
-    },
-    fileList: []
-  }
-
+      }
+    }
+  }) optionsSync!: { sortBy: string[], sortDesc: boolean[], showHiddenFiles: boolean, itemsPerPage: number, hideMetadataColums: String[] }
+  @PropSync('filesForCopyDialog', { type: Array, default: () => [] }) filesForCopyDialogSync!: []
+  @Model('', { type: Array, default: () => [] }) filetree!: []
   $refs!: {
-    fileUpload: HTMLInputElement
+    fileUpload: HTMLInputElement,
+    inputFieldRenameFile: HTMLInputElement,
+    inputFieldCreateDirectory: HTMLInputElement,
+    inputFieldRenameDirectory: HTMLInputElement,
   }
 
-  $helpers: Helpers;
-
-  get accept() {
-    return this.validGcodeExtensions.join(", ")
-  }
-
-  dropzone = {
+  currentPath = this.currentPathProp
+  printMode = ''
+  private search = ''
+  private files: FileStateFile[] | null = []
+  private dropzone = {
     visibility: false,
     opacity: 0,
   }
-  draggingFile: draggingFile = {
+  private draggingFile: draggingFile = {
     status: false,
     item: {
       settings: {},
@@ -862,69 +841,7 @@ export default class FileManager extends Vue {
       modified: (new Date()).getTime()
     }
   }
-
-    dragOverUpload (e: Event) {
-    if (!this.draggingFile.status  && this.enableUpload) {
-      e.preventDefault()
-      e.stopImmediatePropagation()
-      this.dropzone.visibility = true
-      this.dropzone.opacity = 1
-    }
-  }
-  dragLeaveUpload (e: Event) {
-    if (!this.draggingFile.status  && this.enableUpload) {
-      e.preventDefault()
-      e.stopImmediatePropagation()
-      this.dropzone.visibility = false
-      this.dropzone.opacity = 0
-    }
-  }
-
-  async dragDropUpload (e: any) {
-    if (!this.draggingFile.status && this.enableUpload) {
-      e.preventDefault()
-      this.dropzone.visibility = false
-      this.dropzone.opacity = 0
-      if (e.dataTransfer.files.length) {
-        this.uploading = true
-        let successFiles = []
-        this.uploadSnackbar.number = 0
-        this.uploadSnackbar.max = e.dataTransfer.files.length
-        for (const file of e.dataTransfer.files) {
-          if (!this.validGcodeExtensions.includes(`.${file.name.split('.').pop()}`))
-            continue
-          this.uploadSnackbar.number++
-          const result = await this.doUploadFile(file)
-          successFiles.push(result)
-        }
-        this.uploading = true
-        for (const file of successFiles) {
-          this.$emit('uploaded', file)
-        }
-      }
-    }
-  }
-
-    async uploadFile () {
-    if (this.$refs.fileUpload.files?.length) {
-      this.uploading = true
-      let successFiles = []
-      this.uploadSnackbar.number = 0
-      this.uploadSnackbar.max = this.$refs.fileUpload.files.length
-      for (const file of this.$refs.fileUpload.files) {
-        this.uploadSnackbar.number++
-        const result = await this.doUploadFile(file)
-        successFiles.push(result)
-      }
-      this.uploading = false
-      for (const file of successFiles) {
-        this.$emit('uploaded', file)
-      }
-      this.$refs.fileUpload.value = ''
-    }
-  }
-
-  uploadSnackbar: uploadSnackbar = {
+  private uploadSnackbar: uploadSnackbar = {
     status: false,
     filename: "",
     percent: 0,
@@ -938,109 +855,11 @@ export default class FileManager extends Vue {
       loaded: 0
     }
   }
-
-  uploading = false
-  search = ''
-
-  clickUploadButton () {
-    this.$refs.fileUpload.click()
+  private dialogCreateDirectory = {
+    show: false,
+    name: ""
   }
-
-  createDirectory () {
-    this.dialogCreateDirectory.name = ""
-    this.dialogCreateDirectory.show = true
-  }
-
-  refreshFileList () {
-    this.$emit('refresh', this.pathSync)
-  }
-
-  get configHeaders () {
-    return this.filteredHeaders.filter(header => header.configable)
-  }
-
-  get filteredHeaders() {
-    return this.headers.map(h => {
-      let res = Object.assign({}, h)
-      if (h.visible && this.hiddenColums.includes(h.value)) {
-        res.visible = false
-      } else if (!h.visible && !this.hiddenColums.includes(h.value)) {
-        res.visible = true
-      }
-      return res
-    })
-  }
-
-    changeHeaderVisible (name: string) {
-    if (this.headers.find(header => header.value === name)) {
-      const value = this.headers.find(header => header.value === name)?.visible || false;
-      this.$emit('changeHeaderVisible', { name, value })
-    }
-  }
-
-  get visiblePath() {
-    return this.pathSync !== this.rootSync ? this.pathSync.substring(this.rootSync.length) : '/'
-  }
-
-  files: FileStateFile[] | null = []
-
-  get visibleHeaders () {
-    return this.filteredHeaders.filter(h=> h.visible)
-  }
-
-  advancedSearch (value: string | number, search: string) {
-    return value != null &&
-      search != null &&
-      typeof value === 'string' &&
-      value.toString().toLowerCase().indexOf(search.toLowerCase()) !== -1
-  }
-
-    refreshMetadata (data: any) {
-    const items = this.$helpers.sortFiles(this.files, [this.$props.sortBy ?? 'modified'], [this.$props.sortDesc ?? false])
-    for (let i = data.pageStart; i < data.pageStop; i++) {
-      if (items[i] && !items[i].isDirectory && !items[i].metadataPulled) {
-        let filename = this.visiblePath + items[i].filename
-        this.$emit('update:metadata', filename)
-      }
-    }
-  }
-
-  clickRowGoBack () {
-    this.$emit('update:path', this.pathSync.substring(0, this.pathSync.lastIndexOf("/")))
-  }
-    dragOverFilelist (e: any, row: any) {
-    if (this.draggingFile.status) {
-      e.preventDefault()
-      //e.stopPropagation()
-      if (row.isDirectory) {
-        e.target.parentElement.style.backgroundColor = this.$vuetify.theme.currentTheme.primary?.toString()
-      }
-    }
-  }
-  dragLeaveFilelist (e: any) {
-    if (this.draggingFile.status) {
-      e.preventDefault()
-      e.stopPropagation()
-      e.target.parentElement.style.backgroundColor = 'transparent'
-    }
-  }
-
-dragDropFilelist (e: any, row: any) {
-    if (this.draggingFile.status) {
-      e.preventDefault()
-      e.target.parentElement.style.backgroundColor = 'transparent'
-      let dest = "";
-      if (row.filename === '..') {
-        dest = this.pathSync.substring(0, this.pathSync.lastIndexOf("/") + 1) + this.draggingFile.item.filename
-      } else dest = this.pathSync + "/" + row.filename + "/" + this.draggingFile.item.filename
-      this.$emit('move', {
-        source: this.pathSync + "/" + this.draggingFile.item.filename,
-        dest: dest
-      })
-    }
-  }
-
-  contextMenu: contextMenu = {
+  private contextMenu: contextMenu = {
     shown: false,
     isDirectory: false,
     touchTimer: undefined,
@@ -1053,42 +872,7 @@ dragDropFilelist (e: any, row: any) {
       modified: (new Date()).getTime()
     }
   }
-
-  showContextMenu (e: any, item: FileStateFile) {
-    if (!this.contextMenu.shown) {
-      e?.preventDefault();
-      this.contextMenu.shown = true
-      this.contextMenu.x = e?.clientX || e?.pageX || window.screenX / 2;
-      this.contextMenu.y = e?.clientY || e?.pageY || window.screenY / 2;
-      this.contextMenu.item = item
-      this.$nextTick(() => {
-        this.contextMenu.shown = true
-      })
-    }
-  }
-
-   clickRow (item: FileStateFile, force = false) {
-    if (!this.contextMenu.shown || force) {
-      if (force) {
-        this.contextMenu.shown = false;
-      }
-      if (!item.isDirectory) {
-        if (!this.enablePrintDialog) {
-          this.$emit('fileclick', this.pathSync,
-            item)
-        } else {
-          this.dialogPrintFile.show = true;
-          this.dialogPrintFile.item = item;
-        }
-      } else {
-        //this.$emit('update:path', this.pathSync + "/" + item.filename)
-        this.pathSync += `/${item.filename}`
-        this.loadPath();
-      }
-    }
-  }
-
-  dialogPrintFile: dialogPrintFile = {
+  private dialogPrintFile: dialogPrintFile = {
     show: false,
     item: {
       settings: {},
@@ -1097,61 +881,7 @@ dragDropFilelist (e: any, row: any) {
       modified: (new Date()).getTime()
     }
   }
-
-  isUsb (item: FileStateFile) {
-    return this.hasUsb && this.pathSync === this.rootSync && item.isDirectory && item.filename === 'USB'
-  }
-  isUsbInDialog (item: FileStateFile) {
-    return this.hasUsb && this.copyDialog.currentPath === this.rootSync && item.isDirectory && item.filename === 'USB'
-  }
-
-  dragFile (e: Event, item: FileStateFile) {
-    e.preventDefault();
-    this.draggingFile.status = true;
-    this.draggingFile.item = item;
-  }
-  dragendFile (e: Event) {
-    e.preventDefault();
-    this.draggingFile.status = false
-    this.draggingFile.item = {
-      settings: {},
-      isDirectory: false,
-      filename: "",
-      modified: (new Date()).getTime()
-    }
-  }
-
-  getSmallThumbnail (item: FileStateFile) {
-    if (item.thumbnails?.length) {
-      const thumbnail = item.thumbnails.find(thumb =>
-        thumb.width >= 32 && thumb.width <= 64 &&
-        thumb.height >= 32 && thumb.height <= 64
-      )
-      if (thumbnail && 'relative_path' in thumbnail) return `${this.downloadUrl}/${this.pathSync}/${thumbnail.relative_path}?timestamp=${item.modified}`
-    }
-    return ""
-  }
-  getBigThumbnail (item: FileStateFile) {
-    if (item.thumbnails?.length) {
-      const thumbnail = item.thumbnails.find(thumb => thumb.width >= 300 && thumb.width <= 400)
-      if (thumbnail && 'relative_path' in thumbnail) return `${this.downloadUrl}/${this.pathSync}/${thumbnail.relative_path}?timestamp=${item.modified}`
-    }
-    return ""
-  }
-
-  cancelUpload () {
-    this.uploadSnackbar.cancelTokenSource.cancel()
-    this.uploadSnackbar.status = false
-    this.$refs.fileUpload.value = ''
-  }
-
-  downloadFile () {
-    const filename = (this.pathSync + "/" + this.contextMenu.item.filename)
-    const href = `${this.downloadUrl}/${encodeURI(filename)}`
-    window.open(href)
-  }
-
-  dialogRenameDirectory: dialogRenameObject = {
+  private dialogRenameFile: dialogRenameObject = {
     show: false,
     newName: "",
     item: {
@@ -1161,21 +891,20 @@ dragDropFilelist (e: any, row: any) {
       modified: (new Date()).getTime()
     }
   }
-
-  renameDirectory (item: FileStateFile) {
-    this.dialogRenameDirectory.item = item
-    this.dialogRenameDirectory.newName = item.filename
-    this.dialogRenameDirectory.show = true
+  private dialogCopy: dialogCopyObject = {
+    action: 'copy',
+    show: false,
+    filename: '',
+    currentPath: '',
+    newPath: '/',
+    item: {
+      settings: {},
+      isDirectory: false,
+      filename: "",
+      modified: (new Date()).getTime()
+    }
   }
-  renameDirectoryAction () {
-    this.dialogRenameDirectory.show = false
-    this.$emit('move', {
-      source: this.pathSync + "/" + this.dialogRenameDirectory.item.filename,
-      dest: this.pathSync + "/" + this.dialogRenameDirectory.newName
-    })
-  }
-
-  dialogRenameFile: dialogRenameObject = {
+  private dialogRenameDirectory: dialogRenameObject = {
     show: false,
     newName: "",
     item: {
@@ -1185,25 +914,7 @@ dragDropFilelist (e: any, row: any) {
       modified: (new Date()).getTime()
     }
   }
-
-  renameFile (item: FileStateFile) {
-    this.dialogRenameFile.item = item
-    this.dialogRenameFile.newName = item.filename
-    this.dialogRenameFile.show = true
-  }
-  renameFileAction () {
-    this.dialogRenameFile.show = false
-    this.$emit('move', {
-      source: this.pathSync + "/" + this.dialogRenameFile.item.filename,
-      dest: this.pathSync + "/" + this.dialogRenameFile.newName
-    })
-  }
-
-  removeFile () {
-    this.$emit('delete', this.pathSync + "/" + this.contextMenu.item.filename)
-  }
-
-  dialogDeleteDirectory: dialogRenameObject = {
+  private dialogDeleteDirectory: dialogRenameObject = {
     show: false,
     newName: "",
     item: {
@@ -1213,119 +924,74 @@ dragDropFilelist (e: any, row: any) {
       modified: (new Date()).getTime()
     }
   }
-
-  deleteDirectory (item: FileStateFile) {
-    this.dialogDeleteDirectory.item = item
-    this.dialogDeleteDirectory.show = true
-  }
-  deleteDirectoryAction () {
-    this.dialogDeleteDirectory.show = false
-    this.$emit('delete:dir', this.pathSync + "/" + this.contextMenu.item.filename, true )
-  }
-
-
-
-  copyFile (item: FileStateFile, action: 'copy' | 'move') {
-    this.copyDialog.action = action
-    this.copyDialog.show = true
-    this.copyDialog.filename = item.filename
-    this.copyDialog.currentPath = this.pathSync
-    this.copyDialog.newPath = this.pathSync
-    this.copyDialog.item = item
-    const dirArray = this.copyDialog.newPath.split("/")
-    this.copyDialog.fileList = this.$helpers.findDirectory(this.filetree, dirArray) || []
-    if (this.copyDialog.fileList.length !== 0) {
-      this.copyDialog.fileList = this.copyDialog.fileList.filter(file => file.filename !== "thumbs" && file.filename.substr(0, 1) !== "." && (this.validGcodeExtensions.includes(`.${file.filename.split('.').pop()}`) || file.isDirectory))
-    }
-     }
-
-    copyFileAction () {
-    this.copyDialog.show = false
-    if (this.copyDialog.action === 'copy') {
-      this.$emit('copy', {
-        source: this.copyDialog.currentPath + '/' + this.copyDialog.item.filename,
-        dest: this.copyDialog.newPath + '/' + this.copyDialog.item.filename
-      })
-    } else if (this.copyDialog.action === 'move') {
-      this.$emit('move', {
-        source: this.copyDialog.currentPath + '/' + this.copyDialog.item.filename,
-        dest: this.copyDialog.newPath + '/' + this.copyDialog.item.filename
-      })
-    }
-    this.copyDialog.newPath = ''
-    this.copyDialog.fileList = []
-  }
-
-    clickCopyItem (item: any) {
-    if (item.isDirectory) {
-      this.copyDialog.newPath += '/' + item.filename
-      const dirArray = this.copyDialog.newPath.split("/")
-    this.copyDialog.fileList = this.$helpers.findDirectory(this.filetree, dirArray) || []
-    if (this.copyDialog.fileList.length !== 0) {
-      this.copyDialog.fileList = this.copyDialog.fileList.filter(file => file.filename !== "thumbs" && file.filename.substr(0, 1) !== "." && (this.validGcodeExtensions.includes(`.${file.filename.split('.').pop()}`) || file.isDirectory))
-    }    }
-  }
-
-  @Prop({type: Object, default: () => { return {
-    show: false,
-    name: "",
-    title: "",
-    description:  '',
-    rules: [
+  private input_rules = [
     (value: string) => value.indexOf(" ") === -1 || 'Name contains spaces!'
   ]
-  }}}) dialogCreateDirectory!: any
-
+  get headers () {
+    const headers = [
+      { text: '', value: '', align: 'left', configable: false, visible: true, filterable: false },
+      { text: this.$t('Files.Name'), value: 'filename', align: 'left', configable: false, visible: true },
+      //{ text: '', value: 'status', align: 'left', configable: false, visible: true },
+      { text: this.$t('Files.Filesize'), value: 'size', align: 'right', configable: true, visible: true },
+      { text: this.$t('Files.LastModified'), value: 'modified', align: 'right', configable: true, visible: true },
+      { text: this.$t('Files.ObjectHeight'), value: 'object_height', align: 'right', configable: true, visible: false },
+      { text: this.$t('Files.LayerHeight'), value: 'layer_height', align: 'right', configable: true, visible: false },
+      { text: this.$t('Files.FilamentUsage'), value: 'filament_total', align: 'right', configable: true, visible: false },
+      // { text: this.$t('Files.FilamentWeight'), value: 'filament_weight_total', align: 'right', configable: true, visible: false },
+      { text: this.$t('Files.PrintTime'), value: 'estimated_time', align: 'right', configable: true, visible: false },
+      { text: this.$t('Files.Slicer'), value: 'slicer', align: 'right', configable: true, visible: false },
+      { text: this.$t('Files.PrintingMode'), value: 'printing_mode', align: 'right', configable: true, visible: false },
+    ]
+    headers.forEach((header) => {
+      if (header.visible && this.optionsSync.hideMetadataColums.includes(header.value)) {
+        header.visible = false
+      } else if (!header.visible && !this.optionsSync.hideMetadataColums.includes(header.value)) {
+        header.visible = true
+      }
+    })
+    return headers
+  }
+  get filteredHeaders () {
+    return this.headers.filter(header => header.visible)
+  }
+  get configHeaders () {
+    return this.headers.filter(header => header.configable)
+  }
+  clickUploadButton () {
+    this.$refs.fileUpload.click()
+  }
+  createDirectory () {
+    this.dialogCreateDirectory.name = ""
+    this.dialogCreateDirectory.show = true
+  }
   createDirectoryAction () {
     if (this.dialogCreateDirectory.name.length && this.dialogCreateDirectory.name.indexOf(" ") === -1) {
       this.dialogCreateDirectory.show = false
-      this.$emit('create:dir', this.pathSync + "/" + this.dialogCreateDirectory.name)
+      this.$emit('postDirectory', { path: this.currentPath + "/" + this.dialogCreateDirectory.name }, { action: 'files/getCreateDir' })
     }
   }
-
-  startPrint (filename = "") {
-    filename = (this.visiblePath + "/" + filename)
-    this.dialogPrintFile.show = false
-    this.$emit('start', filename)
+  refreshFileList () {
+    this.$emit('getDirectory', { path: this.currentPath }, { action: 'files/getDirectory' })
   }
-
-  upClick () {
-    let arr = this.copyDialog.newPath.split('/')
-    arr.length = arr.length - 1
-    this.copyDialog.newPath = arr.join('/')
-    const dirArray = this.copyDialog.newPath.split("/")
-    this.copyDialog.fileList = this.$helpers.findDirectory(this.filetree, dirArray) || []
-    if (this.copyDialog.fileList.length !== 0) {
-      this.copyDialog.fileList = this.copyDialog.fileList.filter(file => file.filename !== "thumbs" && file.filename.substr(0, 1) !== "." && (this.validGcodeExtensions.includes(`.${file.filename.split('.').pop()}`) || file.isDirectory))
-    }
-   }
-
-  created () {
-    this.$helpers = new Helpers()
-    this.loadPath()
-  }
-  loadPath () {
-    this.$emit('refresh', this.pathSync )
-    let dirArray = this.pathSync.split("/")
-    this.files = this.$helpers.findDirectory(this.filetree, dirArray)
-    if (this.files !== null) {
-      this.files = this.files.filter(file => file.filename !== "thumbs" && file.filename.substr(0, 1) !== "." && (this.validGcodeExtensions.includes(`.${file.filename.split('.').pop()}`) || file.isDirectory))
-    }
-  }
-    @Watch('filetree', { deep: true })
-  filetreeChanged (newVal: FileStateFile[]) {
-    let dirArray = this.pathSync.split("/");
-    this.files = this.$helpers.findDirectory(newVal, dirArray);
-    if (this.files?.length) {
-      this.files = this.files.filter(file => file.filename !== "thumbs" && file.filename.substr(0, 1) !== "." && (this.validGcodeExtensions.includes(`.${file.filename.split('.').pop()}`) || file.isDirectory));
-    }
-  }
-  @Watch('currentPath')
-  currentPathChanged (newVal: string) {
-    let dirArray = newVal.split("/");
-    this.files = this.$helpers.findDirectory(this.filetree, dirArray);
-    if (this.files?.length) {
-      this.files = this.files.filter(file => file.filename !== "thumbs" && file.filename.substr(0, 1) !== "." && (this.validGcodeExtensions.includes(`.${file.filename.split('.').pop()}`) || file.isDirectory));
+  async uploadFile () {
+    if (this.$refs.fileUpload.files?.length) {
+      this.$emit('socketAddLoading', { name: 'gcodeUpload' })
+      let successFiles = []
+      this.uploadSnackbar.number = 0
+      this.uploadSnackbar.max = this.$refs.fileUpload.files.length
+      for (const file of this.$refs.fileUpload.files) {
+        this.uploadSnackbar.number++
+        const result = await this.doUploadFile(file)
+        successFiles.push(result)
+      }
+      this.$emit('socketRemoveLoading', { name: 'gcodeUpload' })
+      for (const file of successFiles) {
+        this.$notify.call({
+          type: 'success',
+          text: this.$t('Files.SuccessfullyUploaded', { filename: file }).toString()
+        })
+      }
+      this.$refs.fileUpload.value = ''
     }
   }
   doUploadFile (file: File) {
@@ -1339,10 +1005,10 @@ dragDropFilelist (e: any, row: any) {
     this.uploadSnackbar.speed = 0
     this.uploadSnackbar.lastProgress.loaded = 0
     this.uploadSnackbar.lastProgress.time = 0
-    formData.append('file', file, (this.visiblePath + "/" + filename))
+    formData.append('file', file, (this.currentPath + "/" + filename).substring(7))
     return new Promise(resolve => {
       this.uploadSnackbar.cancelTokenSource = this.$axios.CancelToken.source();
-      this.$axios.post(this.uploadUrl,
+      this.$axios.post(this.params.apiUrl + '/server/files/upload',                  //todo ?
         formData, {
         cancelToken: this.uploadSnackbar.cancelTokenSource.token,
         headers: { 'Content-Type': 'multipart/form-data' },
@@ -1364,9 +1030,324 @@ dragDropFilelist (e: any, row: any) {
         resolve(filename)
       }).catch(() => {
         this.uploadSnackbar.status = false
-        this.$emit('upload:error', filename)
+        this.$emit('socketRemoveLoading', { name: 'gcodeUpload' })
+        this.$notify.call({
+          type: 'error',
+          text: this.$t("File.CannotUpload").toString()
+        })
       })
     })
+  }
+  advancedSearch (value: string | number, search: string) {
+    return value != null &&
+      search != null &&
+      typeof value === 'string' &&
+      value.toString().toLowerCase().indexOf(search.toLowerCase()) !== -1
+  }
+  refreshMetadata (data: any) {
+    const items = this.$helpers.sortFiles(this.files, [this.optionsSync.sortBy[0]], [this.optionsSync.sortDesc[0]])
+    for (let i = data.pageStart; i < data.pageStop; i++) {
+      if (items[i] && !items[i].isDirectory && !items[i].metadataPulled) {
+        let filename = (this.currentPath + "/" + items[i].filename).substring(7)
+        this.$emit('serverFilesMetadata', { filename: filename }, { action: "files/getMetadata" })
+      }
+    }
+  }
+  clickRowGoBack () {
+    this.currentPath = this.currentPath.substr(0, this.currentPath.lastIndexOf("/"))
+  }
+  dragOverFilelist (e: any, row: any) {
+    if (this.draggingFile.status) {
+      e.preventDefault()
+      //e.stopPropagation()
+      if (row.isDirectory) {
+        e.target.parentElement.style.backgroundColor = this.$vuetify.theme.currentTheme.primary?.toString()
+      }
+    }
+  }
+  dragLeaveFilelist (e: any) {
+    if (this.draggingFile.status) {
+      e.preventDefault()
+      e.stopPropagation()
+      e.target.parentElement.style.backgroundColor = 'transparent'
+    }
+  }
+  async dragDropFilelist (e: any, row: any) {
+    if (this.draggingFile.status) {
+      e.preventDefault()
+      e.target.parentElement.style.backgroundColor = 'transparent'
+      let dest = "";
+      if (row.filename === '..') {
+        dest = this.currentPath.substring(0, this.currentPath.lastIndexOf("/") + 1) + this.draggingFile.item.filename
+      } else dest = this.currentPath + "/" + row.filename + "/" + this.draggingFile.item.filename
+      this.$emit('serverFilesMove', {
+        source: this.currentPath + "/" + this.draggingFile.item.filename,
+        dest: dest
+      }, { action: 'files/getMove' })
+    }
+  }
+  showContextMenu (e: any, item: FileStateFile) {
+    if (!this.contextMenu.shown) {
+      e?.preventDefault();
+      this.contextMenu.shown = true
+      this.contextMenu.x = e?.clientX || e?.pageX || window.screenX / 2;
+      this.contextMenu.y = e?.clientY || e?.pageY || window.screenY / 2;
+      this.contextMenu.item = item
+      this.$nextTick(() => {
+        this.contextMenu.shown = true
+      })
+    }
+  }
+  clickRow (item: FileStateFile, force = false) {
+    this.printMode = item.settings.global_quality?.values.printing_mode || ''
+    if (!this.contextMenu.shown || force) {
+      if (force) {
+        this.contextMenu.shown = false;
+      }
+      if (!item.isDirectory) {
+        if (this.noPrint) {
+          this.$emit('fileclick', this.currentPath,
+            item)
+        } else {
+          this.dialogPrintFile.show = true;
+          this.dialogPrintFile.item = item;
+        }
+      } else {
+        this.currentPath += "/" + item.filename;
+        this.loadPath();
+      }
+    }
+  }
+  created () {
+    this.loadPath()
+  }
+  loadPath () {
+    this.$emit('getDirectory', { path: this.currentPath }, { action: 'files/getDirectory' })
+    let dirArray = this.currentPath.split("/")
+    this.files = this.$helpers.findDirectory(this.filetree, dirArray)
+    if (this.files !== null) {
+      if (!this.optionsSync.showHiddenFiles) {
+        this.files = this.files.filter(file => file.filename !== "thumbs" && file.filename.substr(0, 1) !== "." && (this.validGcodeExtensions.includes(`.${file.filename.split('.').pop()}`) || file.isDirectory))
+      }
+    }
+  }
+  @Watch('filetree', { deep: true })
+  filetreeChanged (newVal: FileStateFile[]) {
+    let dirArray = this.currentPath.split("/");
+    this.files = this.$helpers.findDirectory(newVal, dirArray);
+    if (this.files?.length && !this.optionsSync.showHiddenFiles) {
+      this.files = this.files.filter(file => file.filename !== "thumbs" && file.filename.substr(0, 1) !== "." && (this.validGcodeExtensions.includes(`.${file.filename.split('.').pop()}`) || file.isDirectory));
+    }
+  }
+  @Watch('currentPath')
+  currentPathChanged (newVal: string) {
+    let dirArray = newVal.split("/");
+    this.files = this.$helpers.findDirectory(this.filetree, dirArray);
+    if (this.files?.length && !this.optionsSync.showHiddenFiles) {
+      this.files = this.files.filter(file => file.filename !== "thumbs" && file.filename.substr(0, 1) !== "." && (this.validGcodeExtensions.includes(`.${file.filename.split('.').pop()}`) || file.isDirectory));
+    }
+  }
+  dragFile (e: Event, item: FileStateFile) {
+    e.preventDefault();
+    this.draggingFile.status = true;
+    this.draggingFile.item = item;
+  }
+  dragendFile (e: Event) {
+    e.preventDefault();
+    this.draggingFile.status = false
+    this.draggingFile.item = {
+      settings: {},
+      isDirectory: false,
+      filename: "",
+      modified: (new Date()).getTime()
+    }
+  }
+  getSmallThumbnail (item: FileStateFile) {
+    if (item.thumbnails?.length) {
+      const thumbnail = item.thumbnails.find(thumb =>
+        thumb.width >= 32 && thumb.width <= 64 &&
+        thumb.height >= 32 && thumb.height <= 64
+      )
+      if (thumbnail && 'relative_path' in thumbnail) return 'http://' + this.params.apiUrl + "/server/files/" + this.currentPath + "/" + thumbnail.relative_path + "?timestamp=" + item.modified
+    }
+    return ""
+  }
+  getBigThumbnail (item: FileStateFile) {
+    if (item.thumbnails?.length) {
+      const thumbnail = item.thumbnails.find(thumb => thumb.width >= 300 && thumb.width <= 400)
+      if (thumbnail && 'relative_path' in thumbnail) return 'http://' + this.params.apiUrl + "/server/files/" + this.currentPath + "/" + thumbnail.relative_path + "?timestamp=" + item.modified
+    }
+    return ""
+  }
+  getThumbnailWidth (item: FileStateFile) {
+    if (this.getBigThumbnail(item)) {
+      const thumbnail = item.thumbnails?.find(thumb => thumb.width >= 300 && thumb.width <= 400)
+      if (thumbnail) return thumbnail.width
+    }
+    return 400
+  }
+  changeMetadataVisible (name: string) {
+    if (this.headers.filter(header => header.value === name).length) {
+      const value = this.headers.filter(header => header.value === name)[0].visible;
+      this.$emit('setGcodefilesMetadata', { name, value })
+    }
+  }
+  dragOverUpload (e: Event) {
+    if (!this.draggingFile.status) {
+      e.preventDefault()
+      e.stopImmediatePropagation()
+      this.dropzone.visibility = true
+      this.dropzone.opacity = 1
+    }
+  }
+  dragLeaveUpload (e: Event) {
+    if (!this.draggingFile.status) {
+      e.preventDefault()
+      e.stopImmediatePropagation()
+      this.dropzone.visibility = false
+      this.dropzone.opacity = 0
+    }
+  }
+  async dragDropUpload (e: any) {
+    if (!this.draggingFile.status) {
+      e.preventDefault()
+      this.dropzone.visibility = false
+      this.dropzone.opacity = 0
+      if (e.dataTransfer.files.length) {
+        this.$emit('socketAddLoading', { name: 'gcodeUpload' })
+        let successFiles = []
+        this.uploadSnackbar.number = 0
+        this.uploadSnackbar.max = e.dataTransfer.files.length
+        for (const file of e.dataTransfer.files) {
+          if (!this.validGcodeExtensions.includes(`.${file.name.split('.').pop()}`))
+            continue
+          this.uploadSnackbar.number++
+          const result = await this.doUploadFile(file)
+          successFiles.push(result)
+        }
+        this.$emit('socketRemoveLoading', { name: 'gcodeUpload' })
+        for (const file of successFiles) {
+          this.$notify.call({
+            type: 'success',
+            text: this.$t('Files.SuccessfullyUploaded', { filename: file }).toString()
+          })
+        }
+      }
+    }
+  }
+  cancelUpload () {
+    this.uploadSnackbar.cancelTokenSource.cancel()
+    this.uploadSnackbar.status = false
+    this.$refs.fileUpload.value = ''
+  }
+  downloadFile () {
+    const filename = (this.currentPath + "/" + this.contextMenu.item.filename)
+    const href = this.params.apiUrl + '/server/files/' + encodeURI(filename)
+    window.open(href)
+  }
+  renameFile (item: FileStateFile) {
+    this.dialogRenameFile.item = item
+    this.dialogRenameFile.newName = item.filename
+    this.dialogRenameFile.show = true
+  }
+  renameFileAction () {
+    this.dialogRenameFile.show = false
+    this.$emit('serverFilesMove', {
+      source: this.currentPath + "/" + this.dialogRenameFile.item.filename,
+      dest: this.currentPath + "/" + this.dialogRenameFile.newName
+    }, { action: 'files/getMove' })
+  }
+  renameDirectory (item: FileStateFile) {
+    this.dialogRenameDirectory.item = item
+    this.dialogRenameDirectory.newName = item.filename
+    this.dialogRenameDirectory.show = true
+  }
+  renameDirectoryAction () {
+    this.dialogRenameDirectory.show = false
+    this.$emit('serverFilesMove', {
+      source: this.currentPath + "/" + this.dialogRenameDirectory.item.filename,
+      dest: this.currentPath + "/" + this.dialogRenameDirectory.newName
+    }, { action: 'files/getMove' })
+  }
+  removeFile () {
+    if (!this.printerInfo.printerIsPrinting) {
+      this.$emit('printerGcodeScript', { script: 'SDCARD_RESET_FILE' })
+    }
+    this.$emit('serverFilesDeleteFile', { path: this.currentPath + "/" + this.contextMenu.item.filename }, { action: 'files/getDeleteFile' });
+  }
+  deleteDirectory (item: FileStateFile) {
+    this.dialogDeleteDirectory.item = item
+    this.dialogDeleteDirectory.show = true
+  }
+  deleteDirectoryAction () {
+    this.dialogDeleteDirectory.show = false
+    this.$emit('serverFilesDeleteDirectory', { path: this.currentPath + "/" + this.contextMenu.item.filename, force: true }, { action: 'files/getDeleteDir' })
+  }
+  // создание задания на печать
+  startPrint (filename = "") {
+    filename = (this.currentPath + "/" + filename).substring(7)
+    this.dialogPrintFile.show = false
+    this.$emit('serverPrintjobsPostJob', {
+      name: `Print ${filename}`,
+      description: 'Job created from file manager',
+      filename: filename
+    }, { action: 'switchToDashboard' })
+  }
+  isUsb (item: FileStateFile) {
+    return this.currentPath === this.currentPathProp && item.isDirectory && item.filename === 'USB'
+  }
+  isUsbInDialog (item: FileStateFile) {
+    return this.dialogCopy.currentPath === this.currentPathProp && item.isDirectory && item.filename === 'USB'
+  }
+  // copy
+  copyFile (item: FileStateFile, action: 'copy' | 'move') {
+    this.dialogCopy.action = action
+    this.dialogCopy.show = true
+    this.dialogCopy.filename = item.filename
+    this.dialogCopy.currentPath = this.currentPath
+    this.dialogCopy.newPath = this.currentPath
+    this.dialogCopy.item = item
+    this.$emit('getDirectory', { path: this.dialogCopy.currentPath }, { action: 'files/getDirectoryForCopyDialog' })
+  }
+  copyFileAction () {
+    this.dialogCopy.show = false
+    if (this.dialogCopy.action === 'copy') {
+      this.$emit('serverFilesCopy', {
+        source: this.dialogCopy.currentPath + '/' + this.dialogCopy.item.filename,
+        dest: this.dialogCopy.newPath + '/' + this.dialogCopy.item.filename
+      }, { action: 'files/getCopy', loading: 'fileMoving' })
+    } else if (this.dialogCopy.action === 'move') {
+      this.$emit('serverFilesMove', {
+        source: this.dialogCopy.currentPath + '/' + this.dialogCopy.item.filename,
+        dest: this.dialogCopy.newPath + '/' + this.dialogCopy.item.filename
+      }, { action: 'files/getCopy', loading: 'fileMoving' })
+    }
+    this.dialogCopy.newPath = ''
+  }
+  // Click in copy dialog line
+  clickCopyItem (item: any) {
+    if (item.isDirectory) {
+      this.dialogCopy.newPath += '/' + item.filename
+      this.$emit('getDirectory', { path: this.dialogCopy.newPath }, { action: 'files/getDirectoryForCopyDialog' })
+    }
+  }
+  // Click in copy dialog up directory
+  upClick () {
+    let arr = this.dialogCopy.newPath.split('/')
+    arr.length = arr.length - 1
+    this.dialogCopy.newPath = arr.join('/')
+    this.$emit('getDirectory', { path: this.dialogCopy.newPath }, { action: 'files/getDirectoryForCopyDialog' })
+  }
+  getDate (item: any) {
+    if (this.isUsb(item)) {
+      return "--"
+    } else {
+      if (this.params.isPanel) {
+        return this.$helpers.formatDate(item.modified, this.params.timezoneOffset)
+      } else {
+        return this.$helpers.formatDate(item.modified, 0)
+      }
+    }
   }
 }
 </script>

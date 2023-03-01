@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <card-title :title="title"></card-title>
+    <card-title :title="title" v-bind="$attrs"></card-title>
     <v-container>
       <v-row align="center">
         <!-- Statistic table  -->
@@ -16,9 +16,9 @@
             </tbody>
           </v-simple-table></v-col
         >
-      </v-row></v-container
-    ></v-card
-  >
+      </v-row>
+    </v-container>
+  </v-card>
 </template>
 
 <script lang="ts">

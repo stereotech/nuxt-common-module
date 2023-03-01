@@ -19,20 +19,14 @@
       </card-title>
     </v-card>
 
-    <div v-intersect="onIntersect" style="position: relative" class="rotate">
-      <div class="text-center py-5" v-if="!isLoaded">
-        <v-progress-circular
-          indeterminate
-          color="primary"
-        ></v-progress-circular>
-      </div>
+    <div style="position: relative" class="rotate">
       <canvas
         ref="mjpegstreamerAdaptive"
         width="600"
         height="400"
         :class="
           'webcamImage ' +
-          (isLoaded ? '' : 'hiddenWebcam') +
+          (isLoaded ? '' : 'hiddenWebcam ') +
           (isZoomed ? 'zoomedWebcam' : '')
         "
       ></canvas>
@@ -41,7 +35,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, mixins, Prop } from "nuxt-property-decorator";
+import { Vue, Component, mixins, Prop, Watch } from "nuxt-property-decorator";
 import CardTitle from "../CardTitle.vue";
 
 @Component({
@@ -65,19 +59,10 @@ export default class WebcamCard extends Vue {
   @Prop({ type: String, default: "" }) title!: string;
   @Prop({ type: Boolean, default: false }) zoomable!: boolean;
 
-  isVisible = false;
-  refresh = Math.ceil(Math.random() * Math.pow(10, 12));
   isLoaded = true;
-  timer: any = undefined;
-  request_start_time = performance.now();
-  start_time = performance.now();
-  time = 0;
-  request_time = 0;
-  time_smoothing = 0.6;
-  request_time_smoothing = 0.1;
-
   isZoomed = false;
-  zoomInImage() {
+
+  zoomInImage () {
     this.isZoomed = !this.isZoomed;
   }
 
@@ -85,41 +70,14 @@ export default class WebcamCard extends Vue {
     mjpegstreamerAdaptive: any;
   };
 
-  onIntersect(
-    entries: IntersectionObserverEntry[],
-    observer: IntersectionObserver
-  ) {
-    const isVisible = entries[0].isIntersecting;
-    this.isVisible = isVisible;
-    if (isVisible) {
-      this.refreshFrame();
-    } else {
-      clearTimeout(this.timer);
-      this.timer = undefined;
-    }
-  }
-
-  device: any = null;
-  deviceId: any = null;
-
-  onCameras(cameras: any) {
-    this.device = cameras.length > 0 ? cameras[0] : null;
-    this.deviceId = this.device.deviceId;
-  }
-
-  refreshFrame() {
-    if (this.isVisible) {
-      this.refresh = new Date().getTime();
-      this.setFrame();
-    }
-  }
-
-  async setFrame() {
+  @Watch('url')
+  async setFrame () {
+    if (!this.isLoaded) return
     const url = new URL(this.url);
 
-    this.request_start_time = performance.now();
     let canvas = this.$refs.mjpegstreamerAdaptive;
     if (canvas) {
+      this.isLoaded = false;
       const ctx = canvas.getContext("2d");
       const frame: any = await this.loadImage(url.toString());
 
@@ -139,49 +97,21 @@ export default class WebcamCard extends Vue {
       );
       this.isLoaded = true;
     }
-
-    this.$nextTick(() => {
-      this.onLoad();
-    });
   }
 
-  loadImage(url: string) {
+  loadImage (url: string) {
     return new Promise((r) => {
       let image = new Image();
       image.onload = () => r(image);
-      image.onerror = () => setTimeout(this.refreshFrame, 1000);
       image.src = url;
     });
   }
 
-  onLoad() {
-    this.isLoaded = true;
-
-    const end_time = performance.now();
-    const current_time = end_time - this.start_time;
-    this.time =
-      this.time * this.time_smoothing +
-      current_time * (1.0 - this.time_smoothing);
-    this.start_time = end_time;
-
-    const target_time = 100;
-
-    const current_request_time = performance.now() - this.request_start_time;
-    this.request_time =
-      this.request_time * this.request_time_smoothing +
-      current_request_time * (1.0 - this.request_time_smoothing);
-    const timeout = Math.max(0, target_time - this.request_time);
-
-    this.$nextTick(() => {
-      this.timer = setTimeout(this.refreshFrame, timeout);
-    });
+  get lightIsOff () {
+    return this.lighting.color === "rgb(0, 0, 0)";
   }
 
-  get lightIsOff() {
-    return this.lighting.lightColor === "rgb(0, 0, 0)";
-  }
-
-  lightControl() {
+  lightControl () {
     this.$emit("light");
   }
 }

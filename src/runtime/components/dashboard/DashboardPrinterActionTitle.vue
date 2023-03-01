@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="action-title">
     <slot>
       <v-col cols="12" :class="`${color}--text title`">
         {{ title }}
@@ -26,4 +26,8 @@ export default class DashboardPrinterActionTitle extends Vue {
 }
 </script>
 
-<style></style>
+<style>
+.action-title {
+  display: contents;
+}
+</style>

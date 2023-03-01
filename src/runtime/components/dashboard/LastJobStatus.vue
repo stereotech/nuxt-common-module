@@ -1,5 +1,10 @@
 <template>
-  <v-radio-group v-model="value" column class="statusSelect">
+  <v-radio-group
+    :value="value"
+    @change="$emit('change', $event)"
+    column
+    class="statusSelect"
+  >
     <template v-for="status in items">
       <v-radio
         :key="status.value"

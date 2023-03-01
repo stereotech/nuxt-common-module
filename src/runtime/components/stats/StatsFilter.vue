@@ -64,15 +64,15 @@ export default class StatsFilter extends Vue {
   @Prop({ type: String, default: "" }) pickerLabel!: string;
   @Prop({ type: String, default: "Ok" }) pickerOk!: string;
 
-  get showPicker(): boolean {
+  get showPicker (): boolean {
     return this.value === "period";
   }
 
-  get dateRangeText(): string {
+  get dateRangeText (): string {
     return this.datesSync.join(" ~ ");
   }
 
-  nowDate() {
+  nowDate () {
     let now = new Date();
     return `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
   }

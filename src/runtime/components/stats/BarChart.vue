@@ -24,7 +24,7 @@ export default class BarChart extends Vue {
   @Prop({ type: Array, default: () => [] }) data!: [];
   @Prop({ type: Boolean, default: false }) dark!: boolean;
   @Prop({ type: String, default: "" }) title!: string;
-  @Prop({ type: Object, default: () => {} }) formatter!: (
+  @Prop({ type: Function, default: () => { } }) formatter!: (
     datasets: any
   ) => string;
   @Prop({
@@ -34,11 +34,12 @@ export default class BarChart extends Vue {
     },
   })
   xAxis!: any;
+
   $refs!: {
     echart: any;
   };
 
-  get chartOptions(): any {
+  get chartOptions (): any {
     return {
       darkMode: true,
       animation: false,
@@ -115,38 +116,38 @@ export default class BarChart extends Vue {
     };
   }
 
-  visibilityChanged(entries: any, observer: any) {
+  visibilityChanged (entries: any, observer: any) {
     const isVisible = entries[0].isIntersecting;
     if (isVisible) this.chart.resize();
   }
 
-  eventListenerResize(event: Event) {
+  eventListenerResize (event: Event) {
     this.chart.resize();
   }
 
-  get chart(): ECharts {
+  get chart (): ECharts {
     const echart = this.$refs.echart;
     return echart.inst;
   }
 
-  mounted() {
+  mounted () {
     this.chartOptions.series[0].data = this.data;
     this.chart.setOption(this.chartOptions);
 
     window.addEventListener("resize", this.eventListenerResize);
   }
 
-  destroyed() {
+  destroyed () {
     window.removeEventListener("resize", this.eventListenerResize);
   }
 
-  beforeDestroy() {
+  beforeDestroy () {
     if (typeof window === "undefined") return;
     if (this.chart) this.chart.dispose();
   }
 
   @Watch("data")
-  dataChanged(newVal: any) {
+  dataChanged (newVal: any) {
     this.chart.setOption({
       series: {
         data: newVal,
@@ -154,7 +155,7 @@ export default class BarChart extends Vue {
     });
   }
 
-  getImage(): string | undefined {
+  getImage (): string | undefined {
     return (
       this.chart.getDataURL({
         pixelRatio: 2,
@@ -163,7 +164,7 @@ export default class BarChart extends Vue {
     );
   }
 
-  getGeometry() {
+  getGeometry () {
     return {
       width: this.chart.getWidth() || 0,
       height: this.chart.getHeight() || 0,
