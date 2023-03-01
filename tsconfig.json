@@ -7,12 +7,14 @@
     "experimentalDecorators": true,
     "baseUrl": ".",
     "moduleResolution": "Node",
-    "target": "ESNext",
+    "target": "es2019",
     "module": "ESNext",
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "types": [
-      "node"
+      "node",
+      "src/types",
+      "@nuxtjs/axios"
     ],
     "paths": {
       "~common/*": [

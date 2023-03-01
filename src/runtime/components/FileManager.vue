@@ -687,9 +687,12 @@
 
 <script lang="ts">
 import { Vue, Component, Watch, Prop, PropSync, Model } from 'nuxt-property-decorator'
+import { Helpers } from '../plugins'
 import { IParams, IPrinterInfo } from '../../types/common'
 import { FileStateFile } from '../../types/helpers'
-import  CardTitle from '../components/CardTitle.vue'
+import CardTitle from '../components/CardTitle.vue'
+import TextInputKeyboard from '../components/TextInputKeyboard.vue'
+import longpress from "../plugins/longpress";
 
 interface draggingFile {
   status: boolean
@@ -762,7 +765,13 @@ export interface DiskUsageInfo {
 
 @Component({
   name: "FileManager",
-  components: {CardTitle}
+  components: {
+    CardTitle,
+    TextInputKeyboard
+  },
+  directives: {
+    'longpress' : longpress
+  }
 })
 export default class FileManager extends Vue {
   @Prop({type: Boolean, default: false}) disabled!: boolean
@@ -833,6 +842,8 @@ export default class FileManager extends Vue {
   $refs!: {
     fileUpload: HTMLInputElement
   }
+
+  $helpers: Helpers;
 
   get accept() {
     return this.validGcodeExtensions.join(", ")
@@ -935,13 +946,9 @@ export default class FileManager extends Vue {
     this.$refs.fileUpload.click()
   }
 
-  createDirectoryDialog = {
-    show: false,
-    name: ""
-  }
   createDirectory () {
-    this.createDirectoryDialog.name = ""
-    this.createDirectoryDialog.show = true
+    this.dialogCreateDirectory.name = ""
+    this.dialogCreateDirectory.show = true
   }
 
   refreshFileList () {
@@ -1074,7 +1081,8 @@ dragDropFilelist (e: any, row: any) {
           this.dialogPrintFile.item = item;
         }
       } else {
-        this.$emit('update:path', this.pathSync + "/" + item.filename)
+        //this.$emit('update:path', this.pathSync + "/" + item.filename)
+        this.pathSync += `/${item.filename}`
         this.loadPath();
       }
     }
@@ -1293,6 +1301,7 @@ dragDropFilelist (e: any, row: any) {
    }
 
   created () {
+    this.$helpers = new Helpers()
     this.loadPath()
   }
   loadPath () {
@@ -1330,10 +1339,10 @@ dragDropFilelist (e: any, row: any) {
     this.uploadSnackbar.speed = 0
     this.uploadSnackbar.lastProgress.loaded = 0
     this.uploadSnackbar.lastProgress.time = 0
-    formData.append('file', file, (this.currentPath + "/" + filename).substring(7))
+    formData.append('file', file, (this.visiblePath + "/" + filename))
     return new Promise(resolve => {
       this.uploadSnackbar.cancelTokenSource = this.$axios.CancelToken.source();
-      this.$axios.post(this.params.apiUrl + '/server/files/upload',                  //todo ?
+      this.$axios.post(this.uploadUrl,
         formData, {
         cancelToken: this.uploadSnackbar.cancelTokenSource.token,
         headers: { 'Content-Type': 'multipart/form-data' },
