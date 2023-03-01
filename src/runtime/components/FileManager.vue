@@ -1284,7 +1284,7 @@ dragDropFilelist (e: any, row: any) {
   }
 
   startPrint (filename = "") {
-    filename = (this.visiblePath + "/" + filename)
+    filename = (this.visiblePath + filename)
     this.dialogPrintFile.show = false
     this.$emit('start', filename)
   }
@@ -1341,7 +1341,7 @@ dragDropFilelist (e: any, row: any) {
     this.uploadSnackbar.speed = 0
     this.uploadSnackbar.lastProgress.loaded = 0
     this.uploadSnackbar.lastProgress.time = 0
-    formData.append('file', file, (this.visiblePath + "/" + filename))
+    formData.append('file', file, (this.visiblePath + filename))
     return new Promise(resolve => {
       this.uploadSnackbar.cancelTokenSource = this.$axios.CancelToken.source();
       this.$axios.post(this.uploadUrl,
