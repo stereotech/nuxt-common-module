@@ -20,12 +20,14 @@
     "registry": "https://npm.pkg.github.com"
   },
   "dependencies": {
+    "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/toast": "^3.3.1",
     "@socheatsok78/storybook-addon-vuetify": "^0.1.9",
-    "nuxt-property-decorator": "^2.9.1",
     "echarts": "^5.3.2",
     "echarts-for-vue": "^1.4.1",
     "echarts-gl": "^2.0.9",
+    "nuxt-property-decorator": "^2.9.1",
+    "simple-keyboard": "^3.5.26",
     "vue-echarts": "^6.2.3"
   },
   "devDependencies": {

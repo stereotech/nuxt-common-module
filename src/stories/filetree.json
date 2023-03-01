@@ -1,0 +1,2162 @@
+[
+    {
+        "settings": {},
+        "isDirectory": true,
+        "filename": "gcodes",
+        "modified": 1677664323066,
+        "childrens": [
+            {
+                "settings": {},
+                "isDirectory": true,
+                "filename": ".thumbs",
+                "modified": 1676536200315.8618,
+                "childrens": [
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEF530V52_Cube_spherical_test-32x32.png",
+                        "modified": 1676354677823,
+                        "size": 1527,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Classic_PLA_Konus_d300x300_mm-32x32.png",
+                        "modified": 1671777503468,
+                        "size": 1519,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Testovii_disk_5DSpiral_300_mm_v3-32x32.png",
+                        "modified": 1671777483938,
+                        "size": 920,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5__ub.png",
+                        "modified": 1676466141687,
+                        "size": 13912,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_prostavka__detal_3__1497108_0000_sup_0.15_5DS_TPU_D70.png",
+                        "modified": 1669634717494,
+                        "size": 15788,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "not_hate_only_move.png",
+                        "modified": 1673877733481,
+                        "size": 0,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "003_0119_000_Koltso_AERZEN_poz_39_ch_OZV_3509_674762_674762_5DS.png",
+                        "modified": 1671091756560,
+                        "size": 14416,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Rabochee_koleso_var.2_SUP_0.15_5DS_PLA_NEW-32x32.png",
+                        "modified": 1671777562848,
+                        "size": 1547,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V52_Impeller_44mm-32x32.png",
+                        "modified": 1676386581491,
+                        "size": 1830,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "Cube_conical.png",
+                        "modified": 1676296431347,
+                        "size": 13912,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "Cube_conical-32x32.png",
+                        "modified": 1676296431477,
+                        "size": 1527,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_prostavka__detal_3__1497108_0000_sup_0.15_5DS_TPU_D70-32x32.png",
+                        "modified": 1671777538418,
+                        "size": 1619,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEF530V52_Cube_spherical__2_.png",
+                        "modified": 1676292808953,
+                        "size": 13912,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Classic_ABS_Reshetka.png",
+                        "modified": 1670830973765,
+                        "size": 15856,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Testovii_disk_5DSpiral_300_mm_v3.png",
+                        "modified": 1668153789618,
+                        "size": 6787,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Kub_20kh20kh20_5dsf_CF_5.png",
+                        "modified": 1665387931632,
+                        "size": 11802,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V52_Impeller_44mm_test-32x32.png",
+                        "modified": 1676445418141,
+                        "size": 1830,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Rabochee_koleso_var.2_SUP_0.15_5DS_PLA-32x32.png",
+                        "modified": 1671777506938,
+                        "size": 1958,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Testovii_disk_5DSpiral_300_mm-32x32.png",
+                        "modified": 1671777527548,
+                        "size": 920,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "003_0119_000_Koltso_AERZEN_poz_39_ch_OZV_3509_674762_674762_5DS-32x32.png",
+                        "modified": 1671777487008,
+                        "size": 1063,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Os_vrashcheniya_peredayushchikh_zvezd_5DSF_PET_G_M5.png",
+                        "modified": 1666686266961,
+                        "size": 18853,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_005_Mufta_s_prorezyami_5DS_TPU_D70.png",
+                        "modified": 1668782456467,
+                        "size": 17547,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "not_hate_only_move_3d.png",
+                        "modified": 1673877747591,
+                        "size": 0,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Os_vrashcheniya_peredayushchikh_zvezd_5DSF_TPU_D70_lay0.2_inf30.png",
+                        "modified": 1669101595209,
+                        "size": 14658,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Membrana_nasosa_PL.HM01_sd-32x32.png",
+                        "modified": 1671777451778,
+                        "size": 1056,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "3d_square_t1.png",
+                        "modified": 1673593050117,
+                        "size": 9325,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "3d_square_t1-32x32.png",
+                        "modified": 1673593050177,
+                        "size": 1204,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V52_Impeller_44mm_test.png",
+                        "modified": 1676445418041,
+                        "size": 44295,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V52_sfera-32x32.png",
+                        "modified": 1676536200315,
+                        "size": 1615,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Testovii_tsilindr_5DSF_PLA-32x32.png",
+                        "modified": 1672046257880,
+                        "size": 646,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Classic_PLA_Konus_d300x300_mm.png",
+                        "modified": 1670830969985,
+                        "size": 25795,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_prostavka__detal_3__1497108_0000_sup_0.15_5DS_TPU_CF_5_inf30.png",
+                        "modified": 1669796869908,
+                        "size": 14551,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_3D_2_ekstrudernaya_pechat_proverka.png",
+                        "modified": 1670830967954,
+                        "size": 14533,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "square_on_square_insade_check_move_out_X.png",
+                        "modified": 1673942998144,
+                        "size": 9325,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_EKP16_00.00.003___Ruchka_v3_5D_Full-32x32.png",
+                        "modified": 1671777534858,
+                        "size": 928,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Rabochee_koleso_Final_layer_0.15.png",
+                        "modified": 1665152531436,
+                        "size": 37080,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5__ilka_1-32x32.png",
+                        "modified": 1675941336951,
+                        "size": 1205,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Kub_20kh20kh20_5dsf_CF_5-32x32.png",
+                        "modified": 1671777510288,
+                        "size": 1442,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Classic_SBS_Konus_d300x300_mm-32x32.png",
+                        "modified": 1671777589398,
+                        "size": 1675,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_prostavka__detal_3__1497108_0000_sup_0.15_5DS_TPU_CF_5.png",
+                        "modified": 1669708399401,
+                        "size": 14551,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Classic_ABS_Reshetka-32x32.png",
+                        "modified": 1671777523668,
+                        "size": 1252,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Testovii_disk_5DSpiral_300_mm_v4.png",
+                        "modified": 1668423962188,
+                        "size": 6787,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_3D_2_ekstrudernaya_pechat_proverka-32x32.png",
+                        "modified": 1671777493198,
+                        "size": 1518,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_prostavka__detal_3__1497108_0000_sup_0.15_5DS_TPU_CF_5-32x32.png",
+                        "modified": 1671777490128,
+                        "size": 1522,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Kub_20kh20kh20_5dsf_petg_d12__1_.png",
+                        "modified": 1671631133850,
+                        "size": 13852,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Rabochee_koleso_var.2_SUP_0.15_5DS_PLA.png",
+                        "modified": 1669978554491,
+                        "size": 46831,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Krilchatka_okhlazhdeniya_elektrodvigatelya__Kargill__5DS_PP_GF-32x32.png",
+                        "modified": 1671777470858,
+                        "size": 1825,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_005_Mufta_5DS_TPU_D70-32x32.png",
+                        "modified": 1671777556398,
+                        "size": 1700,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEF530V52_Cube_spherical-32x32.png",
+                        "modified": 1676290904702,
+                        "size": 1527,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "3d_square_t0.png",
+                        "modified": 1673593049377,
+                        "size": 9325,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Kub_20kh20kh20_5dsf_petg_d12__1_-32x32.png",
+                        "modified": 1671777457338,
+                        "size": 1529,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_005_Mufta_5DS_TPU_D70.png",
+                        "modified": 1669020455528,
+                        "size": 16804,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_STE530HV5_Cube__1_-32x32.png",
+                        "modified": 1673333408608,
+                        "size": 1729,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH520V5_STEH530V5__ub_dlya_rascheta_stoimosti_5D_Spiral_Full.png",
+                        "modified": 1675836653315,
+                        "size": 17717,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Rabochee_koleso_var.2_SUP_0.15_5DS_PLA_NEW.png",
+                        "modified": 1670574409055,
+                        "size": 32938,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Pokritie_rolika_5d-32x32.png",
+                        "modified": 1671777531368,
+                        "size": 1297,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEF530V52_Cube_spherical__2_-32x32.png",
+                        "modified": 1676292809093,
+                        "size": 1527,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEF530V52_Cube_spherical.png",
+                        "modified": 1676290904552,
+                        "size": 13912,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Testovii_disk_5DSpiral_300_mm_v4-32x32.png",
+                        "modified": 1671777480858,
+                        "size": 920,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V52_sfera.png",
+                        "modified": 1676536200245,
+                        "size": 35827,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "square_on_square_insade_check_move_out_X-32x32.png",
+                        "modified": 1673942998264,
+                        "size": 1204,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_prostavka__detal_3__1497108_0000_sup_0.15_5DS_TPU_CF_5_inf30-32x32.png",
+                        "modified": 1671777552438,
+                        "size": 1522,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Testovii_disk_5DSpiral_300_mm.png",
+                        "modified": 1667462568916,
+                        "size": 6787,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Classic_SBS_Konus_d300x300_mm.png",
+                        "modified": 1670830981615,
+                        "size": 30244,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "3d_square_t0-32x32.png",
+                        "modified": 1673593049537,
+                        "size": 1204,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Krilchatka_okhlazhdeniya_elektrodvigatelya__Kargill__5DS_PP_GF.png",
+                        "modified": 1671196209349,
+                        "size": 24658,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_STE530HV5_Cube__1_.png",
+                        "modified": 1673333067421,
+                        "size": 17518,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH520V5_STEH530V5__ub_dlya_rascheta_stoimosti_5D_Spiral_Full-32x32.png",
+                        "modified": 1675836653395,
+                        "size": 1718,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Kronshtein_5DSF_cf_5-32x32.png",
+                        "modified": 1671777519598,
+                        "size": 2292,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5__ilka_1.png",
+                        "modified": 1675941336821,
+                        "size": 12612,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Kub_20kh20kh20_5dsf_petg_d12.png",
+                        "modified": 1666787332821,
+                        "size": 13852,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_005_Mufta_s_prorezyami_5DS_TPU_D70-32x32.png",
+                        "modified": 1671777499898,
+                        "size": 1799,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Testovii_tsilindr_5DSF_PLA.png",
+                        "modified": 1671781055971,
+                        "size": 5636,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Kronshtein_5DSF_cf_5.png",
+                        "modified": 1664885575506,
+                        "size": 36923,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEF530V52_Cube_spherical_test.png",
+                        "modified": 1676354677723,
+                        "size": 13912,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Testovii_disk_5DSpiral_300_mm_v2.png",
+                        "modified": 1668082278717,
+                        "size": 6787,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Kub_20kh20kh20_5dsf_petg_d12-32x32.png",
+                        "modified": 1671777477208,
+                        "size": 1529,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_EKP16_00.00.003___Ruchka_v3_5D_Full.png",
+                        "modified": 1669190427040,
+                        "size": 10291,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Pokritie_rolika_5d.png",
+                        "modified": 1664965812570,
+                        "size": 20033,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Os_vrashcheniya_peredayushchikh_zvezd_5DSF_PET_G_M5-32x32.png",
+                        "modified": 1671777496478,
+                        "size": 1619,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Uplotnenie_F172khF154kh10_5_5DS_TPU_A93.png",
+                        "modified": 1665139249125,
+                        "size": 19020,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Membrana_nasosa_PL.HM01_sd.png",
+                        "modified": 1665735357681,
+                        "size": 11155,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Uplotnenie_F172khF154kh10_5_5DS_TPU_A93-32x32.png",
+                        "modified": 1671777559728,
+                        "size": 1444,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Testovii_disk_5DSpiral_300_mm_v2-32x32.png",
+                        "modified": 1671777567038,
+                        "size": 920,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V52_Impeller_44mm.png",
+                        "modified": 1676386581371,
+                        "size": 44295,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5__ub-32x32.png",
+                        "modified": 1676466141807,
+                        "size": 1527,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Os_vrashcheniya_peredayushchikh_zvezd_5DSF_TPU_D70_lay0.2_inf30-32x32.png",
+                        "modified": 1671777545308,
+                        "size": 1641,
+                        "metadataPulled": false
+                    },
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "STEH530V5_Rabochee_koleso_Final_layer_0.15-32x32.png",
+                        "modified": 1671777463808,
+                        "size": 1838,
+                        "metadataPulled": false
+                    }
+                ]
+            },
+            {
+                "settings": {},
+                "isDirectory": true,
+                "filename": "bbb",
+                "modified": 1673877249751.5771,
+                "childrens": [
+                    {
+                        "settings": {},
+                        "isDirectory": false,
+                        "filename": "test.gcode",
+                        "modified": 1673867508693,
+                        "size": 53862,
+                        "metadataPulled": false
+                    }
+                ]
+            },
+            {
+                "settings": {},
+                "isDirectory": true,
+                "filename": "USB",
+                "modified": 0,
+                "childrens": []
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "STEH530V5_Classic_SBS_Konus_d300x300_mm.gcode",
+                "modified": 1664259998453,
+                "size": 14618554,
+                "metadataPulled": false
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "STEH530V5_STE530HV5_Cube__1_.gcode",
+                "modified": 1673333407878,
+                "size": 5397556,
+                "metadataPulled": false
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "Cube_conical.gcode",
+                "modified": 1676296430077,
+                "size": 2513191,
+                "metadataPulled": false
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "STEH530V5_Testovii_disk_5DSpiral_300_mm_v2.gcode",
+                "modified": 1668082277817,
+                "size": 30835536,
+                "metadataPulled": false
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "CFFFP_rabbit_keychain.gcode",
+                "modified": 1672121161807,
+                "size": 4542237,
+                "metadataPulled": false
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "CFFFP_Witcher_Coaster.gcode",
+                "modified": 1672056450476,
+                "size": 1718732,
+                "metadataPulled": false
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "STEH530V5_Rabochee_koleso_var.2_SUP_0.15_5DS_PLA_NEW.gcode",
+                "modified": 1670574407945,
+                "size": 205904221,
+                "metadataPulled": false
+            },
+            {
+                "settings": {
+                    "extruder_quality": {
+                        "0": {
+                            "general": {
+                                "version": 4,
+                                "name": "Fine #2",
+                                "definition": "fdmprinter"
+                            },
+                            "metadata": {
+                                "type": "quality_changes",
+                                "position": 0,
+                                "setting_version": 5,
+                                "quality_type": "normal"
+                            },
+                            "values": {
+                                "infill_pattern": "lines",
+                                "infill_sparse_density": 50,
+                                "raft_surface_layers": 1,
+                                "retraction_amount": 2.5
+                            }
+                        },
+                        "1": {
+                            "general": {
+                                "version": 4,
+                                "name": "Fine #2",
+                                "definition": "fdmprinter"
+                            },
+                            "metadata": {
+                                "type": "quality_changes",
+                                "position": 1,
+                                "setting_version": 5,
+                                "quality_type": "normal"
+                            },
+                            "values": {
+                                "infill_pattern": "lines",
+                                "infill_sparse_density": 50,
+                                "raft_surface_layers": 1,
+                                "retraction_amount": 2.5
+                            }
+                        }
+                    },
+                    "global_quality": {
+                        "general": {
+                            "version": 4,
+                            "name": "Fine #2",
+                            "definition": "fdmprinter"
+                        },
+                        "metadata": {
+                            "type": "quality_changes",
+                            "position": 1,
+                            "setting_version": 5,
+                            "quality_type": "normal"
+                        },
+                        "values": {
+                            "infill_pattern": "lines",
+                            "infill_sparse_density": 50,
+                            "raft_surface_layers": 1,
+                            "retraction_amount": 2.5,
+                            "adhesion_type": "raft",
+                            "conical_mode_base_height": 60,
+                            "conical_mode_base_radius": 6,
+                            "cylindrical_raft_diameter": 12,
+                            "cylindrical_raft_enabled": true,
+                            "layer_height": 0.2,
+                            "printing_mode": "spherical_full",
+                            "spherical_mode_base_radius": 6
+                        }
+                    }
+                },
+                "isDirectory": false,
+                "filename": "STEH530V52_sfera.gcode",
+                "modified": 1676536199635,
+                "size": 2087183,
+                "metadataPulled": true,
+                "estimated_time": 2773,
+                "filament_total": 551.9190000000001,
+                "first_layer_extr_temp": 240,
+                "first_layer_height": 0,
+                "gcode_end_byte": 2086054,
+                "gcode_start_byte": 48053,
+                "job_id": null,
+                "layer_height": 0.2,
+                "object_height": 10,
+                "print_start_time": null,
+                "slicer": "Stereotech STE Slicer",
+                "slicer_version": "~0.3",
+                "thumbnails": [
+                    {
+                        "width": 32,
+                        "height": 32,
+                        "size": 1615,
+                        "relative_path": ".thumbs/STEH530V52_sfera-32x32.png"
+                    },
+                    {
+                        "width": 300,
+                        "height": 300,
+                        "size": 35827,
+                        "relative_path": ".thumbs/STEH530V52_sfera.png"
+                    }
+                ]
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "square_on_square_insade_check_move_out_X.gcode",
+                "modified": 1673942997174,
+                "size": 26462,
+                "metadataPulled": false
+            },
+            {
+                "settings": {
+                    "extruder_quality": {
+                        "0": {
+                            "general": {
+                                "version": 4,
+                                "name": "Fine #2",
+                                "definition": "fdmprinter"
+                            },
+                            "metadata": {
+                                "position": 0,
+                                "setting_version": 5,
+                                "quality_type": "normal",
+                                "type": "quality_changes"
+                            },
+                            "values": {
+                                "bottom_layers": "=999999 if infill_sparse_density == 100 else math.ceil(round(bottom_thickness / resolveOrValue('layer_height'), 4))",
+                                "cool_fan_enabled": false,
+                                "cool_fan_speed": 20,
+                                "cool_fan_speed_max": "=cool_fan_speed",
+                                "cool_fan_speed_max_classic": "=cool_fan_speed",
+                                "cool_fan_speed_max_cylindrical": "=cool_fan_speed",
+                                "cool_fan_speed_min": "=cool_fan_speed",
+                                "cool_fan_speed_min_classic": "=cool_fan_speed",
+                                "cool_fan_speed_min_cylindrical": "=cool_fan_speed",
+                                "default_material_print_temperature": 210,
+                                "infill_before_walls": false,
+                                "infill_sparse_density": 50,
+                                "material_flow": 115,
+                                "material_print_temperature": "=default_material_print_temperature",
+                                "raft_airgap": 0.2,
+                                "raft_base_thickness": "=resolveOrValue('layer_height_0') * 1.2",
+                                "raft_margin": 0,
+                                "retraction_amount": 2,
+                                "speed_print": 20,
+                                "speed_support": 15,
+                                "speed_wall_x": 15,
+                                "support_angle": 70,
+                                "support_first_offset": 0,
+                                "support_infill_rate": 100,
+                                "support_line_distance": "=0 if support_infill_rate == 0 else (support_line_width * 100) / support_infill_rate * (2 if support_pattern == 'grid' else (3 if support_pattern == 'triangles' else 1))",
+                                "support_offset": 0.4,
+                                "support_pattern": "grid",
+                                "support_wall_count": 3,
+                                "support_z_distance": 0.15,
+                                "top_layers": "=0 if infill_sparse_density == 100 else math.ceil(round(top_thickness / resolveOrValue('layer_height'), 4))",
+                                "wall_line_count": "=1 if magic_spiralize else max(1, round((wall_thickness - wall_line_width_0) / wall_line_width_x) + 1) if wall_thickness != 0 else 0"
+                            }
+                        },
+                        "1": {
+                            "general": {
+                                "version": 4,
+                                "name": "Fine #2",
+                                "definition": "fdmprinter"
+                            },
+                            "metadata": {
+                                "position": 1,
+                                "setting_version": 5,
+                                "quality_type": "normal",
+                                "type": "quality_changes"
+                            },
+                            "values": {
+                                "bottom_layers": "=999999 if infill_sparse_density == 100 else math.ceil(round(bottom_thickness / resolveOrValue('layer_height'), 4))",
+                                "cool_fan_enabled": false,
+                                "cool_fan_speed": 20,
+                                "cool_fan_speed_max": "=cool_fan_speed",
+                                "cool_fan_speed_max_classic": "=cool_fan_speed",
+                                "cool_fan_speed_max_cylindrical": "=cool_fan_speed",
+                                "cool_fan_speed_min": "=cool_fan_speed",
+                                "cool_fan_speed_min_classic": "=cool_fan_speed",
+                                "cool_fan_speed_min_cylindrical": "=cool_fan_speed",
+                                "default_material_print_temperature": 210,
+                                "infill_before_walls": false,
+                                "infill_sparse_density": 50,
+                                "material_flow": 115,
+                                "material_print_temperature": "=default_material_print_temperature",
+                                "raft_airgap": 0.2,
+                                "raft_base_thickness": "=resolveOrValue('layer_height_0') * 1.2",
+                                "raft_margin": 0,
+                                "retraction_amount": 2,
+                                "speed_print": 20,
+                                "speed_support": 15,
+                                "speed_wall_x": 15,
+                                "support_angle": 70,
+                                "support_first_offset": 0,
+                                "support_infill_rate": 100,
+                                "support_line_distance": "=0 if support_infill_rate == 0 else (support_line_width * 100) / support_infill_rate * (2 if support_pattern == 'grid' else (3 if support_pattern == 'triangles' else 1))",
+                                "support_offset": 0.4,
+                                "support_pattern": "grid",
+                                "support_wall_count": 3,
+                                "support_z_distance": 0.15,
+                                "top_layers": "=0 if infill_sparse_density == 100 else math.ceil(round(top_thickness / resolveOrValue('layer_height'), 4))",
+                                "wall_line_count": "=1 if magic_spiralize else max(1, round((wall_thickness - wall_line_width_0) / wall_line_width_x) + 1) if wall_thickness != 0 else 0"
+                            }
+                        }
+                    },
+                    "global_quality": {
+                        "general": {
+                            "version": 4,
+                            "name": "Fine #2",
+                            "definition": "fdmprinter"
+                        },
+                        "metadata": {
+                            "position": 1,
+                            "setting_version": 5,
+                            "quality_type": "normal",
+                            "type": "quality_changes"
+                        },
+                        "values": {
+                            "bottom_layers": "=999999 if infill_sparse_density == 100 else math.ceil(round(bottom_thickness / resolveOrValue('layer_height'), 4))",
+                            "cool_fan_enabled": false,
+                            "cool_fan_speed": 20,
+                            "cool_fan_speed_max": "=cool_fan_speed",
+                            "cool_fan_speed_max_classic": "=cool_fan_speed",
+                            "cool_fan_speed_max_cylindrical": "=cool_fan_speed",
+                            "cool_fan_speed_min": "=cool_fan_speed",
+                            "cool_fan_speed_min_classic": "=cool_fan_speed",
+                            "cool_fan_speed_min_cylindrical": "=cool_fan_speed",
+                            "default_material_print_temperature": 210,
+                            "infill_before_walls": false,
+                            "infill_sparse_density": 50,
+                            "material_flow": 115,
+                            "material_print_temperature": "=default_material_print_temperature",
+                            "raft_airgap": 0.2,
+                            "raft_base_thickness": "=resolveOrValue('layer_height_0') * 1.2",
+                            "raft_margin": 0,
+                            "retraction_amount": 2,
+                            "speed_print": 20,
+                            "speed_support": 15,
+                            "speed_wall_x": 15,
+                            "support_angle": 70,
+                            "support_first_offset": 0,
+                            "support_infill_rate": 100,
+                            "support_line_distance": "=0 if support_infill_rate == 0 else (support_line_width * 100) / support_infill_rate * (2 if support_pattern == 'grid' else (3 if support_pattern == 'triangles' else 1))",
+                            "support_offset": 0.4,
+                            "support_pattern": "grid",
+                            "support_wall_count": 3,
+                            "support_z_distance": 0.15,
+                            "top_layers": "=0 if infill_sparse_density == 100 else math.ceil(round(top_thickness / resolveOrValue('layer_height'), 4))",
+                            "wall_line_count": "=1 if magic_spiralize else max(1, round((wall_thickness - wall_line_width_0) / wall_line_width_x) + 1) if wall_thickness != 0 else 0",
+                            "adhesion_type": "none",
+                            "cylindrical_layer_height_0": 0.16,
+                            "cylindrical_mode_base_diameter": 118.5,
+                            "cylindrical_mode_overlap": 0.4,
+                            "default_material_bed_temperature": 75,
+                            "layer_height": 0.14,
+                            "layer_height_0": 0.16,
+                            "printing_mode": "cylindrical",
+                            "speed_control_enable": true,
+                            "speed_control_value": 10,
+                            "support_enable": true,
+                            "support_enable_top_support": true,
+                            "support_type": "everywhere"
+                        }
+                    }
+                },
+                "isDirectory": false,
+                "filename": "STEH530V5_Uplotnenie_F172khF154kh10_5_5DS_TPU_A93.gcode",
+                "modified": 1665139247975,
+                "size": 18497344,
+                "metadataPulled": true,
+                "estimated_time": 31556,
+                "filament_total": 34511.899999999994,
+                "first_layer_extr_temp": 210,
+                "gcode_end_byte": 18494420,
+                "gcode_start_byte": 25581,
+                "job_id": null,
+                "layer_height": 0.14,
+                "object_height": 10.5,
+                "print_start_time": null,
+                "slicer": "Stereotech STE Slicer",
+                "slicer_version": "~0.3",
+                "thumbnails": [
+                    {
+                        "width": 32,
+                        "height": 32,
+                        "size": 1444,
+                        "relative_path": ".thumbs/STEH530V5_Uplotnenie_F172khF154kh10_5_5DS_TPU_A93-32x32.png"
+                    },
+                    {
+                        "width": 300,
+                        "height": 300,
+                        "size": 19020,
+                        "relative_path": ".thumbs/STEH530V5_Uplotnenie_F172khF154kh10_5_5DS_TPU_A93.png"
+                    }
+                ]
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "STEH530V5_005_Mufta_5DS_TPU_D70.gcode",
+                "modified": 1669020455098,
+                "size": 9645295,
+                "metadataPulled": false
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "STEH530V5_prostavka__detal_3__1497108_0000_sup_0.15_5DS_TPU_CF_5_inf30.gcode",
+                "modified": 1669796865898,
+                "size": 18566572,
+                "metadataPulled": false
+            },
+            {
+                "settings": {
+                    "global_quality": {
+                        "general": {
+                            "version": 4,
+                            "name": "Fine #2",
+                            "definition": "fdmprinter"
+                        },
+                        "metadata": {
+                            "setting_version": 5,
+                            "type": "quality_changes",
+                            "quality_type": "normal"
+                        },
+                        "values": {
+                            "adhesion_type": "none",
+                            "conical_mode_base_height": 50,
+                            "conical_mode_base_radius": 9,
+                            "cylindrical_raft_diameter": 18,
+                            "cylindrical_raft_enabled": true,
+                            "layer_height": 0.2,
+                            "printing_mode": "conical_full"
+                        }
+                    },
+                    "extruder_quality": {
+                        "0": {
+                            "general": {
+                                "version": 4,
+                                "name": "Fine #2",
+                                "definition": "fdmprinter"
+                            },
+                            "metadata": {
+                                "setting_version": 5,
+                                "type": "quality_changes",
+                                "quality_type": "normal",
+                                "position": 0
+                            },
+                            "values": {
+                                "adhesion_type": "none",
+                                "conical_mode_base_height": 50,
+                                "conical_mode_base_radius": 9,
+                                "cylindrical_raft_diameter": 18,
+                                "cylindrical_raft_enabled": true,
+                                "layer_height": 0.2,
+                                "printing_mode": "conical_full",
+                                "infill_pattern": "lines",
+                                "infill_sparse_density": 70,
+                                "raft_surface_layers": 1
+                            }
+                        },
+                        "1": {
+                            "general": {
+                                "version": 4,
+                                "name": "Fine #2",
+                                "definition": "fdmprinter"
+                            },
+                            "metadata": {
+                                "setting_version": 5,
+                                "type": "quality_changes",
+                                "quality_type": "normal",
+                                "position": 1
+                            },
+                            "values": {
+                                "adhesion_type": "none",
+                                "conical_mode_base_height": 50,
+                                "conical_mode_base_radius": 9,
+                                "cylindrical_raft_diameter": 18,
+                                "cylindrical_raft_enabled": true,
+                                "layer_height": 0.2,
+                                "printing_mode": "conical_full",
+                                "infill_pattern": "lines",
+                                "infill_sparse_density": 70,
+                                "raft_surface_layers": 1
+                            }
+                        }
+                    }
+                },
+                "isDirectory": false,
+                "filename": "STEH530V52_Impeller_44mm.gcode",
+                "modified": 1676386569182,
+                "size": 22803080,
+                "metadataPulled": true,
+                "estimated_time": 37715,
+                "filament_total": 5585.28,
+                "first_layer_extr_temp": 240,
+                "first_layer_height": 0,
+                "gcode_end_byte": 22802024,
+                "gcode_start_byte": 59340,
+                "job_id": null,
+                "layer_height": 0.2,
+                "object_height": 13.5,
+                "print_start_time": null,
+                "slicer": "Stereotech STE Slicer",
+                "slicer_version": "~0.3",
+                "thumbnails": [
+                    {
+                        "width": 32,
+                        "height": 32,
+                        "size": 1830,
+                        "relative_path": ".thumbs/STEH530V52_Impeller_44mm-32x32.png"
+                    },
+                    {
+                        "width": 300,
+                        "height": 300,
+                        "size": 44295,
+                        "relative_path": ".thumbs/STEH530V52_Impeller_44mm.png"
+                    }
+                ]
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "STEF530V52_Cube_spherical.gcode",
+                "modified": 1676290897052,
+                "size": 7207317,
+                "metadataPulled": false
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "STEH530V5_Os_vrashcheniya_peredayushchikh_zvezd_5DSF_TPU_D70_lay0.2_inf30.gcode",
+                "modified": 1669101594339,
+                "size": 7231516,
+                "metadataPulled": false
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "STEH530V5_prostavka__detal_3__1497108_0000_sup_0.15_5DS_TPU_D70.gcode",
+                "modified": 1669634716454,
+                "size": 32980466,
+                "metadataPulled": false
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "STEH530V5_EKP16_00.00.003___Ruchka_v3_5D_Full.gcode",
+                "modified": 1669190423820,
+                "size": 26602926,
+                "metadataPulled": false
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "STEH530V5_Pokritie_rolika_5d.gcode",
+                "modified": 1664965811020,
+                "size": 28385404,
+                "metadataPulled": false
+            },
+            {
+                "settings": {
+                    "extruder_quality": {
+                        "0": {
+                            "general": {
+                                "version": 4,
+                                "name": "Draft #2",
+                                "definition": "fdmprinter"
+                            },
+                            "metadata": {
+                                "type": "quality_changes",
+                                "position": 0,
+                                "quality_type": "draft",
+                                "setting_version": 5
+                            },
+                            "values": {
+                                "cool_fan_speed_max": 100,
+                                "cool_fan_speed_max_classic": 100,
+                                "cool_fan_speed_max_cylindrical": 100,
+                                "cool_fan_speed_min": 100,
+                                "cool_fan_speed_min_classic": 100,
+                                "cool_fan_speed_min_cylindrical": 100,
+                                "infill_sparse_density": 30,
+                                "material_print_temperature": 235,
+                                "retraction_amount": 3,
+                                "retraction_speed": 25,
+                                "speed_print": 50
+                            }
+                        },
+                        "1": {
+                            "general": {
+                                "version": 4,
+                                "name": "Draft #2",
+                                "definition": "fdmprinter"
+                            },
+                            "metadata": {
+                                "type": "quality_changes",
+                                "position": 1,
+                                "quality_type": "draft",
+                                "setting_version": 5
+                            },
+                            "values": {
+                                "cool_fan_speed_max": 100,
+                                "cool_fan_speed_max_classic": 100,
+                                "cool_fan_speed_max_cylindrical": 100,
+                                "cool_fan_speed_min": 100,
+                                "cool_fan_speed_min_classic": 100,
+                                "cool_fan_speed_min_cylindrical": 100,
+                                "infill_sparse_density": 30,
+                                "material_print_temperature": 235,
+                                "retraction_amount": 3,
+                                "retraction_speed": 25,
+                                "speed_print": 50
+                            }
+                        }
+                    },
+                    "global_quality": {
+                        "general": {
+                            "version": 4,
+                            "name": "Draft #2",
+                            "definition": "fdmprinter"
+                        },
+                        "metadata": {
+                            "type": "quality_changes",
+                            "position": 1,
+                            "quality_type": "draft",
+                            "setting_version": 5
+                        },
+                        "values": {
+                            "cool_fan_speed_max": 100,
+                            "cool_fan_speed_max_classic": 100,
+                            "cool_fan_speed_max_cylindrical": 100,
+                            "cool_fan_speed_min": 100,
+                            "cool_fan_speed_min_classic": 100,
+                            "cool_fan_speed_min_cylindrical": 100,
+                            "infill_sparse_density": 30,
+                            "material_print_temperature": 235,
+                            "retraction_amount": 3,
+                            "retraction_speed": 25,
+                            "speed_print": 50,
+                            "printing_mode": "cylindrical",
+                            "speed_control_enable": false
+                        }
+                    }
+                },
+                "isDirectory": false,
+                "filename": "STEH530V5_Testovii_disk_5DSpiral_300_mm.gcode",
+                "modified": 1667462566786,
+                "size": 36420274,
+                "metadataPulled": true,
+                "estimated_time": 82676,
+                "filament_total": 58327.9,
+                "first_layer_extr_temp": 235,
+                "first_layer_height": 0,
+                "gcode_end_byte": 36419085,
+                "gcode_start_byte": 9257,
+                "job_id": null,
+                "layer_height": 0.2,
+                "object_height": 10.8,
+                "print_start_time": null,
+                "slicer": "Stereotech STE Slicer",
+                "slicer_version": "~0.3",
+                "thumbnails": [
+                    {
+                        "width": 32,
+                        "height": 32,
+                        "size": 920,
+                        "relative_path": ".thumbs/STEH530V5_Testovii_disk_5DSpiral_300_mm-32x32.png"
+                    },
+                    {
+                        "width": 300,
+                        "height": 300,
+                        "size": 6787,
+                        "relative_path": ".thumbs/STEH530V5_Testovii_disk_5DSpiral_300_mm.png"
+                    }
+                ]
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "STEH530V5_Classic_ABS_Reshetka.gcode",
+                "modified": 1663740259051,
+                "size": 1333890,
+                "metadataPulled": false
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "STEH530V5_Kronshtein_5DSF_cf_5.gcode",
+                "modified": 1664885573386,
+                "size": 52522227,
+                "metadataPulled": false
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "530_opornoe_koltso_uzla_pauka_2727286_0000_3D_TPU_D70.gcode",
+                "modified": 1669379827221,
+                "size": 5710395,
+                "metadataPulled": false
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "STEH530V5_Kub_20kh20kh20_5dsf_CF_5.gcode",
+                "modified": 1665387930912,
+                "size": 4469804,
+                "metadataPulled": false
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "3d_square_t0.gcode",
+                "modified": 1673593048438,
+                "size": 29601,
+                "metadataPulled": false
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "STEF530V52_Cube_spherical_test.gcode",
+                "modified": 1676354677123,
+                "size": 7207195,
+                "metadataPulled": false
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "STEH530V5_Rabochee_koleso_var.2_SUP_0.15_5DS_PLA.gcode",
+                "modified": 1669978551791,
+                "size": 160888558,
+                "metadataPulled": false
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "STEH530V5_Classic_PLA_Konus_d300x300_mm.gcode",
+                "modified": 1664196058978,
+                "size": 14612597,
+                "metadataPulled": false
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "STEH530V5_005_Mufta_s_prorezyami_5DS_TPU_D70.gcode",
+                "modified": 1668782454357,
+                "size": 18787953,
+                "metadataPulled": false
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "STEH530V5_Os_vrashcheniya_peredayushchikh_zvezd_5DSF_PET_G_M5.gcode",
+                "modified": 1666686266091,
+                "size": 22177155,
+                "metadataPulled": false
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "STEH530V5_3D_2_ekstrudernaya_pechat_proverka.gcode",
+                "modified": 1663660505757,
+                "size": 1315242,
+                "metadataPulled": false
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "STEH530V5_prostavka__detal_3__1497108_0000_sup_0.15_5DS_TPU_CF_5.gcode",
+                "modified": 1669708398361,
+                "size": 31220399,
+                "metadataPulled": false
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "CFFFP_Cat_Coaster.gcode",
+                "modified": 1672065463135,
+                "size": 2453522,
+                "metadataPulled": false
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "003_0119_000_Koltso_AERZEN_poz_39_ch_OZV_3509_674762_674762_5DS.gcode",
+                "modified": 1671091755860,
+                "size": 4209346,
+                "metadataPulled": false
+            },
+            {
+                "settings": {
+                    "extruder_quality": {
+                        "0": {
+                            "general": {
+                                "version": 4,
+                                "name": "Draft #2",
+                                "definition": "fdmprinter"
+                            },
+                            "metadata": {
+                                "setting_version": 5,
+                                "position": 0,
+                                "type": "quality_changes",
+                                "quality_type": "draft"
+                            },
+                            "values": {
+                                "bottom_layers": 0,
+                                "cool_fan_speed_max": 100,
+                                "cool_fan_speed_max_classic": 100,
+                                "cool_fan_speed_max_cylindrical": 100,
+                                "cool_fan_speed_min": 100,
+                                "cool_fan_speed_min_classic": 100,
+                                "cool_fan_speed_min_cylindrical": 100,
+                                "infill_pattern": "concentric",
+                                "infill_sparse_density": 100,
+                                "material_print_temperature": 230,
+                                "retraction_amount": 3,
+                                "retraction_enable": false,
+                                "retraction_speed": 25,
+                                "speed_print": 30,
+                                "speed_wall_0_cylindrical": 30,
+                                "speed_wall_x_classic": 30,
+                                "speed_wall_x_cylindrical": 30,
+                                "wall_line_count": 999999
+                            }
+                        },
+                        "1": {
+                            "general": {
+                                "version": 4,
+                                "name": "Draft #2",
+                                "definition": "fdmprinter"
+                            },
+                            "metadata": {
+                                "setting_version": 5,
+                                "position": 1,
+                                "type": "quality_changes",
+                                "quality_type": "draft"
+                            },
+                            "values": {
+                                "bottom_layers": 0,
+                                "cool_fan_speed_max": 100,
+                                "cool_fan_speed_max_classic": 100,
+                                "cool_fan_speed_max_cylindrical": 100,
+                                "cool_fan_speed_min": 100,
+                                "cool_fan_speed_min_classic": 100,
+                                "cool_fan_speed_min_cylindrical": 100,
+                                "infill_pattern": "concentric",
+                                "infill_sparse_density": 100,
+                                "material_print_temperature": 230,
+                                "retraction_amount": 3,
+                                "retraction_enable": false,
+                                "retraction_speed": 25,
+                                "speed_print": 30,
+                                "speed_wall_0_cylindrical": 30,
+                                "speed_wall_x_classic": 30,
+                                "speed_wall_x_cylindrical": 30,
+                                "wall_line_count": 999999
+                            }
+                        }
+                    },
+                    "global_quality": {
+                        "general": {
+                            "version": 4,
+                            "name": "Draft #2",
+                            "definition": "fdmprinter"
+                        },
+                        "metadata": {
+                            "setting_version": 5,
+                            "position": 1,
+                            "type": "quality_changes",
+                            "quality_type": "draft"
+                        },
+                        "values": {
+                            "bottom_layers": 0,
+                            "cool_fan_speed_max": 100,
+                            "cool_fan_speed_max_classic": 100,
+                            "cool_fan_speed_max_cylindrical": 100,
+                            "cool_fan_speed_min": 100,
+                            "cool_fan_speed_min_classic": 100,
+                            "cool_fan_speed_min_cylindrical": 100,
+                            "infill_pattern": "concentric",
+                            "infill_sparse_density": 100,
+                            "material_print_temperature": 230,
+                            "retraction_amount": 3,
+                            "retraction_enable": false,
+                            "retraction_speed": 25,
+                            "speed_print": 30,
+                            "speed_wall_0_cylindrical": 30,
+                            "speed_wall_x_classic": 30,
+                            "speed_wall_x_cylindrical": 30,
+                            "wall_line_count": 999999,
+                            "printing_mode": "cylindrical",
+                            "speed_control_value": 8
+                        }
+                    }
+                },
+                "isDirectory": false,
+                "filename": "STEH530V5_Testovii_disk_5DSpiral_300_mm_v3.gcode",
+                "modified": 1668153787028,
+                "size": 22639872,
+                "metadataPulled": true,
+                "estimated_time": 12670,
+                "filament_total": 71326.3,
+                "first_layer_extr_temp": 230,
+                "first_layer_height": 0,
+                "gcode_end_byte": 22638454,
+                "gcode_start_byte": 9257,
+                "job_id": null,
+                "layer_height": 0.2,
+                "object_height": 10.8,
+                "print_start_time": null,
+                "slicer": "Stereotech STE Slicer",
+                "slicer_version": "~0.3",
+                "thumbnails": [
+                    {
+                        "width": 32,
+                        "height": 32,
+                        "size": 920,
+                        "relative_path": ".thumbs/STEH530V5_Testovii_disk_5DSpiral_300_mm_v3-32x32.png"
+                    },
+                    {
+                        "width": 300,
+                        "height": 300,
+                        "size": 6787,
+                        "relative_path": ".thumbs/STEH530V5_Testovii_disk_5DSpiral_300_mm_v3.png"
+                    }
+                ]
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "CFFFP_Bunny_with_down_ears_new.gcode",
+                "modified": 1672122267088,
+                "size": 3385656,
+                "metadataPulled": false
+            },
+            {
+                "settings": {
+                    "global_quality": {
+                        "general": {
+                            "version": 4,
+                            "name": "Draft #2",
+                            "definition": "fdmprinter"
+                        },
+                        "metadata": {
+                            "type": "quality_changes",
+                            "quality_type": "draft",
+                            "setting_version": 5
+                        },
+                        "values": {
+                            "printing_mode": "cylindrical",
+                            "speed_control_enable": false,
+                            "speed_control_value": 8
+                        }
+                    },
+                    "extruder_quality": {
+                        "0": {
+                            "general": {
+                                "version": 4,
+                                "name": "Draft #2",
+                                "definition": "fdmprinter"
+                            },
+                            "metadata": {
+                                "type": "quality_changes",
+                                "quality_type": "draft",
+                                "setting_version": 5,
+                                "position": 0
+                            },
+                            "values": {
+                                "printing_mode": "cylindrical",
+                                "speed_control_enable": false,
+                                "speed_control_value": 8,
+                                "bottom_layers": 0,
+                                "cool_fan_speed_max": 100,
+                                "cool_fan_speed_max_classic": 100,
+                                "cool_fan_speed_max_cylindrical": 100,
+                                "cool_fan_speed_min": 100,
+                                "cool_fan_speed_min_classic": 100,
+                                "cool_fan_speed_min_cylindrical": 100,
+                                "infill_pattern": "concentric",
+                                "infill_sparse_density": 100,
+                                "material_print_temperature": 230,
+                                "retraction_amount": 3,
+                                "retraction_enable": false,
+                                "retraction_speed": 25,
+                                "speed_print": 40,
+                                "wall_line_count": 999999
+                            }
+                        },
+                        "1": {
+                            "general": {
+                                "version": 4,
+                                "name": "Draft #2",
+                                "definition": "fdmprinter"
+                            },
+                            "metadata": {
+                                "type": "quality_changes",
+                                "quality_type": "draft",
+                                "setting_version": 5,
+                                "position": 1
+                            },
+                            "values": {
+                                "printing_mode": "cylindrical",
+                                "speed_control_enable": false,
+                                "speed_control_value": 8,
+                                "bottom_layers": 0,
+                                "cool_fan_speed_max": 100,
+                                "cool_fan_speed_max_classic": 100,
+                                "cool_fan_speed_max_cylindrical": 100,
+                                "cool_fan_speed_min": 100,
+                                "cool_fan_speed_min_classic": 100,
+                                "cool_fan_speed_min_cylindrical": 100,
+                                "infill_pattern": "concentric",
+                                "infill_sparse_density": 100,
+                                "material_print_temperature": 230,
+                                "retraction_amount": 3,
+                                "retraction_enable": false,
+                                "retraction_speed": 25,
+                                "speed_print": 40,
+                                "wall_line_count": 999999
+                            }
+                        }
+                    }
+                },
+                "isDirectory": false,
+                "filename": "STEH530V5_Testovii_disk_5DSpiral_300_mm_v4.gcode",
+                "modified": 1668423960438,
+                "size": 22648603,
+                "metadataPulled": true,
+                "estimated_time": 12668,
+                "filament_total": 71326.3,
+                "first_layer_extr_temp": 230,
+                "first_layer_height": 0,
+                "gcode_end_byte": 22647258,
+                "gcode_start_byte": 9257,
+                "job_id": null,
+                "layer_height": 0.2,
+                "object_height": 10.8,
+                "print_start_time": null,
+                "slicer": "Stereotech STE Slicer",
+                "slicer_version": "~0.3",
+                "thumbnails": [
+                    {
+                        "width": 32,
+                        "height": 32,
+                        "size": 920,
+                        "relative_path": ".thumbs/STEH530V5_Testovii_disk_5DSpiral_300_mm_v4-32x32.png"
+                    },
+                    {
+                        "width": 300,
+                        "height": 300,
+                        "size": 6787,
+                        "relative_path": ".thumbs/STEH530V5_Testovii_disk_5DSpiral_300_mm_v4.png"
+                    }
+                ]
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "STEH530V5_Kub_20kh20kh20_5dsf_petg_d12.gcode",
+                "modified": 1671629807450,
+                "size": 4184699,
+                "metadataPulled": false
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "STEH530V5__ub.gcode",
+                "modified": 1676466141157,
+                "size": 4015038,
+                "metadataPulled": false
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "STEH530V5_DEMO_Empeller.gcode",
+                "modified": 1666610348377,
+                "size": 3714,
+                "metadataPulled": false
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "STEF530V52_Cube_spherical__2_.gcode",
+                "modified": 1676292807713,
+                "size": 7207317,
+                "metadataPulled": false
+            },
+            {
+                "settings": {
+                    "global_quality": {
+                        "general": {
+                            "version": 4,
+                            "name": "Fine #2",
+                            "definition": "fdmprinter"
+                        },
+                        "metadata": {
+                            "type": "quality_changes",
+                            "setting_version": 5,
+                            "quality_type": "normal"
+                        },
+                        "values": {
+                            "adhesion_type": "raft",
+                            "conical_mode_base_height": 60,
+                            "conical_mode_base_radius": 12,
+                            "cylindrical_raft_diameter": 12,
+                            "cylindrical_raft_enabled": true,
+                            "layer_height": 0.2,
+                            "printing_mode": "conical_full"
+                        }
+                    },
+                    "extruder_quality": {
+                        "0": {
+                            "general": {
+                                "version": 4,
+                                "name": "Fine #2",
+                                "definition": "fdmprinter"
+                            },
+                            "metadata": {
+                                "type": "quality_changes",
+                                "setting_version": 5,
+                                "quality_type": "normal",
+                                "position": 0
+                            },
+                            "values": {
+                                "adhesion_type": "raft",
+                                "conical_mode_base_height": 60,
+                                "conical_mode_base_radius": 12,
+                                "cylindrical_raft_diameter": 12,
+                                "cylindrical_raft_enabled": true,
+                                "layer_height": 0.2,
+                                "printing_mode": "conical_full",
+                                "infill_pattern": "lines",
+                                "infill_sparse_density": 70,
+                                "raft_surface_layers": 1
+                            }
+                        },
+                        "1": {
+                            "general": {
+                                "version": 4,
+                                "name": "Fine #2",
+                                "definition": "fdmprinter"
+                            },
+                            "metadata": {
+                                "type": "quality_changes",
+                                "setting_version": 5,
+                                "quality_type": "normal",
+                                "position": 1
+                            },
+                            "values": {
+                                "adhesion_type": "raft",
+                                "conical_mode_base_height": 60,
+                                "conical_mode_base_radius": 12,
+                                "cylindrical_raft_diameter": 12,
+                                "cylindrical_raft_enabled": true,
+                                "layer_height": 0.2,
+                                "printing_mode": "conical_full",
+                                "infill_pattern": "lines",
+                                "infill_sparse_density": 70,
+                                "raft_surface_layers": 1
+                            }
+                        }
+                    }
+                },
+                "isDirectory": false,
+                "filename": "STEH530V52_Impeller_44mm_test.gcode",
+                "modified": 1676445417221,
+                "size": 21354501,
+                "metadataPulled": true,
+                "estimated_time": 35513,
+                "filament_total": 5390.251,
+                "first_layer_extr_temp": 240,
+                "first_layer_height": 0,
+                "gcode_end_byte": 21353444,
+                "gcode_start_byte": 59341,
+                "job_id": null,
+                "layer_height": 0.2,
+                "object_height": 13.5,
+                "print_start_time": null,
+                "slicer": "Stereotech STE Slicer",
+                "slicer_version": "~0.3",
+                "thumbnails": [
+                    {
+                        "width": 32,
+                        "height": 32,
+                        "size": 1830,
+                        "relative_path": ".thumbs/STEH530V52_Impeller_44mm_test-32x32.png"
+                    },
+                    {
+                        "width": 300,
+                        "height": 300,
+                        "size": 44295,
+                        "relative_path": ".thumbs/STEH530V52_Impeller_44mm_test.png"
+                    }
+                ]
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "STEH530V5_Krilchatka_okhlazhdeniya_elektrodvigatelya__Kargill__5DS_PP_GF.gcode",
+                "modified": 1671196206259,
+                "size": 115300324,
+                "metadataPulled": false
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "STEH530V5__ilka_1.gcode",
+                "modified": 1675941329681,
+                "size": 27502431,
+                "metadataPulled": false
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "STEH530V5_Petini_d2_so_skosami_3d.gcode",
+                "modified": 1667889504571,
+                "size": 25641152,
+                "metadataPulled": false
+            },
+            {
+                "settings": {
+                    "extruder_quality": {
+                        "0": {
+                            "general": {
+                                "version": 4,
+                                "name": "Fine #2",
+                                "definition": "fdmprinter"
+                            },
+                            "metadata": {
+                                "type": "quality_changes",
+                                "quality_type": "normal",
+                                "position": 0,
+                                "setting_version": 5
+                            },
+                            "values": {
+                                "bottom_layers": "=999999 if infill_sparse_density == 100 else math.ceil(round(bottom_thickness / resolveOrValue('layer_height'), 4))",
+                                "cool_fan_speed": 100,
+                                "cool_fan_speed_max_cylindrical": "=cool_fan_speed",
+                                "default_material_print_temperature": 215,
+                                "infill_before_walls": false,
+                                "infill_sparse_density": 30,
+                                "material_print_temperature": "=default_material_print_temperature",
+                                "raft_airgap": 0.2,
+                                "raft_margin": 0,
+                                "raft_surface_layers": 6,
+                                "retraction_speed": 25,
+                                "speed_print": 50,
+                                "speed_support": "=speed_print",
+                                "speed_wall_x": 40,
+                                "support_angle": 80,
+                                "support_first_offset": 0,
+                                "support_infill_rate": 40,
+                                "support_wall_count": 1,
+                                "support_z_distance": 0.2,
+                                "top_layers": "=0 if infill_sparse_density == 100 else math.ceil(round(top_thickness / resolveOrValue('layer_height'), 4))"
+                            }
+                        },
+                        "1": {
+                            "general": {
+                                "version": 4,
+                                "name": "Fine #2",
+                                "definition": "fdmprinter"
+                            },
+                            "metadata": {
+                                "type": "quality_changes",
+                                "quality_type": "normal",
+                                "position": 1,
+                                "setting_version": 5
+                            },
+                            "values": {
+                                "bottom_layers": "=999999 if infill_sparse_density == 100 else math.ceil(round(bottom_thickness / resolveOrValue('layer_height'), 4))",
+                                "cool_fan_speed": 100,
+                                "cool_fan_speed_max_cylindrical": "=cool_fan_speed",
+                                "default_material_print_temperature": 215,
+                                "infill_before_walls": false,
+                                "infill_sparse_density": 30,
+                                "material_print_temperature": "=default_material_print_temperature",
+                                "raft_airgap": 0.2,
+                                "raft_margin": 0,
+                                "raft_surface_layers": 6,
+                                "retraction_speed": 25,
+                                "speed_print": 50,
+                                "speed_support": "=speed_print",
+                                "speed_wall_x": 40,
+                                "support_angle": 80,
+                                "support_first_offset": 0,
+                                "support_infill_rate": 40,
+                                "support_wall_count": 1,
+                                "support_z_distance": 0.2,
+                                "top_layers": "=0 if infill_sparse_density == 100 else math.ceil(round(top_thickness / resolveOrValue('layer_height'), 4))"
+                            }
+                        }
+                    },
+                    "global_quality": {
+                        "general": {
+                            "version": 4,
+                            "name": "Fine #2",
+                            "definition": "fdmprinter"
+                        },
+                        "metadata": {
+                            "type": "quality_changes",
+                            "quality_type": "normal",
+                            "position": 1,
+                            "setting_version": 5
+                        },
+                        "values": {
+                            "bottom_layers": "=999999 if infill_sparse_density == 100 else math.ceil(round(bottom_thickness / resolveOrValue('layer_height'), 4))",
+                            "cool_fan_speed": 100,
+                            "cool_fan_speed_max_cylindrical": "=cool_fan_speed",
+                            "default_material_print_temperature": 215,
+                            "infill_before_walls": false,
+                            "infill_sparse_density": 30,
+                            "material_print_temperature": "=default_material_print_temperature",
+                            "raft_airgap": 0.2,
+                            "raft_margin": 0,
+                            "raft_surface_layers": 6,
+                            "retraction_speed": 25,
+                            "speed_print": 50,
+                            "speed_support": "=speed_print",
+                            "speed_wall_x": 40,
+                            "support_angle": 80,
+                            "support_first_offset": 0,
+                            "support_infill_rate": 40,
+                            "support_wall_count": 1,
+                            "support_z_distance": 0.2,
+                            "top_layers": "=0 if infill_sparse_density == 100 else math.ceil(round(top_thickness / resolveOrValue('layer_height'), 4))",
+                            "adhesion_type": "raft",
+                            "cylindrical_layer_height_0": 0.2,
+                            "cylindrical_mode_base_diameter": 19.2,
+                            "cylindrical_raft_diameter": 19.2,
+                            "cylindrical_raft_thickness": 0.24,
+                            "cylindrical_round_segments": 256,
+                            "default_material_bed_temperature": 75,
+                            "layer_height": 0.2,
+                            "layer_height_0": 0.2,
+                            "printing_mode": "cylindrical_full",
+                            "speed_control_enable": false,
+                            "speed_control_value": 30,
+                            "support_enable_top_support": true,
+                            "support_type": "everywhere"
+                        }
+                    }
+                },
+                "isDirectory": false,
+                "filename": "STEH530V5_Testovii_tsilindr_5DSF_PLA.gcode",
+                "modified": 1672046253970,
+                "size": 14199602,
+                "metadataPulled": true,
+                "estimated_time": 10959,
+                "filament_total": 7585.91,
+                "first_layer_extr_temp": 215,
+                "first_layer_height": 0,
+                "gcode_end_byte": 14197433,
+                "gcode_start_byte": 7808,
+                "job_id": null,
+                "layer_height": 0.2,
+                "object_height": 150,
+                "print_start_time": null,
+                "slicer": "Stereotech STE Slicer",
+                "slicer_version": "~0.3",
+                "thumbnails": [
+                    {
+                        "width": 32,
+                        "height": 32,
+                        "size": 646,
+                        "relative_path": ".thumbs/STEH530V5_Testovii_tsilindr_5DSF_PLA-32x32.png"
+                    },
+                    {
+                        "width": 300,
+                        "height": 300,
+                        "size": 5636,
+                        "relative_path": ".thumbs/STEH530V5_Testovii_tsilindr_5DSF_PLA.png"
+                    }
+                ]
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "3d_square_t1.gcode",
+                "modified": 1673593049707,
+                "size": 29600,
+                "metadataPulled": false
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "STEH530V5_Rabochee_koleso_Final_layer_0.15.gcode",
+                "modified": 1665152528496,
+                "size": 250191572,
+                "metadataPulled": false
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "STEH520V5_STEH530V5__ub_dlya_rascheta_stoimosti_5D_Spiral_Full.gcode",
+                "modified": 1675836652475,
+                "size": 7130871,
+                "metadataPulled": false
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "STEH530V5_Membrana_DEMO.gcode",
+                "modified": 1669120240034,
+                "size": 6180,
+                "metadataPulled": false
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "STEH530V5_Kub_20kh20kh20_5dsf_petg_d12__1_.gcode",
+                "modified": 1671631132860,
+                "size": 4184699,
+                "metadataPulled": false
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "Cube_conical_cut.gcode",
+                "modified": 1676298117568,
+                "size": 1228154,
+                "metadataPulled": false
+            },
+            {
+                "settings": {},
+                "isDirectory": false,
+                "filename": "STEH530V5_Membrana_nasosa_PL.HM01_sd.gcode",
+                "modified": 1665735356961,
+                "size": 19770802,
+                "metadataPulled": false
+            }
+        ],
+        "disk_usage": {
+            "total": 15383261184,
+            "used": 9103036416,
+            "free": 5623730176
+        }
+    },
+    {
+        "settings": {},
+        "isDirectory": true,
+        "filename": "timelapse",
+        "modified": 1677664323066,
+        "childrens": [],
+        "disk_usage": {
+            "total": 15383261184,
+            "used": 9103032320,
+            "free": 5623734272
+        }
+    },
+    {
+        "settings": {},
+        "isDirectory": true,
+        "filename": "timelapse_frames",
+        "modified": 1677664323066,
+        "childrens": [],
+        "disk_usage": {
+            "total": 15383261184,
+            "used": 9103032320,
+            "free": 5623734272
+        }
+    }
+]
