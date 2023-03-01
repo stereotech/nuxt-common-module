@@ -897,7 +897,7 @@ export default class FileManager extends Vue {
           const result = await this.doUploadFile(file)
           successFiles.push(result)
         }
-        this.uploading = true
+        this.uploading = false
         for (const file of successFiles) {
           this.$emit('uploaded', file)
         }
@@ -999,7 +999,7 @@ export default class FileManager extends Vue {
     const items = this.$helpers.sortFiles(this.files, [this.$props.sortBy ?? 'modified'], [this.$props.sortDesc ?? false])
     for (let i = data.pageStart; i < data.pageStop; i++) {
       if (items[i] && !items[i].isDirectory && !items[i].metadataPulled) {
-        let filename = this.visiblePath + items[i].filename
+        let filename = this.visiblePath + "/" + items[i].filename
         this.$emit('update:metadata', filename)
       }
     }
@@ -1284,7 +1284,7 @@ dragDropFilelist (e: any, row: any) {
   }
 
   startPrint (filename = "") {
-    filename = (this.visiblePath + filename)
+    filename = this.visiblePath !== '/' ? (this.visiblePath + filename) : filename
     this.dialogPrintFile.show = false
     this.$emit('start', filename)
   }
@@ -1366,6 +1366,7 @@ dragDropFilelist (e: any, row: any) {
         resolve(filename)
       }).catch(() => {
         this.uploadSnackbar.status = false
+        this.uploading = false
         this.$emit('upload:error', filename)
       })
     })
