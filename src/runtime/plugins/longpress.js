@@ -11,7 +11,7 @@ export default {
       console.warn(warn)
     }
 
-    const debounceTime = parseInt(binding.arg ?? 1000);
+    const debounceTime = parseInt(binding.arg ? binding.arg : 1000);
 
     // Run Function
     const handler = (e) => {
