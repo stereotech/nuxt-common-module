@@ -1301,7 +1301,9 @@ dragDropFilelist (e: any, row: any) {
    }
 
   created () {
-    this.$helpers = new Helpers()
+    if (!this.$helpers) {
+      this.$helpers = new Helpers()
+    }
     this.loadPath()
   }
   loadPath () {
