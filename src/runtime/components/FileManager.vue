@@ -140,6 +140,7 @@
         @pagination="refreshMetadata"
         v-bind="$attrs"
         v-on="$listeners"
+        ref="table"
       >
         <template slot="items">
           <td v-for="header in visibleHeaders" v-bind:key="header.value">
@@ -843,6 +844,7 @@ export default class FileManager extends Vue {
 
   $refs!: {
     fileUpload: HTMLInputElement
+    table: any
   }
 
   $helpers: Helpers;
@@ -999,18 +1001,18 @@ export default class FileManager extends Vue {
 
     refreshMetadata (data: any) {
       let sortBy = 'modified'
-      if (this.$props.options.sortBy) {
-        sortBy = this.$props.options.sortBy[0] ?? sortBy
+      if (this.$attrs.options?.sortBy) {
+        sortBy = this.$attrs.options.sortBy[0] ?? sortBy
       }
-      if (this.$props.sortBy) {
-        sortBy = typeof this.$props.sortBy === 'string' ? this.$props.sortBy : (this.$props.sortBy[0] ?? sortBy)
+      if (this.$attrs.sortBy) {
+        sortBy = typeof this.$attrs.sortBy === 'string' ? this.$attrs.sortBy : (this.$attrs.sortBy[0] ?? sortBy)
       }
       let sortDesc = false
-      if (this.$props.options.sortDesc) {
-        sortDesc = this.$props.options.sortDesc[0] ?? sortDesc
+      if (this.$attrs.options?.sortDesc) {
+        sortDesc = this.$attrs.options.sortDesc[0] ?? sortDesc
       }
-      if (this.$props.sortDesc) {
-        sortDesc = typeof this.$props.sortDesc === 'boolean' ? this.$props.sortDesc : (this.$props.sortDesc[0] ?? sortDesc)
+      if (this.$attrs.sortDesc) {
+        sortDesc = typeof this.$attrs.sortDesc === 'boolean' ? this.$attrs.sortDesc : (this.$attrs.sortDesc[0] ?? sortDesc)
       }
     const items = this.$helpers.sortFiles(this.files, [sortBy], [sortDesc])
     for (let i = data.pageStart; i < data.pageStop; i++) {
