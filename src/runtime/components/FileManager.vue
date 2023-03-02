@@ -998,7 +998,21 @@ export default class FileManager extends Vue {
   }
 
     refreshMetadata (data: any) {
-    const items = this.$helpers.sortFiles(this.files, [this.$props.sortBy ?? 'modified'], [this.$props.sortDesc ?? false])
+      let sortBy = 'modified'
+      if (this.$props.options.sortBy) {
+        sortBy = this.$props.options.sortBy[0] ?? sortBy
+      }
+      if (this.$props.sortBy) {
+        sortBy = typeof this.$props.sortBy === 'string' ? this.$props.sortBy : (this.$props.sortBy[0] ?? sortBy)
+      }
+      let sortDesc = false
+      if (this.$props.options.sortDesc) {
+        sortDesc = this.$props.options.sortDesc[0] ?? sortDesc
+      }
+      if (this.$props.sortDesc) {
+        sortDesc = typeof this.$props.sortDesc === 'boolean' ? this.$props.sortDesc : (this.$props.sortDesc[0] ?? sortDesc)
+      }
+    const items = this.$helpers.sortFiles(this.files, [sortBy], [sortDesc])
     for (let i = data.pageStart; i < data.pageStop; i++) {
       if (items[i] && !items[i].isDirectory && !items[i].metadataPulled) {
         let filename = join(this.visiblePath, items[i].filename)
