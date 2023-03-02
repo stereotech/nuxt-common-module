@@ -260,14 +260,14 @@
             <td>{{ item.filename }}</td>
             <td
               class="text-no-wrap text-right"
-              v-if="headers.find((header) => header.value === 'size').visible"
+              v-if="visibleHeaders.find((header) => header.value === 'size')"
             >
               {{ item.isDirectory ? "--" : $helpers.formatFilesize(item.size) }}
             </td>
             <td
               class="text-right"
               v-if="
-                headers.find((header) => header.value === 'modified').visible
+                visibleHeaders.find((header) => header.value === 'modified')
               "
             >
               {{
@@ -279,8 +279,7 @@
             <td
               class="text-no-wrap text-right"
               v-if="
-                headers.find((header) => header.value === 'object_height')
-                  .visible
+                visibleHeaders.find((header) => header.value === 'object_height')
               "
             >
               {{
@@ -292,8 +291,7 @@
             <td
               class="text-no-wrap text-right"
               v-if="
-                headers.find((header) => header.value === 'layer_height')
-                  .visible
+                visibleHeaders.find((header) => header.value === 'layer_height')
               "
             >
               {{
@@ -303,8 +301,7 @@
             <td
               class="text-no-wrap text-right"
               v-if="
-                headers.find((header) => header.value === 'filament_total')
-                  .visible
+                visibleHeaders.find((header) => header.value === 'filament_total')
               "
             >
               {{
@@ -316,15 +313,14 @@
             <td
               class="text-no-wrap text-right"
               v-if="
-                headers.find((header) => header.value === 'estimated_time')
-                  .visible
+                visibleHeaders.find((header) => header.value === 'estimated_time')
               "
             >
               {{ $helpers.formatPrintTime(item.estimated_time) }}
             </td>
             <td
               class="text-no-wrap text-right"
-              v-if="headers.find((header) => header.value === 'slicer').visible"
+              v-if="visibleHeaders.find((header) => header.value === 'slicer')"
             >
               {{ item.slicer ? item.slicer : "--" }}<br /><small
                 v-if="item.slicer_version"
@@ -334,8 +330,7 @@
             <td
               class="text-no-wrap text-right"
               v-if="
-                headers.find((header) => header.value === 'printing_mode')
-                  .visible
+                visibleHeaders.find((header) => header.value === 'printing_mode')
               "
             >
               {{
