@@ -1083,8 +1083,7 @@ dragDropFilelist (e: any, row: any) {
           this.dialogPrintFile.item = item;
         }
       } else {
-        //this.$emit('update:path', this.pathSync + "/" + item.filename)
-        this.pathSync += `/${item.filename}`
+        this.$emit('update:path', this.pathSync + "/" + item.filename)
         this.loadPath();
       }
     }
