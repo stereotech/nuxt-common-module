@@ -1221,7 +1221,7 @@ dragDropFilelist (e: any, row: any) {
   }
   deleteDirectoryAction () {
     this.dialogDeleteDirectory.show = false
-    this.$emit('delete:dir', this.pathSync + "/" + this.contextMenu.item.filename, true )
+    this.$emit('delete:dir', join(this.visiblePath, this.contextMenu.item.filename), true )
   }
 
 
