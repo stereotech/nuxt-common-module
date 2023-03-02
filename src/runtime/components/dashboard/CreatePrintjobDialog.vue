@@ -66,7 +66,7 @@
                     }}<v-icon right>mdi-plus</v-icon>
                   </v-btn></template
                 >
-                <file-manager
+                <file-manager-old
                   v-bind="fileManagerPropsEvents"
                   v-on="fileManagerPropsEvents"
                   :options.sync="optionsSync"
@@ -192,7 +192,7 @@
 import { Vue, Component, Model, Prop, PropSync } from 'nuxt-property-decorator'
 import { IParams, IPrinterInfo } from '../../../types/common'
 import { ServerPrintjobsStatePrintjob } from '../../../types/printjobs'
-import FileManager from '../FileManager.vue'
+import FileManagerOld from '../FileManagerOld.vue'
 import CardTitle from '../CardTitle.vue'
 
 interface ICreateDialog {
@@ -205,7 +205,7 @@ interface ICreateDialog {
 @Component({
   name: 'CreatePrintjobDialog',
   components: {
-    FileManager,
+    FileManagerOld,
     CardTitle
   }
 })

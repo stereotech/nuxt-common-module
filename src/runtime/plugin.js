@@ -22,8 +22,10 @@ import DashboardPrinterActionTitle from '~common/components/dashboard/DashboardP
 //Plugins
 import { Helpers } from '~common/plugins/helpers'
 import { Notification } from '~common/plugins/notifications'
+import FileManagerOld from './components/FileManagerOld.vue'
 
 Vue.component(FileManager.name, FileManager)
+Vue.component(FileManagerOld.name, FileManagerOld)
 Vue.component(CardTitle.name, CardTitle)
 Vue.component(PrintQueue.name, PrintQueue)
 Vue.component(CreatePrintjobDialog.name, CreatePrintjobDialog)
