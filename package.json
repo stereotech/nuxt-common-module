@@ -1,6 +1,6 @@
 {
   "name": "@stereotech/nuxt-common-module",
-  "version": "2.6.9",
+  "version": "2.6.10",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/stereotech/nuxt-common-module.git"
