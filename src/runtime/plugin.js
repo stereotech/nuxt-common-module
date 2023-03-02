@@ -1,6 +1,7 @@
 
 import Vue from 'vue'
 import FileManager from '~common/components/FileManager.vue'
+import FileManagerOld from '~common/components/FileManagerOld.vue'
 import CardTitle from '~common/components/CardTitle.vue'
 import PrintQueue from '~common/components/dashboard/PrintQueue'
 import CreatePrintjobDialog from '~common/components/dashboard/CreatePrintjobDialog'
@@ -22,7 +23,7 @@ import DashboardPrinterActionTitle from '~common/components/dashboard/DashboardP
 //Plugins
 import { Helpers } from '~common/plugins/helpers'
 import { Notification } from '~common/plugins/notifications'
-import FileManagerOld from './components/FileManagerOld.vue'
+
 
 Vue.component(FileManager.name, FileManager)
 Vue.component(FileManagerOld.name, FileManagerOld)
