@@ -272,7 +272,7 @@
               {{
                 isUsb(item)
                   ? "--"
-                  : item.modified
+                  : $helpers.formatDate(item.modified, timeOffsetSecs/3600)
               }}
             </td>
             <td
@@ -781,6 +781,7 @@ export default class FileManager extends Vue {
   @Prop({ type: Boolean, default: true }) hasUsb!: boolean
   @Prop({ type: Boolean, default: true }) enablePrintDialog!: boolean
   @Prop({ type: Boolean, default: true }) enableDownload!: boolean
+  @Prop({ type: Number, default: 0 }) timeOffsetSecs!: number
   @Prop({ type: Array, default: () => [] }) validGcodeExtensions!: string[]
   @Prop({ type: String, default: '' }) downloadUrl!: string
   @Prop({ type: String, default: '' }) uploadUrl!: string
