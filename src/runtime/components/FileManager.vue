@@ -586,7 +586,7 @@
                 ></v-img>
               </v-col>
               <v-col>
-                <slot name="alert"></slot>
+                <slot name="alert" v-bind:item="dialogPrintFile.item"></slot>
               </v-col>
             </v-row>
           </v-container>
