@@ -17,7 +17,11 @@
       </v-btn>
     </card-title>
     <v-card-text>
-      <div v-intersect="onIntersect" style="position: relative" class="rotate">
+      <div
+        v-intersect="onIntersect"
+        style="position: relative"
+        :class="isRotate ? 'rotate' : 'norotate'"
+      >
         <div class="text-center py-5" v-if="!isLoaded">
           <v-progress-circular
             indeterminate
@@ -63,6 +67,7 @@ export default class WebcamCard extends Vue {
   @Prop({ type: String, default: "" }) url!: string;
   @Prop({ type: String, default: "" }) title!: string;
   @Prop({ type: Boolean, default: false }) zoomable!: boolean;
+  @Prop({ type: Boolean, default: true }) isRotate!: boolean;
 
   isVisible = false;
   refresh = Math.ceil(Math.random() * Math.pow(10, 12));
@@ -126,8 +131,8 @@ export default class WebcamCard extends Vue {
 
       canvas.width = canvas.clientWidth;
       canvas.height = canvas.clientWidth * (frame.height / frame.width);
-      this.width = canvas.width * 2.2;
-      this.height = canvas.height * 2.2;
+      this.width = canvas.width * 1.1;
+      this.height = canvas.height * 1.1;
 
       ctx.drawImage(
         frame,
@@ -193,6 +198,10 @@ export default class WebcamCard extends Vue {
 <style scoped>
 .rotate {
   transform: translateY(40%) rotate(-90deg);
+  overflow: hidden;
+}
+
+.norotate {
   overflow: hidden;
 }
 
