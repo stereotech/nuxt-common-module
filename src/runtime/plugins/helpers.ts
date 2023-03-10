@@ -150,7 +150,7 @@ export class Helpers implements IHelpers {
   }
 
   formatTime (date: Date, offset: number = 0): string {
-    let numDate = date.getTime() + (offset * 3600000 - 3600000)
+    let numDate = date.getTime() + (offset * 3600000)
     const newDate = new Date(numDate)
     let hours: string | number = newDate.getHours()
     if (hours < 10) hours = "0" + hours.toString()
