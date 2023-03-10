@@ -86,7 +86,7 @@ export class Helpers implements IHelpers {
   }
 
   formatDate (date: number, offset: number = 0): string {
-    date = date + (offset - 2) * 3600000 - 3600000
+    date = date + (offset - 2) * 3600000
     const tmp2 = new Date(date)
     return tmp2.toLocaleString().replace(',', '')
   }
