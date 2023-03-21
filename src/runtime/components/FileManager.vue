@@ -997,7 +997,8 @@ export default class FileManager extends Vue {
     if (this.$attrs.sortDesc) {
       sortDesc = typeof this.$attrs.sortDesc === 'boolean' ? this.$attrs.sortDesc : (this.$attrs.sortDesc[0] ?? sortDesc)
     }
-    const items = this.$helpers.sortFiles(this.files, [sortBy], [sortDesc])
+    const items = this.$helpers.sortFiles(
+    , [sortBy], [sortDesc])
     for (let i = data.pageStart; i < data.pageStop; i++) {
       if (items[i] && !items[i].isDirectory && !items[i].metadataPulled) {
         let filename = join(this.visiblePath, items[i].filename)
@@ -1320,6 +1321,7 @@ export default class FileManager extends Vue {
     this.$emit('refresh', this.pathSync)
     // let dirArray = this.pathSync.split("/")
     let dirArray = [this.rootSync, ...this.pathSync.replace(this.rootSync, '').split("/")];
+    console.log('loadPath', dirArray)
     this.files = this.$helpers.findDirectory(this.filetree, dirArray)
     if (this.files !== null) {
       this.files = this.files.filter(file => file.filename !== "thumbs" && file.filename.substr(0, 1) !== "." && (this.validGcodeExtensions.includes(`.${file.filename.split('.').pop()}`) || file.isDirectory))
@@ -1329,16 +1331,8 @@ export default class FileManager extends Vue {
   filetreeChanged (newVal: FileStateFile[]) {
     // let dirArray = this.pathSync.split("/");
     let dirArray = [this.rootSync, ...this.pathSync.replace(this.rootSync, '').split("/")];
+    console.log('filetreeChanged', dirArray)
     this.files = this.$helpers.findDirectory(newVal, dirArray);
-    if (this.files?.length) {
-      this.files = this.files.filter(file => file.filename !== "thumbs" && file.filename.substr(0, 1) !== "." && (this.validGcodeExtensions.includes(`.${file.filename.split('.').pop()}`) || file.isDirectory));
-    }
-  }
-  @Watch('currentPath')
-  currentPathChanged (newVal: string) {
-    // let dirArray = newVal.split("/");
-    let dirArray = [this.rootSync, ...newVal.replace(this.rootSync, '').split("/")];
-    this.files = this.$helpers.findDirectory(this.filetree, dirArray);
     if (this.files?.length) {
       this.files = this.files.filter(file => file.filename !== "thumbs" && file.filename.substr(0, 1) !== "." && (this.validGcodeExtensions.includes(`.${file.filename.split('.').pop()}`) || file.isDirectory));
     }
