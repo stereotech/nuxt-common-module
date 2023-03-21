@@ -1234,7 +1234,7 @@ export default class FileManager extends Vue {
     this.copyDialog.newPath = this.pathSync
     this.copyDialog.item = item
     // const dirArray = this.copyDialog.newPath.split("/")
-    const dirArray = [this.rootSync, ...this.copyDialog.newPath.replace(this.rootSync, '').split("/")];
+    const dirArray = [this.rootSync, ...this.copyDialog.newPath.replace(this.rootSync, '').split("/")].filter((itm: string)=>itm.length);
     this.copyDialog.fileList = this.$helpers.findDirectory(this.filetree, dirArray) || []
     if (this.copyDialog.fileList.length !== 0) {
       this.copyDialog.fileList = this.copyDialog.fileList.filter(file => file.filename !== "thumbs" && file.filename.substr(0, 1) !== "." && (this.validGcodeExtensions.includes(`.${file.filename.split('.').pop()}`) || file.isDirectory))
@@ -1262,7 +1262,7 @@ export default class FileManager extends Vue {
     if (item.isDirectory) {
       this.copyDialog.newPath += '/' + item.filename
       // const dirArray = this.copyDialog.newPath.split("/")
-      const dirArray = [this.rootSync, ...this.copyDialog.newPath.replace(this.rootSync, '').split("/")];
+      const dirArray = [this.rootSync, ...this.copyDialog.newPath.replace(this.rootSync, '').split("/")].filter((itm: string)=>itm.length);
       this.copyDialog.fileList = this.$helpers.findDirectory(this.filetree, dirArray) || []
       if (this.copyDialog.fileList.length !== 0) {
         this.copyDialog.fileList = this.copyDialog.fileList.filter(file => file.filename !== "thumbs" && file.filename.substr(0, 1) !== "." && (this.validGcodeExtensions.includes(`.${file.filename.split('.').pop()}`) || file.isDirectory))
@@ -1301,9 +1301,7 @@ export default class FileManager extends Vue {
     let arr = this.copyDialog.newPath.split('/')
     arr.length = arr.length - 1
     this.copyDialog.newPath = arr.join('/')
-    // const dirArray = this.copyDialog.newPath.split("/")
-    const dirArray = [this.rootSync, ...this.copyDialog.newPath.replace(this.rootSync, '').split("/")];
-
+    const dirArray = [this.rootSync, ...this.copyDialog.newPath.replace(this.rootSync, '').split("/")].filter((itm: string)=>itm.length);
     this.copyDialog.fileList = this.$helpers.findDirectory(this.filetree, dirArray) || []
     if (this.copyDialog.fileList.length !== 0) {
       this.copyDialog.fileList = this.copyDialog.fileList.filter(file => file.filename !== "thumbs" && file.filename.substr(0, 1) !== "." && (this.validGcodeExtensions.includes(`.${file.filename.split('.').pop()}`) || file.isDirectory))
@@ -1318,8 +1316,7 @@ export default class FileManager extends Vue {
   }
   loadPath () {
     this.$emit('refresh', this.pathSync)
-    // let dirArray = this.pathSync.split("/")
-    let dirArray = [this.rootSync, ...this.pathSync.replace(this.rootSync, '').split("/")];
+    let dirArray = [this.rootSync, ...this.pathSync.replace(this.rootSync, '').split("/")].filter((itm: string)=>itm.length);
     console.log('loadPath', dirArray)
     this.files = this.$helpers.findDirectory(this.filetree, dirArray)
     if (this.files !== null) {
@@ -1328,8 +1325,7 @@ export default class FileManager extends Vue {
   }
   @Watch('filetree', { deep: true })
   filetreeChanged (newVal: FileStateFile[]) {
-    // let dirArray = this.pathSync.split("/");
-    let dirArray = [this.rootSync, ...this.pathSync.replace(this.rootSync, '').split("/")];
+    let dirArray = [this.rootSync, ...this.pathSync.replace(this.rootSync, '').split("/")].filter((itm: string)=>itm.length);
     console.log('filetreeChanged', dirArray)
     this.files = this.$helpers.findDirectory(newVal, dirArray);
     if (this.files?.length) {
