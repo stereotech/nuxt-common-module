@@ -63,10 +63,7 @@
               class="ml-2"
               ><v-icon>mdi-refresh</v-icon></v-btn
             >
-            <v-menu
-              offset-y
-              :close-on-content-click="false"
-            >
+            <v-menu offset-y :close-on-content-click="false">
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
                   color="primary"
@@ -100,31 +97,28 @@
         <v-row>
           <v-col class="col-12 py-2 d-flex align-center">
             <span
-              ><b>{{ pathTitle }}:</b>
-              {{
-               visiblePath
-              }}</span
+              ><b>{{ pathTitle }}:</b> {{ visiblePath }}</span
             >
             <v-spacer></v-spacer>
             <slot name="usage" v-bind:usage="diskUsage">
-            <template v-if="diskUsage !== null">
-              <v-tooltip top>
-                <template v-slot:activator="{ on, attrs }">
-                  <span v-bind="attrs" v-on="on">
-                    <b>{{ diskUsage.title }}:</b>
-                    {{ $helpers.formatFilesize(diskUsage.free.value) }}
+              <template v-if="diskUsage !== null">
+                <v-tooltip top>
+                  <template v-slot:activator="{ on, attrs }">
+                    <span v-bind="attrs" v-on="on">
+                      <b>{{ diskUsage.title }}:</b>
+                      {{ $helpers.formatFilesize(diskUsage.free.value) }}
+                    </span>
+                  </template>
+                  <span>
+                    {{ diskUsage.used.title }}:
+                    {{ $helpers.formatFilesize(diskUsage.used.value) }}<br />
+                    {{ diskUsage.free.title }}:
+                    {{ $helpers.formatFilesize(diskUsage.free.value) }}<br />
+                    {{ diskUsage.total.title }}:
+                    {{ $helpers.formatFilesize(diskUsage.total.value) }}
                   </span>
-                </template>
-                <span>
-                  {{ diskUsage.used.title }}:
-                  {{ $helpers.formatFilesize(diskUsage.used.value) }}<br />
-                  {{  diskUsage.free.title }}:
-                  {{ $helpers.formatFilesize(diskUsage.free.value) }}<br />
-                  {{ diskUsage.total.title }}:
-                  {{ $helpers.formatFilesize(diskUsage.total.value) }}
-                </span>
-              </v-tooltip>
-            </template>
+                </v-tooltip>
+              </template>
             </slot>
           </v-col>
         </v-row>
@@ -233,11 +227,7 @@
                   </v-tooltip>
                 </template>
                 <template v-else-if="getSmallThumbnail(item)">
-                  <v-img
-                    :src="getSmallThumbnail(item)"
-                    width="32"
-                    height="32"
-                  >
+                  <v-img :src="getSmallThumbnail(item)" width="32" height="32">
                     <template v-slot:placeholder>
                       <v-row
                         class="fill-height ma-0"
@@ -273,13 +263,15 @@
               {{
                 isUsb(item)
                   ? "--"
-                  : $helpers.formatDate(item.modified, timeOffsetSecs/3600)
+                  : $helpers.formatDate(item.modified, timeOffsetSecs / 3600)
               }}
             </td>
             <td
               class="text-no-wrap text-right"
               v-if="
-                visibleHeaders.find((header) => header.value === 'object_height')
+                visibleHeaders.find(
+                  (header) => header.value === 'object_height'
+                )
               "
             >
               {{
@@ -301,7 +293,9 @@
             <td
               class="text-no-wrap text-right"
               v-if="
-                visibleHeaders.find((header) => header.value === 'filament_total')
+                visibleHeaders.find(
+                  (header) => header.value === 'filament_total'
+                )
               "
             >
               {{
@@ -313,7 +307,9 @@
             <td
               class="text-no-wrap text-right"
               v-if="
-                visibleHeaders.find((header) => header.value === 'estimated_time')
+                visibleHeaders.find(
+                  (header) => header.value === 'estimated_time'
+                )
               "
             >
               {{ $helpers.formatPrintTime(item.estimated_time) }}
@@ -330,7 +326,9 @@
             <td
               class="text-no-wrap text-right"
               v-if="
-                visibleHeaders.find((header) => header.value === 'printing_mode')
+                visibleHeaders.find(
+                  (header) => header.value === 'printing_mode'
+                )
               "
             >
               {{
@@ -365,9 +363,7 @@
     >
       <span v-if="uploadSnackbar.max > 1" class="mr-1"
         >({{ uploadSnackbar.number }}/{{ uploadSnackbar.max }})</span
-      ><strong>{{
-        snackbarTitle + " " + uploadSnackbar.filename
-      }}</strong
+      ><strong>{{ snackbarTitle + " " + uploadSnackbar.filename }}</strong
       ><br />
       {{ Math.round(uploadSnackbar.percent) }} % @
       {{ $helpers.formatFilesize(Math.round(uploadSnackbar.speed)) }}/s<br />
@@ -416,10 +412,7 @@
         >
           <v-icon class="mr-1">mdi-rename-box</v-icon> {{ renameTitle }}
         </v-list-item>
-        <v-list-item
-          @click="renameFile(contextMenu.item)"
-          v-else
-        >
+        <v-list-item @click="renameFile(contextMenu.item)" v-else>
           <v-icon class="mr-1">mdi-rename-box</v-icon> {{ renameTitle }}
         </v-list-item>
         <v-list-item @click="removeFile" v-if="!contextMenu.item.isDirectory">
@@ -467,7 +460,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="" text @click="dialogCreateDirectory.show = false">{{
-           cancelTitle
+            cancelTitle
           }}</v-btn>
           <v-btn color="primary" text @click="createDirectoryAction">{{
             createDirectoryTitle
@@ -481,9 +474,7 @@
       :transition="false"
     >
       <v-card>
-        <v-card-title class="headline">{{
-          renameTitle
-        }}</v-card-title>
+        <v-card-title class="headline">{{ renameTitle }}</v-card-title>
         <v-card-text>
           <text-input-keyboard
             label="Name"
@@ -513,9 +504,7 @@
       :transition="false"
     >
       <v-card>
-        <v-card-title class="headline">{{
-          renameTitle
-        }}</v-card-title>
+        <v-card-title class="headline">{{ renameTitle }}</v-card-title>
         <v-card-text>
           <text-input-keyboard
             label="Name"
@@ -545,14 +534,13 @@
       :transition="false"
     >
       <v-card>
-        <v-card-title class="headline">{{
-          deleteTitle
-        }} : {{ dialogDeleteDirectory.item.filename }}</v-card-title>
+        <v-card-title class="headline"
+          >{{ deleteTitle }} :
+          {{ dialogDeleteDirectory.item.filename }}</v-card-title
+        >
         <v-card-text>
           <p class="mb-0">
-            {{
-              confirmationTitle
-            }}
+            {{ confirmationTitle }}
           </p>
         </v-card-text>
         <v-card-actions>
@@ -572,7 +560,10 @@
     </v-dialog>
     <v-dialog width="380" v-model="dialogPrintFile.show" :transition="false">
       <v-card>
-        <v-card-title class="headline">{{ createJobTitle }} : {{ dialogPrintFile.item.filename }}</v-card-title>
+        <v-card-title class="headline"
+          >{{ createJobTitle }} :
+          {{ dialogPrintFile.item.filename }}</v-card-title
+        >
         <v-card-text>
           <v-container>
             <v-row>
@@ -612,9 +603,7 @@
     <v-dialog v-model="copyDialog.show" max-width="500" :transition="false">
       <v-card>
         <v-card-title class="headline"
-          >{{
-            copyDialog.action === "copy" ? copyTitle : moveTitle
-          }}
+          >{{ copyDialog.action === "copy" ? copyTitle : moveTitle }}
           {{ copyDialog.filename }}</v-card-title
         >
         <v-card-text>
@@ -627,10 +616,7 @@
           <v-simple-table>
             <template v-slot:default>
               <tbody>
-                <tr
-                  v-if="copyDialog.newPath !== rootSync"
-                  @click="upClick"
-                >
+                <tr v-if="copyDialog.newPath !== rootSync" @click="upClick">
                   <td class="px-1"><v-icon>mdi-folder-upload</v-icon></td>
                   <td class="px-1">..</td>
                 </tr>
@@ -671,9 +657,7 @@
             text
             @click="copyFileAction"
             :disabled="!copyDialog.newPath"
-            >{{
-              copyDialog.action === "copy" ? copyTitle : moveTitle
-            }}</v-btn
+            >{{ copyDialog.action === "copy" ? copyTitle : moveTitle }}</v-btn
           >
         </v-card-actions>
       </v-card>
@@ -737,11 +721,11 @@ export interface dialogCopyObject {
 }
 
 export interface FileManagerHeader {
-    text: string;
-    value: string;
-    align: string;
-    configable: boolean;
-    visible: boolean;
+  text: string;
+  value: string;
+  align: string;
+  configable: boolean;
+  visible: boolean;
 }
 
 export interface DiskUsageInfo {
@@ -767,11 +751,11 @@ export interface DiskUsageInfo {
     TextInputKeyboard
   },
   directives: {
-    'longpress' : longpress
+    'longpress': longpress
   }
 })
 export default class FileManager extends Vue {
-  @Prop({type: Boolean, default: false}) disabled!: boolean
+  @Prop({ type: Boolean, default: false }) disabled!: boolean
   @Prop({ type: Boolean, default: false }) closeable!: boolean
   @Prop({ type: Boolean, default: true }) enableUpload!: boolean
   @Prop({ type: Boolean, default: true }) hasUsb!: boolean
@@ -797,27 +781,31 @@ export default class FileManager extends Vue {
   @Prop({ type: String, default: 'Are you sure?' }) confirmationTitle!: string
   @Prop({ type: String, default: 'Drop files to upload' }) dropzoneTitle!: string
   @Prop({ type: String, default: 'Uploading' }) snackbarTitle!: string
-  @PropSync('path', {type: String, default: 'gcodes'}) pathSync!: string
-  @Prop({type: String, default: 'Current Path'}) pathTitle!: string
-  @PropSync('root', {type: String, default: 'gcodes'}) rootSync!: string
-  @Prop({type: Array, default: (): FileManagerHeader[] => {
-    return [
-      { text: '', value: '', align: 'left', configable: false, visible: true},
-      { text: 'Name', value: 'filename', align: 'left', configable: false, visible: true },
-      { text: 'Filesize', value: 'size', align: 'right', configable: true, visible: true },
-      { text: 'Last Modified', value: 'modified', align: 'right', configable: true, visible: true },
-    ]
-  }}) headers!: FileManagerHeader[]
-  @Prop({type: Array, default: () => {
-    return  [
-          "object_height",
-          "layer_height",
-          "filament_total",
-          "filament_weight_total",
-          "estimated_time",
-          "slicer"
-        ]
-  }}) hiddenColums!: string[]
+  @PropSync('path', { type: String, default: 'gcodes' }) pathSync!: string
+  @Prop({ type: String, default: 'Current Path' }) pathTitle!: string
+  @PropSync('root', { type: String, default: 'gcodes' }) rootSync!: string
+  @Prop({
+    type: Array, default: (): FileManagerHeader[] => {
+      return [
+        { text: '', value: '', align: 'left', configable: false, visible: true },
+        { text: 'Name', value: 'filename', align: 'left', configable: false, visible: true },
+        { text: 'Filesize', value: 'size', align: 'right', configable: true, visible: true },
+        { text: 'Last Modified', value: 'modified', align: 'right', configable: true, visible: true },
+      ]
+    }
+  }) headers!: FileManagerHeader[]
+  @Prop({
+    type: Array, default: () => {
+      return [
+        "object_height",
+        "layer_height",
+        "filament_total",
+        "filament_weight_total",
+        "estimated_time",
+        "slicer"
+      ]
+    }
+  }) hiddenColums!: string[]
   @Prop({ type: Object, default: () => { return null } }) diskUsage!: DiskUsageInfo
   @Prop({ type: Array, default: () => [] }) filetree!: FileStateFile[]
 
@@ -844,7 +832,7 @@ export default class FileManager extends Vue {
 
   $helpers: Helpers;
 
-  get accept() {
+  get accept () {
     return this.validGcodeExtensions.join(", ")
   }
 
@@ -862,8 +850,8 @@ export default class FileManager extends Vue {
     }
   }
 
-    dragOverUpload (e: Event) {
-    if (!this.draggingFile.status  && this.enableUpload) {
+  dragOverUpload (e: Event) {
+    if (!this.draggingFile.status && this.enableUpload) {
       e.preventDefault()
       e.stopImmediatePropagation()
       this.dropzone.visibility = true
@@ -871,7 +859,7 @@ export default class FileManager extends Vue {
     }
   }
   dragLeaveUpload (e: Event) {
-    if (!this.draggingFile.status  && this.enableUpload) {
+    if (!this.draggingFile.status && this.enableUpload) {
       e.preventDefault()
       e.stopImmediatePropagation()
       this.dropzone.visibility = false
@@ -904,7 +892,7 @@ export default class FileManager extends Vue {
     }
   }
 
-    async uploadFile () {
+  async uploadFile () {
     if (this.$refs.fileUpload.files?.length) {
       this.uploading = true
       let successFiles = []
@@ -958,7 +946,7 @@ export default class FileManager extends Vue {
     return this.filteredHeaders.filter(header => header.configable)
   }
 
-  get filteredHeaders() {
+  get filteredHeaders () {
     return this.headers.map(h => {
       let res = Object.assign({}, h)
       if (h.visible && this.hiddenColums.includes(h.value)) {
@@ -970,21 +958,21 @@ export default class FileManager extends Vue {
     })
   }
 
-    changeHeaderVisible (name: string) {
+  changeHeaderVisible (name: string) {
     if (this.headers.find(header => header.value === name)) {
       const value = this.headers.find(header => header.value === name)?.visible || false;
       this.$emit('changeHeaderVisible', { name, value })
     }
   }
 
-  get visiblePath() {
+  get visiblePath () {
     return this.pathSync !== this.rootSync ? this.pathSync.substring(this.rootSync.length) : '/'
   }
 
   files: FileStateFile[] | null = []
 
   get visibleHeaders () {
-    return this.filteredHeaders.filter(h=> h.visible)
+    return this.filteredHeaders.filter(h => h.visible)
   }
 
   advancedSearch (value: string | number, search: string) {
@@ -994,21 +982,21 @@ export default class FileManager extends Vue {
       value.toString().toLowerCase().indexOf(search.toLowerCase()) !== -1
   }
 
-    refreshMetadata (data: any) {
-      let sortBy = 'modified'
-      if (this.$attrs.options?.sortBy) {
-        sortBy = this.$attrs.options.sortBy[0] ?? sortBy
-      }
-      if (this.$attrs.sortBy) {
-        sortBy = typeof this.$attrs.sortBy === 'string' ? this.$attrs.sortBy : (this.$attrs.sortBy[0] ?? sortBy)
-      }
-      let sortDesc = false
-      if (this.$attrs.options?.sortDesc) {
-        sortDesc = this.$attrs.options.sortDesc[0] ?? sortDesc
-      }
-      if (this.$attrs.sortDesc) {
-        sortDesc = typeof this.$attrs.sortDesc === 'boolean' ? this.$attrs.sortDesc : (this.$attrs.sortDesc[0] ?? sortDesc)
-      }
+  refreshMetadata (data: any) {
+    let sortBy = 'modified'
+    if (this.$attrs.options?.sortBy) {
+      sortBy = this.$attrs.options.sortBy[0] ?? sortBy
+    }
+    if (this.$attrs.sortBy) {
+      sortBy = typeof this.$attrs.sortBy === 'string' ? this.$attrs.sortBy : (this.$attrs.sortBy[0] ?? sortBy)
+    }
+    let sortDesc = false
+    if (this.$attrs.options?.sortDesc) {
+      sortDesc = this.$attrs.options.sortDesc[0] ?? sortDesc
+    }
+    if (this.$attrs.sortDesc) {
+      sortDesc = typeof this.$attrs.sortDesc === 'boolean' ? this.$attrs.sortDesc : (this.$attrs.sortDesc[0] ?? sortDesc)
+    }
     const items = this.$helpers.sortFiles(this.files, [sortBy], [sortDesc])
     for (let i = data.pageStart; i < data.pageStop; i++) {
       if (items[i] && !items[i].isDirectory && !items[i].metadataPulled) {
@@ -1021,7 +1009,7 @@ export default class FileManager extends Vue {
   clickRowGoBack () {
     this.$emit('update:path', this.pathSync.substring(0, this.pathSync.lastIndexOf("/")))
   }
-    dragOverFilelist (e: any, row: any) {
+  dragOverFilelist (e: any, row: any) {
     if (this.draggingFile.status) {
       e.preventDefault()
       //e.stopPropagation()
@@ -1038,7 +1026,7 @@ export default class FileManager extends Vue {
     }
   }
 
-dragDropFilelist (e: any, row: any) {
+  dragDropFilelist (e: any, row: any) {
     if (this.draggingFile.status) {
       e.preventDefault()
       e.target.parentElement.style.backgroundColor = 'transparent'
@@ -1080,7 +1068,7 @@ dragDropFilelist (e: any, row: any) {
     }
   }
 
-   clickRow (item: FileStateFile, force = false) {
+  clickRow (item: FileStateFile, force = false) {
     if (!this.contextMenu.shown || force) {
       if (force) {
         this.contextMenu.shown = false;
@@ -1232,7 +1220,7 @@ dragDropFilelist (e: any, row: any) {
   }
   deleteDirectoryAction () {
     this.dialogDeleteDirectory.show = false
-    this.$emit('delete:dir', this.pathSync + "/" + this.contextMenu.item.filename, true )
+    this.$emit('delete:dir', this.pathSync + "/" + this.contextMenu.item.filename, true)
   }
 
 
@@ -1244,14 +1232,15 @@ dragDropFilelist (e: any, row: any) {
     this.copyDialog.currentPath = this.pathSync
     this.copyDialog.newPath = this.pathSync
     this.copyDialog.item = item
-    const dirArray = this.copyDialog.newPath.split("/")
+    // const dirArray = this.copyDialog.newPath.split("/")
+    const dirArray = [this.rootSync, ...this.copyDialog.newPath.replace(this.rootSync, '').split("/")];
     this.copyDialog.fileList = this.$helpers.findDirectory(this.filetree, dirArray) || []
     if (this.copyDialog.fileList.length !== 0) {
       this.copyDialog.fileList = this.copyDialog.fileList.filter(file => file.filename !== "thumbs" && file.filename.substr(0, 1) !== "." && (this.validGcodeExtensions.includes(`.${file.filename.split('.').pop()}`) || file.isDirectory))
     }
-     }
+  }
 
-    copyFileAction () {
+  copyFileAction () {
     this.copyDialog.show = false
     if (this.copyDialog.action === 'copy') {
       this.$emit('copy', {
@@ -1268,25 +1257,31 @@ dragDropFilelist (e: any, row: any) {
     this.copyDialog.fileList = []
   }
 
-    clickCopyItem (item: any) {
+  clickCopyItem (item: any) {
     if (item.isDirectory) {
       this.copyDialog.newPath += '/' + item.filename
-      const dirArray = this.copyDialog.newPath.split("/")
-    this.copyDialog.fileList = this.$helpers.findDirectory(this.filetree, dirArray) || []
-    if (this.copyDialog.fileList.length !== 0) {
-      this.copyDialog.fileList = this.copyDialog.fileList.filter(file => file.filename !== "thumbs" && file.filename.substr(0, 1) !== "." && (this.validGcodeExtensions.includes(`.${file.filename.split('.').pop()}`) || file.isDirectory))
-    }    }
+      // const dirArray = this.copyDialog.newPath.split("/")
+      const dirArray = [this.rootSync, ...this.copyDialog.newPath.replace(this.rootSync, '').split("/")];
+      this.copyDialog.fileList = this.$helpers.findDirectory(this.filetree, dirArray) || []
+      if (this.copyDialog.fileList.length !== 0) {
+        this.copyDialog.fileList = this.copyDialog.fileList.filter(file => file.filename !== "thumbs" && file.filename.substr(0, 1) !== "." && (this.validGcodeExtensions.includes(`.${file.filename.split('.').pop()}`) || file.isDirectory))
+      }
+    }
   }
 
-  @Prop({type: Object, default: () => { return {
-    show: false,
-    name: "",
-    title: "",
-    description:  '',
-    rules: [
-    (value: string) => value.indexOf(" ") === -1 || 'Name contains spaces!'
-  ]
-  }}}) dialogCreateDirectory!: any
+  @Prop({
+    type: Object, default: () => {
+      return {
+        show: false,
+        name: "",
+        title: "",
+        description: '',
+        rules: [
+          (value: string) => value.indexOf(" ") === -1 || 'Name contains spaces!'
+        ]
+      }
+    }
+  }) dialogCreateDirectory!: any
 
   createDirectoryAction () {
     if (this.dialogCreateDirectory.name.length && this.dialogCreateDirectory.name.indexOf(" ") === -1) {
@@ -1305,12 +1300,14 @@ dragDropFilelist (e: any, row: any) {
     let arr = this.copyDialog.newPath.split('/')
     arr.length = arr.length - 1
     this.copyDialog.newPath = arr.join('/')
-    const dirArray = this.copyDialog.newPath.split("/")
+    // const dirArray = this.copyDialog.newPath.split("/")
+    const dirArray = [this.rootSync, ...this.copyDialog.newPath.replace(this.rootSync, '').split("/")];
+
     this.copyDialog.fileList = this.$helpers.findDirectory(this.filetree, dirArray) || []
     if (this.copyDialog.fileList.length !== 0) {
       this.copyDialog.fileList = this.copyDialog.fileList.filter(file => file.filename !== "thumbs" && file.filename.substr(0, 1) !== "." && (this.validGcodeExtensions.includes(`.${file.filename.split('.').pop()}`) || file.isDirectory))
     }
-   }
+  }
 
   created () {
     if (!this.$helpers) {
@@ -1319,16 +1316,18 @@ dragDropFilelist (e: any, row: any) {
     this.loadPath()
   }
   loadPath () {
-    this.$emit('refresh', this.pathSync )
-    let dirArray = this.pathSync.split("/")
+    this.$emit('refresh', this.pathSync)
+    // let dirArray = this.pathSync.split("/")
+    let dirArray = [this.rootSync, ...this.pathSync.replace(this.rootSync, '').split("/")];
     this.files = this.$helpers.findDirectory(this.filetree, dirArray)
     if (this.files !== null) {
       this.files = this.files.filter(file => file.filename !== "thumbs" && file.filename.substr(0, 1) !== "." && (this.validGcodeExtensions.includes(`.${file.filename.split('.').pop()}`) || file.isDirectory))
     }
   }
-    @Watch('filetree', { deep: true })
+  @Watch('filetree', { deep: true })
   filetreeChanged (newVal: FileStateFile[]) {
-    let dirArray = this.pathSync.split("/");
+    // let dirArray = this.pathSync.split("/");
+    let dirArray = [this.rootSync, ...this.pathSync.replace(this.rootSync, '').split("/")];
     this.files = this.$helpers.findDirectory(newVal, dirArray);
     if (this.files?.length) {
       this.files = this.files.filter(file => file.filename !== "thumbs" && file.filename.substr(0, 1) !== "." && (this.validGcodeExtensions.includes(`.${file.filename.split('.').pop()}`) || file.isDirectory));
@@ -1336,7 +1335,8 @@ dragDropFilelist (e: any, row: any) {
   }
   @Watch('currentPath')
   currentPathChanged (newVal: string) {
-    let dirArray = newVal.split("/");
+    // let dirArray = newVal.split("/");
+    let dirArray = [this.rootSync, ...newVal.replace(this.rootSync, '').split("/")];
     this.files = this.$helpers.findDirectory(this.filetree, dirArray);
     if (this.files?.length) {
       this.files = this.files.filter(file => file.filename !== "thumbs" && file.filename.substr(0, 1) !== "." && (this.validGcodeExtensions.includes(`.${file.filename.split('.').pop()}`) || file.isDirectory));
