@@ -1068,7 +1068,7 @@ export default class FileManager extends Vue {
     }
   }
 
-  clickRow (item: FileStateFile, force = false) {
+  async clickRow (item: FileStateFile, force = false) {
     if (!this.contextMenu.shown || force) {
       if (force) {
         this.contextMenu.shown = false;
@@ -1083,6 +1083,7 @@ export default class FileManager extends Vue {
         }
       } else {
         this.$emit('update:path', this.pathSync + "/" + item.filename)
+        await this.$nextTick()
         this.loadPath();
       }
     }
