@@ -997,8 +997,7 @@ export default class FileManager extends Vue {
     if (this.$attrs.sortDesc) {
       sortDesc = typeof this.$attrs.sortDesc === 'boolean' ? this.$attrs.sortDesc : (this.$attrs.sortDesc[0] ?? sortDesc)
     }
-    const items = this.$helpers.sortFiles(
-    , [sortBy], [sortDesc])
+    const items = this.$helpers.sortFiles(this.files, [sortBy], [sortDesc])
     for (let i = data.pageStart; i < data.pageStop; i++) {
       if (items[i] && !items[i].isDirectory && !items[i].metadataPulled) {
         let filename = join(this.visiblePath, items[i].filename)
