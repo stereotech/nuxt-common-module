@@ -1014,9 +1014,11 @@ export default class FileManager extends Vue {
   }
 
   clickRowGoBack () {
-  console.log('this.pathSync:', this.pathSync)
-  console.log('вызываю update:path из clickRowGoBack с параметром', this.pathSync.substring(0, this.pathSync.lastIndexOf("/")))
+  console.log('вызываю update:path из clickRowGoBack')
     this.$emit('update:path', this.pathSync.substring(0, this.pathSync.lastIndexOf("/")))
+    //todo помогут 2 строки?
+    await this.$nextTick()
+    this.loadPath();
   }
   dragOverFilelist (e: any, row: any) {
     if (this.draggingFile.status) {
