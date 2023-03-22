@@ -945,7 +945,6 @@ export default class FileManager extends Vue {
   }
 
   refreshFileList () {
-    console.log('вызываю refresh из refreshFileList с параметром ',this.pathSync)
     this.$emit('refresh', this.pathSync)
   }
 
@@ -1014,9 +1013,7 @@ export default class FileManager extends Vue {
   }
 
   async clickRowGoBack () {
-  console.log('вызываю update:path из clickRowGoBack')
     this.$emit('update:path', this.pathSync.substring(0, this.pathSync.lastIndexOf("/")))
-    //todo помогут 2 строки?
     await this.$nextTick()
     this.loadPath();
   }
@@ -1326,10 +1323,9 @@ export default class FileManager extends Vue {
     this.loadPath()
   }
   loadPath () {
-    console.log('вызываю refresh из loadPath с параметром ',this.pathSync)
     this.$emit('refresh', this.pathSync)
     let dirArray = [this.rootSync, ...this.pathSync.replace(this.rootSync, '').split("/")].filter((itm: string)=>itm.length);
-    console.log('loadPath', dirArray)
+    //console.log('loadPath', dirArray)
     this.files = this.$helpers.findDirectory(this.filetree, dirArray)
     if (this.files !== null) {
       this.files = this.files.filter(file => file.filename !== "thumbs" && file.filename.substr(0, 1) !== "." && (this.validGcodeExtensions.includes(`.${file.filename.split('.').pop()}`) || file.isDirectory))
@@ -1338,7 +1334,7 @@ export default class FileManager extends Vue {
   @Watch('filetree', { deep: true })
   filetreeChanged (newVal: FileStateFile[]) {
     let dirArray = [this.rootSync, ...this.pathSync.replace(this.rootSync, '').split("/")].filter((itm: string)=>itm.length);
-    console.log('filetreeChanged', dirArray)
+    //console.log('filetreeChanged', dirArray)
     this.files = this.$helpers.findDirectory(newVal, dirArray);
     if (this.files?.length) {
       this.files = this.files.filter(file => file.filename !== "thumbs" && file.filename.substr(0, 1) !== "." && (this.validGcodeExtensions.includes(`.${file.filename.split('.').pop()}`) || file.isDirectory));
@@ -1363,7 +1359,6 @@ export default class FileManager extends Vue {
       pathForUpload = this.visiblePath + '/' + filename      
     }
 
-    console.log('pathForUpload:', pathForUpload)
     formData.append('file', file, pathForUpload)
     return new Promise(resolve => {
       this.uploadSnackbar.cancelTokenSource = this.$axios.CancelToken.source();
