@@ -443,6 +443,7 @@
       :transition="false"
     >
       <v-card>
+      <v-form @submit.prevent="createDirectoryAction">
         <v-card-title class="headline">{{
           dialogCreateDirectory.title
         }}</v-card-title>
@@ -461,10 +462,11 @@
           <v-btn color="" text @click="dialogCreateDirectory.show = false">{{
             cancelTitle
           }}</v-btn>
-          <v-btn color="primary" text @click="createDirectoryAction">{{
+          <v-btn color="primary" text type="submit">{{
             createDirectoryTitle
           }}</v-btn>
         </v-card-actions>
+        </v-form>
       </v-card>
     </v-dialog>
     <v-dialog
