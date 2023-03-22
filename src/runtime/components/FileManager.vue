@@ -1013,7 +1013,7 @@ export default class FileManager extends Vue {
     }
   }
 
-  clickRowGoBack () {
+  async clickRowGoBack () {
   console.log('вызываю update:path из clickRowGoBack')
     this.$emit('update:path', this.pathSync.substring(0, this.pathSync.lastIndexOf("/")))
     //todo помогут 2 строки?
