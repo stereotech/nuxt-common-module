@@ -1339,13 +1339,16 @@ export default class FileManager extends Vue {
     this.uploadSnackbar.speed = 0
     this.uploadSnackbar.lastProgress.loaded = 0
     this.uploadSnackbar.lastProgress.time = 0
-    if(this.visiblePath[this.visiblePath.length-1] !== "/"){
-      this.visiblePath = this.visiblePath + '/'
+    
+    let pathForUpload = ''
+    if(this.visiblePath[this.visiblePath.length-1] === "/"){
+      pathForUpload = this.visiblePath + filename
+    } else{
+      pathForUpload = this.visiblePath + '/' + filename      
     }
-    console.log('this.visiblePath', this.visiblePath)
-    console.log('filename', filename)
-    console.log('this.visiblePath + filename:', this.visiblePath + filename)
-    formData.append('file', file, (this.visiblePath + filename))
+
+    console.log('pathForUpload:', pathForUpload)
+    formData.append('file', file, pathForUpload)
     return new Promise(resolve => {
       this.uploadSnackbar.cancelTokenSource = this.$axios.CancelToken.source();
       this.$axios.post(this.uploadUrl,
