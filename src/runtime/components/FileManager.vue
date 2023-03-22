@@ -462,7 +462,7 @@
           <v-btn color="" text @click="dialogCreateDirectory.show = false">{{
             cancelTitle
           }}</v-btn>
-          <v-btn color="primary" text @click="createDirectoryAction" @keyup.enter="createDirectoryAction">{{
+          <v-btn color="primary" text @click="createDirectoryAction" @keyup.enter.native="createDirectoryAction">{{
             createDirectoryTitle
           }}</v-btn>
         </v-card-actions>
@@ -492,7 +492,7 @@
             color="primary"
             text
             @click="renameFileAction"
-            @keyup.enter="renameFileAction"
+            @keyup.13="renameFileAction"
             >{{ renameTitle }}</v-btn
           >
         </v-card-actions>
@@ -522,7 +522,7 @@
             color="primary"
             text
             @click="renameDirectoryAction"
-            @keyup.enter="renameDirectoryAction"
+            @keyup="renameDirectoryActionWrap"
             >{{ renameTitle }}</v-btn
           >
         </v-card-actions>
@@ -1345,7 +1345,8 @@ export default class FileManager extends Vue {
     this.uploadSnackbar.speed = 0
     this.uploadSnackbar.lastProgress.loaded = 0
     this.uploadSnackbar.lastProgress.time = 0
-    console.log('file', file)
+    console.log('this.visiblePath', this.visiblePath)
+    console.log('filename', filename)
     console.log('this.visiblePath + filename:', this.visiblePath + filename)
     formData.append('file', file, (this.visiblePath + filename))
     return new Promise(resolve => {
@@ -1377,6 +1378,12 @@ export default class FileManager extends Vue {
         this.$emit('upload:error', filename)
       })
     })
+  }
+  
+  renameDirectoryActionWrap(e: any){
+  if (e.keyCode === 13) {
+    this.renameDirectoryAction()
+  }
   }
 }
 </script>
