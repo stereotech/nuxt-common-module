@@ -451,7 +451,6 @@
           <text-input-keyboard
             label="Name"
             :rules="dialogCreateDirectory.rules"
-            @keyup.enter="createDirectoryAction"
             required
             outlined
             v-model="dialogCreateDirectory.name"
@@ -462,7 +461,7 @@
           <v-btn color="" text @click="dialogCreateDirectory.show = false">{{
             cancelTitle
           }}</v-btn>
-          <v-btn color="primary" text @click="createDirectoryAction" @keyup.enter.native="createDirectoryAction">{{
+          <v-btn color="primary" text @click="createDirectoryAction">{{
             createDirectoryTitle
           }}</v-btn>
         </v-card-actions>
@@ -492,7 +491,6 @@
             color="primary"
             text
             @click="renameFileAction"
-            @keyup.13="renameFileAction"
             >{{ renameTitle }}</v-btn
           >
         </v-card-actions>
@@ -522,7 +520,6 @@
             color="primary"
             text
             @click="renameDirectoryAction"
-            @keyup="renameDirectoryActionWrap"
             >{{ renameTitle }}</v-btn
           >
         </v-card-actions>
@@ -552,7 +549,6 @@
             color="error"
             text
             @click="deleteDirectoryAction"
-            @keyup.enter="deleteDirectoryAction"
             >{{ deleteTitle }}</v-btn
           >
         </v-card-actions>
@@ -594,7 +590,6 @@
             color="green darken-1"
             text
             @click="startPrint(dialogPrintFile.item.filename)"
-            @keyup.enter="startPrint(dialogPrintFile.item.filename)"
             >{{ createJobTitle }}</v-btn
           >
         </v-card-actions>
@@ -657,7 +652,6 @@
             color="primary"
             text
             @click="copyFileAction"
-            @keyup.enter="copyFileAction"
             :disabled="!copyDialog.newPath"
             >{{ copyDialog.action === "copy" ? copyTitle : moveTitle }}</v-btn
           >
@@ -1345,6 +1339,9 @@ export default class FileManager extends Vue {
     this.uploadSnackbar.speed = 0
     this.uploadSnackbar.lastProgress.loaded = 0
     this.uploadSnackbar.lastProgress.time = 0
+    if(this.visiblePath[this.visiblePath.length-1] !== "/"){
+      this.visiblePath = this.visiblePath + '/'
+    }
     console.log('this.visiblePath', this.visiblePath)
     console.log('filename', filename)
     console.log('this.visiblePath + filename:', this.visiblePath + filename)
@@ -1368,7 +1365,6 @@ export default class FileManager extends Vue {
         }
       }
       ).then((result: any) => {
-      console.log('.then filename: ', filename)
         const filename = result.data.item.path.substr(result.data.item.path.indexOf("/") + 1)
         this.uploadSnackbar.status = false
         resolve(filename)
@@ -1378,12 +1374,6 @@ export default class FileManager extends Vue {
         this.$emit('upload:error', filename)
       })
     })
-  }
-  
-  renameDirectoryActionWrap(e: any){
-  if (e.keyCode === 13) {
-    this.renameDirectoryAction()
-  }
   }
 }
 </script>
