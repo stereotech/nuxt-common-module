@@ -475,6 +475,7 @@
       :transition="false"
     >
       <v-card>
+      <v-form @submit.prevent="renameFileAction">
         <v-card-title class="headline">{{ renameTitle }}</v-card-title>
         <v-card-text>
           <text-input-keyboard
@@ -492,10 +493,11 @@
           <v-btn
             color="primary"
             text
-            @click="renameFileAction"
+            type="submit"
             >{{ renameTitle }}</v-btn
           >
         </v-card-actions>
+        </v-form>
       </v-card>
     </v-dialog>
     <v-dialog
@@ -504,6 +506,7 @@
       :transition="false"
     >
       <v-card>
+      <v-form @submit.prevent="renameDirectoryAction">
         <v-card-title class="headline">{{ renameTitle }}</v-card-title>
         <v-card-text>
           <text-input-keyboard
@@ -521,10 +524,11 @@
           <v-btn
             color="primary"
             text
-            @click="renameDirectoryAction"
+            type="submit"
             >{{ renameTitle }}</v-btn
           >
         </v-card-actions>
+        </v-form>
       </v-card>
     </v-dialog>
     <v-dialog
@@ -533,6 +537,7 @@
       :transition="false"
     >
       <v-card>
+      <v-form @submit.prevent="deleteDirectoryAction">
         <v-card-title class="headline"
           >{{ deleteTitle }} :
           {{ dialogDeleteDirectory.item.filename }}</v-card-title
@@ -550,14 +555,16 @@
           <v-btn
             color="error"
             text
-            @click="deleteDirectoryAction"
+            type="submit"
             >{{ deleteTitle }}</v-btn
           >
         </v-card-actions>
+        </v-form>
       </v-card>
     </v-dialog>
     <v-dialog width="400" v-model="dialogPrintFile.show" :transition="false">
       <v-card>
+      <v-form @submit.prevent="startPrint(dialogPrintFile.item.filename)">
         <v-card-title class="headline"
           >{{ createJobTitle }} :
           {{ dialogPrintFile.item.filename }}</v-card-title
@@ -591,10 +598,11 @@
           <v-btn
             color="green darken-1"
             text
-            @click="startPrint(dialogPrintFile.item.filename)"
+            type="submit"
             >{{ createJobTitle }}</v-btn
           >
         </v-card-actions>
+        </v-form>
       </v-card>
     </v-dialog>
 
