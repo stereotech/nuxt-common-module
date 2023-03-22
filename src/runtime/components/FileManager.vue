@@ -945,6 +945,7 @@ export default class FileManager extends Vue {
   }
 
   refreshFileList () {
+    console.log('вызываю refresh из refreshFileList с параметром ',this.pathSync)
     this.$emit('refresh', this.pathSync)
   }
 
@@ -1013,6 +1014,8 @@ export default class FileManager extends Vue {
   }
 
   clickRowGoBack () {
+  console.log('this.pathSync:', this.pathSync)
+  console.log('вызываю update:path из clickRowGoBack с параметром', this.pathSync.substring(0, this.pathSync.lastIndexOf("/")))
     this.$emit('update:path', this.pathSync.substring(0, this.pathSync.lastIndexOf("/")))
   }
   dragOverFilelist (e: any, row: any) {
@@ -1321,6 +1324,7 @@ export default class FileManager extends Vue {
     this.loadPath()
   }
   loadPath () {
+    console.log('вызываю refresh из loadPath с параметром ',this.pathSync)
     this.$emit('refresh', this.pathSync)
     let dirArray = [this.rootSync, ...this.pathSync.replace(this.rootSync, '').split("/")].filter((itm: string)=>itm.length);
     console.log('loadPath', dirArray)
