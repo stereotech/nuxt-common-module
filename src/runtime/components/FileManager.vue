@@ -939,8 +939,8 @@ export default class FileManager extends Vue {
     this.$refs.fileUpload.click()
   }
 
-  createDirectory () {
-  this.$nextTick(() => {
+  async createDirectory () {
+  await this.$nextTick(() => {
       this.dialogCreateDirectory.name = ""
       this.dialogCreateDirectory.show = true
       console.log('this.dialogCreateDirectory: ', this.dialogCreateDirectory)
