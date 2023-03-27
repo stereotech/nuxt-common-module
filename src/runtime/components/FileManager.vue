@@ -47,7 +47,7 @@
             >
             <v-btn
               icon
-              @click="dialogCreateDirectory.show = true"
+              @click="createDirectory"
               :title="createDirectoryTitle"
               color="primary"
               large
@@ -443,7 +443,7 @@
       :transition="false"
     >
       <v-card>
-      <!--<v-form @submit.prevent="createDirectoryAction">-->
+      <v-form @submit.prevent="createDirectoryAction">
         <v-card-title class="headline">{{
           dialogCreateDirectory.title
         }}</v-card-title>
@@ -462,11 +462,11 @@
           <v-btn color="" text @click="dialogCreateDirectory.show = false">{{
             cancelTitle
           }}</v-btn>
-          <v-btn color="primary" text @click="createDirectoryAction">{{
+          <v-btn color="primary" text type="submit">{{
             createDirectoryTitle
           }}</v-btn>
         </v-card-actions>
-        <!--</v-form>-->
+        </v-form>
       </v-card>
     </v-dialog>
     <v-dialog
@@ -814,6 +814,19 @@ export default class FileManager extends Vue {
   }) hiddenColums!: string[]
   @Prop({ type: Object, default: () => { return null } }) diskUsage!: DiskUsageInfo
   @Prop({ type: Array, default: () => [] }) filetree!: FileStateFile[]
+  @Prop({
+    type: Object, default: () => {
+      return {
+        show: false,
+        name: "",
+        title: "",
+        description: '',
+        rules: [
+          (value: string) => value.indexOf(" ") === -1 || 'Name contains spaces!'
+        ]
+      }
+    }
+  }) dialogCreateDirectory!: any
 
 
   copyDialog: dialogCopyObject = {
@@ -942,7 +955,6 @@ export default class FileManager extends Vue {
   createDirectory () {
       this.dialogCreateDirectory.name = ""
       this.dialogCreateDirectory.show = true
-      console.log('this.dialogCreateDirectory: ', this.dialogCreateDirectory)
   }
 
   refreshFileList () {
@@ -1279,28 +1291,11 @@ export default class FileManager extends Vue {
     }
   }
 
-  @Prop({
-    type: Object, default: () => {
-      return {
-        show: false,
-        name: "",
-        title: "",
-        description: '',
-        rules: [
-          (value: string) => value.indexOf(" ") === -1 || 'Name contains spaces!'
-        ]
-      }
-    }
-  }) dialogCreateDirectory!: any
-
   createDirectoryAction () {
     if (this.dialogCreateDirectory.name.length && this.dialogCreateDirectory.name.indexOf(" ") === -1) {
       this.dialogCreateDirectory.show = false
-      console.log('emit create:dir: ', this.pathSync + "/" + this.dialogCreateDirectory.name)
       this.$emit('create:dir', this.pathSync + "/" + this.dialogCreateDirectory.name)
     }
-    console.log('обнуляем name')
-    this.dialogCreateDirectory.name = ''
   }
 
   startPrint (filename = "") {
