@@ -940,8 +940,11 @@ export default class FileManager extends Vue {
   }
 
   createDirectory () {
-    this.dialogCreateDirectory.name = ""
-    this.dialogCreateDirectory.show = true
+  this.$nextTick(() => {
+      this.dialogCreateDirectory.name = ""
+      this.dialogCreateDirectory.show = true
+      console.log('this.dialogCreateDirectory: ', this.dialogCreateDirectory)
+    })
   }
 
   refreshFileList () {
@@ -1325,7 +1328,6 @@ export default class FileManager extends Vue {
   loadPath () {
     this.$emit('refresh', this.pathSync)
     let dirArray = [this.rootSync, ...this.pathSync.replace(this.rootSync, '').split("/")].filter((itm: string)=>itm.length);
-    //console.log('loadPath', dirArray)
     this.files = this.$helpers.findDirectory(this.filetree, dirArray)
     if (this.files !== null) {
       this.files = this.files.filter(file => file.filename !== "thumbs" && file.filename.substr(0, 1) !== "." && (this.validGcodeExtensions.includes(`.${file.filename.split('.').pop()}`) || file.isDirectory))
@@ -1334,7 +1336,6 @@ export default class FileManager extends Vue {
   @Watch('filetree', { deep: true })
   filetreeChanged (newVal: FileStateFile[]) {
     let dirArray = [this.rootSync, ...this.pathSync.replace(this.rootSync, '').split("/")].filter((itm: string)=>itm.length);
-    //console.log('filetreeChanged', dirArray)
     this.files = this.$helpers.findDirectory(newVal, dirArray);
     if (this.files?.length) {
       this.files = this.files.filter(file => file.filename !== "thumbs" && file.filename.substr(0, 1) !== "." && (this.validGcodeExtensions.includes(`.${file.filename.split('.').pop()}`) || file.isDirectory));
