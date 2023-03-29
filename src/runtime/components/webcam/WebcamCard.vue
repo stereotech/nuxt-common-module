@@ -1,6 +1,5 @@
 <template>
-  <v-card>
-   <!--:height="height" :width="width"-->
+  <v-card :height="height" :width="width" :min-height="initialHeight" :min-width="initialWidth">
     <card-title icon="mdi-webcam" :title="title">
       <v-spacer></v-spacer>
       <v-btn v-if="zoomable" @click="zoomInImage" icon>
@@ -82,6 +81,8 @@ export default class WebcamCard extends Vue {
   request_time_smoothing = 0.1;
   height = 400
   width = 600
+  initialHeight = 400
+  initialWidth = 600  
 
   isZoomed = false;
   zoomInImage () {
@@ -120,12 +121,14 @@ export default class WebcamCard extends Vue {
       this.setFrame();
     }
   }
+  
+ globalCanvas = this.$refs.mjpegstreamerAdaptive;
 
   async setFrame () {
     const url = new URL(this.url);
 
     this.request_start_time = performance.now();
-    let canvas = this.$refs.mjpegstreamerAdaptive;
+    //let canvas = this.$refs.mjpegstreamerAdaptive;
     if (canvas) {
       const ctx = canvas.getContext("2d");
       const frame: any = await this.loadImage(url.toString());
@@ -133,7 +136,7 @@ export default class WebcamCard extends Vue {
       canvas.width = canvas.clientWidth;
       canvas.height = canvas.clientWidth * (frame.height / frame.width);
       this.width = canvas.width * 1.1;
-      this.height = canvas.height * 1.1;
+      this.height = canvas.height * 1.3;
 
       ctx.drawImage(
         frame,
@@ -146,6 +149,7 @@ export default class WebcamCard extends Vue {
         canvas.width,
         canvas.height
       );
+      //! идет постоянная перерисовка
       console.log('canvas: [',canvas.width,', ', canvas.height,']')
       console.log('frame: [',frame.width,', ', frame.height,']')
       this.isLoaded = true;
@@ -156,12 +160,9 @@ export default class WebcamCard extends Vue {
     });
   }
 
-@Watch('height') heightChanged(val: any){
-  console.log('Watch height = ', val)
-}
-
-@Watch('width') widthChanged(val: any){
-  console.log('Watch width = ', val)
+@Watch('globalCanvas.height') heightChanged(val: any){
+  console.log('Watch globalCanvas height = ', val)
+  //this.height = this.globalCanvas.height * 1.3;
 }
 
   loadImage (url: string) {
