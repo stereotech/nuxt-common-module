@@ -1,5 +1,6 @@
 <template>
-  <v-card :height="height" :width="width" :min-height="initialHeight" :min-width="initialWidth">
+  <v-card :height="height" :width="width" :min-height="height" :min-width="width">
+   <!--:min-height="initialHeight" :min-width="initialWidth"-->
     <card-title icon="mdi-webcam" :title="title">
       <v-spacer></v-spacer>
       <v-btn v-if="zoomable" @click="zoomInImage" icon>
@@ -78,8 +79,8 @@ export default class WebcamCard extends Vue {
   request_time = 0;
   time_smoothing = 0.6;
   request_time_smoothing = 0.1;
-  height = 400
-  width = 600
+  //height = 400
+  //width = 600
   initialHeight = 400
   initialWidth = 600  
 
@@ -121,7 +122,15 @@ export default class WebcamCard extends Vue {
     }
   }
   
- globalCanvas = this.$refs.mjpegstreamerAdaptive;
+ get height(){
+  console.log('height = ', this.$refs.mjpegstreamerAdaptive.height * 1.3)
+  return this.$refs.mjpegstreamerAdaptive.height * 1.3
+ }
+ 
+ get width(){
+  console.log('width = ', this.$refs.mjpegstreamerAdaptive.width * 1.1)
+  return this.$refs.mjpegstreamerAdaptive.width * 1.1
+ }
 
   async setFrame () {
     const url = new URL(this.url);
@@ -134,8 +143,8 @@ export default class WebcamCard extends Vue {
 
       canvas.width = canvas.clientWidth;
       canvas.height = canvas.clientWidth * (frame.height / frame.width);
-      this.width = canvas.width * 1.1;
-      this.height = canvas.height * 1.3;
+      //this.width = canvas.width * 1.1;
+      //this.height = canvas.height * 1.3;
 
       ctx.drawImage(
         frame,
@@ -149,8 +158,8 @@ export default class WebcamCard extends Vue {
         canvas.height
       );
       //! идет постоянная перерисовка
-      console.log('canvas: [',canvas.width,', ', canvas.height,']')
-      console.log('frame: [',frame.width,', ', frame.height,']')
+      //console.log('canvas: [',canvas.width,', ', canvas.height,']')
+      //console.log('frame: [',frame.width,', ', frame.height,']')
       this.isLoaded = true;
     }
 
