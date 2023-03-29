@@ -123,7 +123,7 @@ export default class WebcamCard extends Vue {
   }
   
  get globalCanvas(){
-  return this.$refs.mjpegstreamerAdaptive
+  return this.$refs.mjpegstreamerAdaptive ?? {}
  }
   
  get height(){
