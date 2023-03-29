@@ -122,22 +122,26 @@ export default class WebcamCard extends Vue {
     }
   }
   
+ get globalCanvas(){
+  return this.$refs.mjpegstreamerAdaptive
+ }
+  
  get height(){
-  console.log('height = ', this.$refs.mjpegstreamerAdaptive.height * 1.3)
-  return this.$refs.mjpegstreamerAdaptive.height * 1.3
+  console.log('height = ', this.globalCanvas.height * 1.3)
+  return this.globalCanvas.height * 1.3
  }
  
  get width(){
-  console.log('width = ', this.$refs.mjpegstreamerAdaptive.width * 1.1)
-  return this.$refs.mjpegstreamerAdaptive.width * 1.1
+  console.log('width = ', this.globalCanvas.width * 1.1)
+  return this.globalCanvas.width * 1.1
  }
 
   async setFrame () {
     const url = new URL(this.url);
 
     this.request_start_time = performance.now();
-    //let canvas = this.$refs.mjpegstreamerAdaptive;
-    if (canvas) {
+    let canvas = this.$refs.mjpegstreamerAdaptive;
+    if (this.canvas) {
       const ctx = canvas.getContext("2d");
       const frame: any = await this.loadImage(url.toString());
 
@@ -158,8 +162,7 @@ export default class WebcamCard extends Vue {
         canvas.height
       );
       //! идет постоянная перерисовка
-      //console.log('canvas: [',canvas.width,', ', canvas.height,']')
-      //console.log('frame: [',frame.width,', ', frame.height,']')
+      console.log('canvas: [',canvas.width,', ', canvas.height,']')
       this.isLoaded = true;
     }
 
