@@ -1,5 +1,6 @@
 <template>
-  <v-card :height="height" :width="width">
+  <v-card>
+   <!--:height="height" :width="width"-->
     <card-title icon="mdi-webcam" :title="title">
       <v-spacer></v-spacer>
       <v-btn v-if="zoomable" @click="zoomInImage" icon>
@@ -44,7 +45,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from "nuxt-property-decorator";
+import { Vue, Component, Prop, Watch } from "nuxt-property-decorator";
 import CardTitle from "../CardTitle.vue";
 
 @Component({
@@ -145,6 +146,8 @@ export default class WebcamCard extends Vue {
         canvas.width,
         canvas.height
       );
+      console.log('canvas: [',canvas.width,', ', canvas.height,']')
+      console.log('frame: [',frame.width,', ', frame.height,']')
       this.isLoaded = true;
     }
 
@@ -152,6 +155,14 @@ export default class WebcamCard extends Vue {
       this.onLoad();
     });
   }
+
+@Watch('height') heightChanged(val: any){
+  console.log('Watch height = ', val)
+}
+
+@Watch('width') widthChanged(val: any){
+  console.log('Watch width = ', val)
+}
 
   loadImage (url: string) {
     return new Promise((r) => {
