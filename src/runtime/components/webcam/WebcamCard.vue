@@ -30,14 +30,13 @@
         </div>
         <canvas
           ref="mjpegstreamerAdaptive"
-          :width="width"
-          :height="height"
           :class="
             'webcamImage ' +
             (isLoaded ? '' : 'hiddenWebcam') +
             (isZoomed ? 'zoomedWebcam' : '')
           "
         ></canvas>
+        <!--:width="width" :height="height" -->
       </div>
     </v-card-text>
   </v-card>
