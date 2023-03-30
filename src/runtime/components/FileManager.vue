@@ -988,7 +988,7 @@ export default class FileManager extends Vue {
 
   get visiblePath () {
     //return this.pathSync !== this.rootSync ? this.pathSync.substring(this.rootSync.length) : '/'
-    let visiblePath = this.pathSync !== this.rootSync ? this.pathSync.substring(0, this.pathSync.lastIndexOf("/") : '/'
+    let visiblePath = this.pathSync !== this.rootSync ? this.pathSync.substring(0, this.pathSync.lastIndexOf("/")) : '/'
     console.log('rootSync: ', this.rootSync)
     console.log('pathSync: ', this.pathSync)    
     console.log('visiblePath: ', visiblePath)
