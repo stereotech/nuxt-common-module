@@ -923,8 +923,6 @@ export default class FileManager extends Vue {
         successFiles.push(result)
       }
       this.uploading = false
-      console.log('----- before success emit ------successFiles: ')
-      console.table(successFiles)
       for (const file of successFiles) {
         this.$emit('uploaded', file)
       }
@@ -987,10 +985,25 @@ export default class FileManager extends Vue {
   }
 
   get visiblePath () {
-    //return this.pathSync !== this.rootSync ? this.pathSync.substring(this.rootSync.length) : '/'
-    let visiblePath = this.pathSync !== this.rootSync ? this.pathSync.substring(0, this.pathSync.lastIndexOf("/")) : '/6384c27353b6689eb554bc19/'
     console.log('rootSync: ', this.rootSync)
     console.log('pathSync: ', this.pathSync)    
+
+    //return this.pathSync !== this.rootSync ? this.pathSync.substring(this.rootSync.length) : '/'
+    let visiblePath = ''
+    
+    //if(this.pathSync === this.rootSync){
+    //  visiblePath = this.rootSync.includes('gcodes/') ? this.pathSync.substring(this.pathSync.indexOf('/'))+'/' : '/'
+    //} else {
+    //  visiblePath = this.rootSync.includes('gcodes/') ? this.pathSync.substring(this.pathSync.indexOf('/'))+'/' :this.pathSync.substring(this.rootSync.length)
+    //}
+    
+    if(this.rootSync.includes('gcodes/')){
+      visiblePath = this.pathSync.substring(this.pathSync.indexOf('/'))+'/'
+      console.log('if')  
+    } else {
+      visiblePath = this.pathSync !== this.rootSync ? this.pathSync.substring(this.rootSync.length) : '/'
+      console.log('else')  
+    }
     console.log('visiblePath: ', visiblePath)
     
     return visiblePath
@@ -1346,7 +1359,6 @@ export default class FileManager extends Vue {
     }
   }
   doUploadFile (file: File) {
-  console.log('doUploadFile file: ', file)
     let formData = new FormData()
     let filename = file.name;
     filename = this.$helpers.cyrillicTransform(filename, "_");
@@ -1361,10 +1373,10 @@ export default class FileManager extends Vue {
     let pathForUpload = ''
     if(this.visiblePath[this.visiblePath.length-1] === "/"){
       pathForUpload = this.visiblePath + filename
-      console.log('if ')
+      //console.log('if ')
     } else{
       pathForUpload = this.visiblePath + '/' + filename      
-      console.log('else')
+      //console.log('else')
     }
     console.log('pathForUpload: ', pathForUpload)
 
