@@ -993,7 +993,8 @@ export default class FileManager extends Vue {
     console.log('pathSync: ', this.pathSync)    
     console.log('visiblePath: ', visiblePath)
     
-    return visiblePath
+    //return visiblePath
+    returm '/6384c27353b6689eb554bc19/'
   }
 
   files: FileStateFile[] | null = []
