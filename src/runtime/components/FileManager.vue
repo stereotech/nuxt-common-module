@@ -923,8 +923,8 @@ export default class FileManager extends Vue {
         successFiles.push(result)
       }
       this.uploading = false
-      console.log('----- before success emit ------')
-      console.log('successFiles', successFiles)
+      console.log('----- before success emit ------successFiles: ')
+      console.table(successFiles)
       for (const file of successFiles) {
         this.$emit('uploaded', file)
       }
