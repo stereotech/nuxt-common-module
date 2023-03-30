@@ -985,27 +985,12 @@ export default class FileManager extends Vue {
   }
 
   get visiblePath () {
-    console.log('rootSync: ', this.rootSync)
-    console.log('pathSync: ', this.pathSync)    
-
-    //return this.pathSync !== this.rootSync ? this.pathSync.substring(this.rootSync.length) : '/'
     let visiblePath = ''
-    
-    //if(this.pathSync === this.rootSync){
-    //  visiblePath = this.rootSync.includes('gcodes/') ? this.pathSync.substring(this.pathSync.indexOf('/'))+'/' : '/'
-    //} else {
-    //  visiblePath = this.rootSync.includes('gcodes/') ? this.pathSync.substring(this.pathSync.indexOf('/'))+'/' :this.pathSync.substring(this.rootSync.length)
-    //}
-    
     if(this.rootSync.includes('gcodes/')){
       visiblePath = this.pathSync.substring(this.pathSync.indexOf('/'))+'/'
-      console.log('if')  
     } else {
       visiblePath = this.pathSync !== this.rootSync ? this.pathSync.substring(this.rootSync.length) : '/'
-      console.log('else')  
     }
-    console.log('visiblePath: ', visiblePath)
-    
     return visiblePath
   }
 
@@ -1373,12 +1358,9 @@ export default class FileManager extends Vue {
     let pathForUpload = ''
     if(this.visiblePath[this.visiblePath.length-1] === "/"){
       pathForUpload = this.visiblePath + filename
-      //console.log('if ')
     } else{
       pathForUpload = this.visiblePath + '/' + filename      
-      //console.log('else')
     }
-    console.log('pathForUpload: ', pathForUpload)
 
     formData.append('file', file, pathForUpload)
     return new Promise(resolve => {
