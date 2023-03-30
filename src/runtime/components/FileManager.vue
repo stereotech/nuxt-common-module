@@ -923,6 +923,8 @@ export default class FileManager extends Vue {
         successFiles.push(result)
       }
       this.uploading = false
+      console.log('----- before success emit ------')
+      console.log('successFiles', successFiles)
       for (const file of successFiles) {
         this.$emit('uploaded', file)
       }
@@ -1338,6 +1340,7 @@ export default class FileManager extends Vue {
     }
   }
   doUploadFile (file: File) {
+  console.log('doUploadFile file: ', file)
     let formData = new FormData()
     let filename = file.name;
     filename = this.$helpers.cyrillicTransform(filename, "_");
@@ -1350,11 +1353,17 @@ export default class FileManager extends Vue {
     this.uploadSnackbar.lastProgress.time = 0
     
     let pathForUpload = ''
+    console.log('rootSync: ', rootSync)
+    console.log('pathSync: ', pathSync)    
+    console.log('visiblePath: ', this.visiblePath)
     if(this.visiblePath[this.visiblePath.length-1] === "/"){
       pathForUpload = this.visiblePath + filename
+      console.log('if ')
     } else{
       pathForUpload = this.visiblePath + '/' + filename      
+      console.log('else')
     }
+    console.log('pathForUpload: ', pathForUpload)
 
     formData.append('file', file, pathForUpload)
     return new Promise(resolve => {
