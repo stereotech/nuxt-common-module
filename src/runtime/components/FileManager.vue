@@ -987,7 +987,13 @@ export default class FileManager extends Vue {
   }
 
   get visiblePath () {
-    return this.pathSync !== this.rootSync ? this.pathSync.substring(this.rootSync.length) : '/'
+    //return this.pathSync !== this.rootSync ? this.pathSync.substring(this.rootSync.length) : '/'
+    let visiblePath = this.pathSync !== this.rootSync ? this.pathSync.substring(0, this.pathSync.lastIndexOf("/") : '/'
+    console.log('rootSync: ', this.rootSync)
+    console.log('pathSync: ', this.pathSync)    
+    console.log('visiblePath: ', visiblePath)
+    
+    return visiblePath
   }
 
   files: FileStateFile[] | null = []
@@ -1353,9 +1359,6 @@ export default class FileManager extends Vue {
     this.uploadSnackbar.lastProgress.time = 0
     
     let pathForUpload = ''
-    console.log('rootSync: ', rootSync)
-    console.log('pathSync: ', pathSync)    
-    console.log('visiblePath: ', this.visiblePath)
     if(this.visiblePath[this.visiblePath.length-1] === "/"){
       pathForUpload = this.visiblePath + filename
       console.log('if ')
