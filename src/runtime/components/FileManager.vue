@@ -566,7 +566,8 @@
       <v-card>
       <v-form @submit.prevent="startPrint(dialogPrintFile.item.filename)">
         <v-card-title class="headline"
-          >{{ createJobTitle }} :
+          >{{ createJobTitle }}:
+          <br>
           {{ dialogPrintFile.item.filename }}</v-card-title
         >
         <v-card-text>
