@@ -1101,10 +1101,8 @@ export default class FileManager extends Vue {
         this.contextMenu.shown = false;
       }
       if (!item.isDirectory) {
-        if (!this.enablePrintDialog) {
-          this.$emit('fileclick', this.pathSync,
-            item)
-        } else {
+        if (this.enablePrintDialog) {
+          this.$emit('fileclick', this.pathSync, item)          
           this.dialogPrintFile.show = true;
           this.dialogPrintFile.item = item;
         }
