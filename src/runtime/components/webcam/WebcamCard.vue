@@ -30,8 +30,8 @@
         </div>
         <canvas
           ref="mjpegstreamerAdaptive"
-          :width="width"
-          :height="height"
+          :width="canvasWidth"
+          :height="canvasHeight"
           :class="
             'webcamImage ' +
             (isLoaded ? '' : 'hiddenWebcam') +
