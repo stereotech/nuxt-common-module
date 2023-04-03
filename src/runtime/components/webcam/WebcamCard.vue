@@ -1,5 +1,5 @@
 <template>
-  <v-card :height="height" :width="width">
+  <v-card :height="cardHeight" :width="cardWidth" :min-height="canvasHeight" :min-width="canvasWidth">
     <card-title icon="mdi-webcam" :title="title">
       <v-spacer></v-spacer>
       <v-btn v-if="zoomable" @click="zoomInImage" icon>
@@ -79,8 +79,11 @@ export default class WebcamCard extends Vue {
   request_time = 0;
   time_smoothing = 0.6;
   request_time_smoothing = 0.1;
-  height = 400
-  width = 600
+  cardHeight = 400
+  cardWidth = 600
+  canvasHeight = 400
+  canvasWidth = 600
+
 
   isZoomed = false;
   zoomInImage () {
@@ -131,8 +134,12 @@ export default class WebcamCard extends Vue {
 
       canvas.width = canvas.clientWidth;
       canvas.height = canvas.clientWidth * (frame.height / frame.width);
-      this.width = canvas.width * 1.1;
-      this.height = canvas.height * 1.1;
+      
+      this.canvasWidth = canvas.clientWidth;
+      this.canvasHeight = canvas.clientWidth * (frame.height / frame.width);
+      
+      this.cardWidth = canvas.width * 1.1;
+      this.cardHeight = canvas.height * 1.1;
 
       ctx.drawImage(
         frame,
