@@ -1,6 +1,5 @@
 <template>
-  <v-card :height="height" :width="width" :min-height="height" :min-width="width">
-   <!--:min-height="initialHeight" :min-width="initialWidth"-->
+  <v-card :height="cardHeight" :width="cardWidth" :min-height="cardHeight" :min-width="cardWidth">
     <card-title icon="mdi-webcam" :title="title">
       <v-spacer></v-spacer>
       <v-btn v-if="zoomable" @click="zoomInImage" icon>
@@ -31,20 +30,21 @@
         </div>
         <canvas
           ref="mjpegstreamerAdaptive"
+          :width="canvasWidth"
+          :height="canvasHeight"
           :class="
             'webcamImage ' +
             (isLoaded ? '' : 'hiddenWebcam') +
             (isZoomed ? 'zoomedWebcam' : '')
           "
         ></canvas>
-        <!--:width="width" :height="height" -->
       </div>
     </v-card-text>
   </v-card>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Watch } from "nuxt-property-decorator";
+import { Vue, Component, Prop } from "nuxt-property-decorator";
 import CardTitle from "../CardTitle.vue";
 
 @Component({
@@ -79,10 +79,10 @@ export default class WebcamCard extends Vue {
   request_time = 0;
   time_smoothing = 0.6;
   request_time_smoothing = 0.1;
-  //height = 400
-  //width = 600
-  initialHeight = 400
-  initialWidth = 600  
+  cardHeight = 400
+  cardWidth = 600
+  canvasHeight = 400
+  canvasWidth = 600
 
   isZoomed = false;
   zoomInImage () {
@@ -121,34 +121,20 @@ export default class WebcamCard extends Vue {
       this.setFrame();
     }
   }
-  
- get globalCanvas(){
-  return this.$refs.mjpegstreamerAdaptive ?? {}
- }
-  
- get height(){
-  console.log('height = ', this.globalCanvas.height * 1.3)
-  return this.globalCanvas.height * 1.3
- }
- 
- get width(){
-  console.log('width = ', this.globalCanvas.width * 1.1)
-  return this.globalCanvas.width * 1.1
- }
 
   async setFrame () {
     const url = new URL(this.url);
 
     this.request_start_time = performance.now();
     let canvas = this.$refs.mjpegstreamerAdaptive;
-    if (this.canvas) {
+    if (canvas) {
       const ctx = canvas.getContext("2d");
       const frame: any = await this.loadImage(url.toString());
 
       canvas.width = canvas.clientWidth;
       canvas.height = canvas.clientWidth * (frame.height / frame.width);
-      //this.width = canvas.width * 1.1;
-      //this.height = canvas.height * 1.3;
+      this.cardWidth = canvas.width * 1.1;
+      this.cardHeight = canvas.height * 1.3;
 
       ctx.drawImage(
         frame,
@@ -161,8 +147,6 @@ export default class WebcamCard extends Vue {
         canvas.width,
         canvas.height
       );
-      //! идет постоянная перерисовка
-      console.log('canvas: [',canvas.width,', ', canvas.height,']')
       this.isLoaded = true;
     }
 
@@ -170,11 +154,6 @@ export default class WebcamCard extends Vue {
       this.onLoad();
     });
   }
-
-@Watch('globalCanvas.height') heightChanged(val: any){
-  console.log('Watch globalCanvas height = ', val)
-  //this.height = this.globalCanvas.height * 1.3;
-}
 
   loadImage (url: string) {
     return new Promise((r) => {
