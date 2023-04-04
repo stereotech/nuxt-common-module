@@ -8,8 +8,7 @@
     <v-card>
       <card-title
         :icon="createDialogSync.edit ? 'mdi-pencil' : 'mdi-plus'"
-        :title="
-          'CreatePrintjobDialog ' + createDialogSync.edit
+        :title="createDialogSync.edit
             ? $t('Dashboard.Printqueue.Edit')
             : $t('Dashboard.Printqueue.Create')
         "
