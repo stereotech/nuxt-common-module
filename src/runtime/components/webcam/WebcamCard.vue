@@ -1,5 +1,5 @@
 <template>
-  <v-card :height="cardHeight" :width="cardWidth" :min-height="canvasHeight" :min-width="canvasWidth">
+  <v-card v-bind="$attrs" v-on="$listeners" min-width="200" min-height="200">
     <card-title icon="mdi-webcam" :title="title">
       <v-spacer></v-spacer>
       <v-btn v-if="zoomable" @click="zoomInImage" icon>
@@ -19,8 +19,6 @@
     <v-card-text>
       <div
         v-intersect="onIntersect"
-        style="position: relative"
-        :class="isRotate ? 'rotate' : 'norotate'"
       >
         <div class="text-center py-5" v-if="!isLoaded">
           <v-progress-circular
@@ -30,8 +28,6 @@
         </div>
         <canvas
           ref="mjpegstreamerAdaptive"
-          :width="canvasWidth"
-          :height="canvasHeight"
           :class="
             'webcamImage ' +
             (isLoaded ? '' : 'hiddenWebcam') +
@@ -67,7 +63,7 @@ export default class WebcamCard extends Vue {
   @Prop({ type: String, default: "" }) url!: string;
   @Prop({ type: String, default: "" }) title!: string;
   @Prop({ type: Boolean, default: false }) zoomable!: boolean;
-  @Prop({ type: Boolean, default: true }) isRotate!: boolean;
+  @Prop({ type: Number, default: 0}) rotation!: number
 
   isVisible = false;
   refresh = Math.ceil(Math.random() * Math.pow(10, 12));
@@ -79,10 +75,6 @@ export default class WebcamCard extends Vue {
   request_time = 0;
   time_smoothing = 0.6;
   request_time_smoothing = 0.1;
-  cardHeight = 400
-  cardWidth = 600
-  canvasHeight = 400
-  canvasWidth = 600
 
 
   isZoomed = false;
@@ -91,7 +83,7 @@ export default class WebcamCard extends Vue {
   }
 
   $refs!: {
-    mjpegstreamerAdaptive: any;
+    mjpegstreamerAdaptive: HTMLCanvasElement;
   };
 
   onIntersect (
@@ -123,6 +115,15 @@ export default class WebcamCard extends Vue {
     }
   }
 
+  get rotationParams() {
+    const sin_a = Math.sin(this.rotation * Math.PI / 180)
+    const cos_a = Math.cos(this.rotation * Math.PI / 180)
+    return {
+      sin_a,
+      cos_a
+    }
+  }
+
   async setFrame () {
     const url = new URL(this.url);
 
@@ -130,28 +131,29 @@ export default class WebcamCard extends Vue {
     let canvas = this.$refs.mjpegstreamerAdaptive;
     if (canvas) {
       const ctx = canvas.getContext("2d");
-      const frame: any = await this.loadImage(url.toString());
-
+      const frame = await this.loadImage(url.toString());
       canvas.width = canvas.clientWidth;
-      canvas.height = canvas.clientWidth * (frame.height / frame.width);
-      
-      this.canvasWidth = canvas.clientWidth;
-      this.canvasHeight = canvas.clientWidth * (frame.height / frame.width);
-      
-      this.cardWidth = canvas.width * 1.1;
-      this.cardHeight = canvas.height * 1.1;
+      canvas.height = canvas.clientWidth * ((Math.abs(frame.width * this.rotationParams.sin_a) + Math.abs(frame.height * this.rotationParams.cos_a)) / (Math.abs(frame.width*this.rotationParams.cos_a) + Math.abs(frame.height * this.rotationParams.sin_a)));
 
+      if (ctx) {
+        const rot_width = Math.abs(canvas.height*this.rotationParams.sin_a) + Math.abs(canvas.width * this.rotationParams.cos_a)
+        const rot_height = Math.abs(canvas.height*this.rotationParams.cos_a) + Math.abs(canvas.width * this.rotationParams.sin_a)
+        ctx.translate( canvas.width/2,  canvas.height/2)
+        ctx.rotate(this.rotation * Math.PI / 180)
       ctx.drawImage(
         frame,
         0,
         0,
         frame.width,
         frame.height,
-        0,
-        0,
-        canvas.width,
-        canvas.height
+        -rot_width/2,
+        -rot_height/2,
+        rot_width,
+        rot_height
       );
+
+      }
+
       this.isLoaded = true;
     }
 
@@ -160,7 +162,7 @@ export default class WebcamCard extends Vue {
     });
   }
 
-  loadImage (url: string) {
+  loadImage (url: string): Promise<HTMLImageElement> {
     return new Promise((r) => {
       let image = new Image();
       image.onload = () => r(image);
