@@ -30,8 +30,7 @@
           ref="mjpegstreamerAdaptive"
           :class="
             'webcamImage ' +
-            (isLoaded ? '' : 'hiddenWebcam') +
-            (isZoomed ? 'zoomedWebcam' : '')
+            (isLoaded ? '' : 'hiddenWebcam')
           "
         ></canvas>
       </div>
@@ -136,9 +135,12 @@ export default class WebcamCard extends Vue {
       canvas.height = canvas.clientWidth * ((Math.abs(frame.width * this.rotationParams.sin_a) + Math.abs(frame.height * this.rotationParams.cos_a)) / (Math.abs(frame.width*this.rotationParams.cos_a) + Math.abs(frame.height * this.rotationParams.sin_a)));
 
       if (ctx) {
+        if (this.isZoomed) {
+          ctx.scale(2, 2)
+        }
         const rot_width = Math.abs(canvas.height*this.rotationParams.sin_a) + Math.abs(canvas.width * this.rotationParams.cos_a)
         const rot_height = Math.abs(canvas.height*this.rotationParams.cos_a) + Math.abs(canvas.width * this.rotationParams.sin_a)
-        ctx.translate( canvas.width/2,  canvas.height/2)
+        ctx.translate(canvas.width/(this.isZoomed ? 4 : 2), canvas.height/(this.isZoomed ? 4 : 2))
         ctx.rotate(this.rotation * Math.PI / 180)
       ctx.drawImage(
         frame,
