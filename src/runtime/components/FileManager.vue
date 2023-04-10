@@ -987,11 +987,11 @@ export default class FileManager extends Vue {
 
   get visiblePath () {
     let visiblePath = ''
-    if(this.rootSync.includes('gcodes/')){
-      visiblePath = this.pathSync.substring(this.pathSync.indexOf('/'))+'/'
-    } else {
+//    if(this.rootSync.includes('gcodes/')){
+//      visiblePath = this.pathSync.substring(this.pathSync.indexOf('/'))+'/'
+//    } else {
       visiblePath = this.pathSync !== this.rootSync ? this.pathSync.substring(this.rootSync.length) : '/'
-    }
+//    }
     return visiblePath
   }
 
