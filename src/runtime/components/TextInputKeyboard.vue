@@ -7,6 +7,7 @@
       @change="$emit('change', $event)"
       @click:append="$emit('click:append', $event)"
       @input="$emit('input', $event)"
+      :autofocus="true"
     >
       <slot v-for="(_, name) in $slots" :name="name" :slot="name" />
     </v-text-field>
