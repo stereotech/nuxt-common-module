@@ -766,7 +766,7 @@ export default class FileManager extends Vue {
   @Prop({ type: Boolean, default: false }) closeable!: boolean
   @Prop({ type: Boolean, default: true }) enableUpload!: boolean
   @Prop({ type: Boolean, default: true }) hasUsb!: boolean
-  @Prop({ type: Boolean, default: true }) enablePrintDialog!: boolean
+  @Prop({ type: Boolean, default: true }) enablePrintDialog!: boolean // Разрешено диалоговое окно подтверждения создания задания
   @Prop({ type: Boolean, default: true }) enableDownload!: boolean
   @Prop({ type: Number, default: 0 }) timeOffsetSecs!: number
   @Prop({ type: Array, default: () => [] }) validGcodeExtensions!: string[]
@@ -1102,10 +1102,12 @@ export default class FileManager extends Vue {
         this.contextMenu.shown = false;
       }
       if (!item.isDirectory) {
+        this.dialogPrintFile.item = item
         if (this.enablePrintDialog) {
           this.$emit('fileclick', this.pathSync, item)          
-          this.dialogPrintFile.show = true;
-          this.dialogPrintFile.item = item;
+          this.dialogPrintFile.show = true
+        } else{
+          this.startPrint(this.dialogPrintFile.item.filename)
         }
       } else {
         this.$emit('update:path', this.pathSync + "/" + item.filename)
