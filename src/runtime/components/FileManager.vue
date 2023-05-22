@@ -335,8 +335,10 @@
             <v-container>
               <v-row>
                 <v-col cols="12">
-                  <v-img width="150" class="mx-auto" contain v-if="getBigThumbnail(dialogPrintFile.item)"
-                    :src="getBigThumbnail(dialogPrintFile.item)"></v-img>
+                  <slot name="dialog-preview" v-bind:item="dialogPrintFile.item">
+                    <v-img width="150" class="mx-auto" contain v-if="getBigThumbnail(dialogPrintFile.item)"
+                      :src="getBigThumbnail(dialogPrintFile.item)"></v-img>
+                  </slot>
                 </v-col>
                 <v-col>
                   <slot name="alert" v-bind:item="dialogPrintFile.item"></slot>
