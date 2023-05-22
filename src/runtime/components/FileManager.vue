@@ -1,92 +1,32 @@
 <template>
   <div>
-    <v-card
-      :disabled="disabled"
-      @dragover="dragOverUpload"
-      @dragleave="dragLeaveUpload"
-      @drop.prevent.stop="dragDropUpload"
-    >
-      <card-title
-        icon="mdi-file-document-multiple-outline"
-        :title="title"
-        :closeable="closeable"
-        @close="$emit('close', $event)"
-      ></card-title>
+    <v-card :disabled="disabled" @dragover="dragOverUpload" @dragleave="dragLeaveUpload"
+      @drop.prevent.stop="dragDropUpload">
+      <card-title icon="mdi-file-document-multiple-outline" :title="title" :closeable="closeable"
+        @close="$emit('close', $event)"></card-title>
       <v-card-text>
         <v-row>
           <v-col cols="12" sm="6" md="4">
-            <text-input-keyboard
-              v-model="search"
-              append-icon="mdi-magnify"
-              :label="searchTitle"
-              outlined
-              clearable
-              hide-details
-              dense
-            ></text-input-keyboard>
+            <text-input-keyboard v-model="search" append-icon="mdi-magnify" :label="searchTitle" outlined clearable
+              hide-details dense></text-input-keyboard>
           </v-col>
           <v-col cols="12" sm="5" md="4" offset-md="4" offset-sm="1">
-            <input
-              type="file"
-              ref="fileUpload"
-              style="display: none"
-              multiple
-              :accept="accept"
-              @change="uploadFile"
-            />
-            <v-btn
-              v-if="enableUpload"
-              fab
-              small
-              depressed
-              @click="clickUploadButton"
-              :title="uploadTitle"
-              color="primary"
-              :loading="uploading"
-              ><v-icon>mdi-upload</v-icon></v-btn
-            >
-            <v-btn
-              icon
-              @click="createDirectory"
-              :title="createDirectoryTitle"
-              color="primary"
-              large
-              class="ml-2"
-              ><v-icon>mdi-folder-plus</v-icon></v-btn
-            >
-            <v-btn
-              icon
-              @click="refreshFileList"
-              :title="refreshTitle"
-              color="primary"
-              large
-              class="ml-2"
-              ><v-icon>mdi-refresh</v-icon></v-btn
-            >
+            <input type="file" ref="fileUpload" style="display: none" multiple :accept="accept" @change="uploadFile" />
+            <v-btn v-if="enableUpload" fab small depressed @click="clickUploadButton" :title="uploadTitle" color="primary"
+              :loading="uploading"><v-icon>mdi-upload</v-icon></v-btn>
+            <v-btn icon @click="createDirectory" :title="createDirectoryTitle" color="primary" large
+              class="ml-2"><v-icon>mdi-folder-plus</v-icon></v-btn>
+            <v-btn icon @click="refreshFileList" :title="refreshTitle" color="primary" large
+              class="ml-2"><v-icon>mdi-refresh</v-icon></v-btn>
             <v-menu offset-y :close-on-content-click="false">
               <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  color="primary"
-                  icon
-                  large
-                  class="ml-2"
-                  v-bind="attrs"
-                  v-on="on"
-                  ><v-icon>mdi-dots-vertical</v-icon></v-btn
-                >
+                <v-btn color="primary" icon large class="ml-2" v-bind="attrs"
+                  v-on="on"><v-icon>mdi-dots-vertical</v-icon></v-btn>
               </template>
               <v-list>
-                <v-list-item
-                  v-for="header of configHeaders"
-                  v-bind:key="header.value"
-                >
-                  <v-checkbox
-                    class="mt-0"
-                    hide-details
-                    v-model="header.visible"
-                    @change="changeHeaderVisible(header.value)"
-                    :label="header.text"
-                  ></v-checkbox>
+                <v-list-item v-for="header of configHeaders" v-bind:key="header.value">
+                  <v-checkbox class="mt-0" hide-details v-model="header.visible"
+                    @change="changeHeaderVisible(header.value)" :label="header.text"></v-checkbox>
                 </v-list-item>
               </v-list>
             </v-menu>
@@ -96,9 +36,7 @@
       <v-card-text>
         <v-row>
           <v-col class="col-12 py-2 d-flex align-center">
-            <span
-              ><b>{{ pathTitle }}:</b> {{ visiblePath }}</span
-            >
+            <span><b>{{ pathTitle }}:</b> {{ visiblePath }}</span>
             <v-spacer></v-spacer>
             <slot name="usage" v-bind:usage="diskUsage">
               <template v-if="diskUsage !== null">
@@ -123,19 +61,9 @@
           </v-col>
         </v-row>
       </v-card-text>
-      <v-data-table
-        :items="files"
-        :headers="visibleHeaders"
-        :custom-sort="$helpers.sortFiles"
-        item-key="name"
-        :search="search"
-        :custom-filter="advancedSearch"
-        mobile-breakpoint="0"
-        @pagination="refreshMetadata"
-        v-bind="$attrs"
-        v-on="$listeners"
-        ref="table"
-      >
+      <v-data-table :items="files" :headers="visibleHeaders" :custom-sort="$helpers.sortFiles" item-key="name"
+        :search="search" :custom-filter="advancedSearch" mobile-breakpoint="0" @pagination="refreshMetadata"
+        v-bind="$attrs" v-on="$listeners" ref="table">
         <template slot="items">
           <td v-for="header in visibleHeaders" v-bind:key="header.value">
             {{ header.text }}
@@ -144,17 +72,11 @@
 
         <slot name="body.prepend">
           <template slot="body.prepend" v-if="pathSync !== rootSync">
-            <tr
-              class="file-list-cursor"
-              @click="clickRowGoBack"
-              @dragover="
-                dragOverFilelist($event, { isDirectory: true, filename: '..' })
-              "
-              @dragleave="dragLeaveFilelist"
-              @drop.prevent.stop="
-                dragDropFilelist($event, { isDirectory: true, filename: '..' })
-              "
-            >
+            <tr class="file-list-cursor" @click="clickRowGoBack" @dragover="
+              dragOverFilelist($event, { isDirectory: true, filename: '..' })
+              " @dragleave="dragLeaveFilelist" @drop.prevent.stop="
+    dragDropFilelist($event, { isDirectory: true, filename: '..' })
+    ">
               <td class="pr-0 text-center" style="width: 32px">
                 <v-icon>mdi-folder-upload</v-icon>
               </td>
@@ -163,253 +85,144 @@
           </template>
         </slot>
         <template #item="{ index, item }">
-          <tr
-            :key="`${index} ${item.filename}`"
-            v-longpress:600="(e) => showContextMenu(e, item)"
-            @contextmenu="showContextMenu($event, item)"
-            @click="clickRow(item)"
-            class="file-list-cursor user-select-none"
-            :draggable="!isUsb(item)"
-            @drag="dragFile($event, item)"
-            @dragend="dragendFile($event)"
-            @dragover="dragOverFilelist($event, item)"
-            @dragleave="dragLeaveFilelist"
-            @drop.prevent.stop="dragDropFilelist($event, item)"
-            :data-name="item.filename"
-          >
+          <tr :key="`${index} ${item.filename}`" v-longpress:600="(e) => showContextMenu(e, item)"
+            @contextmenu="showContextMenu($event, item)" @click="clickRow(item)" class="file-list-cursor user-select-none"
+            :draggable="!isUsb(item)" @drag="dragFile($event, item)" @dragend="dragendFile($event)"
+            @dragover="dragOverFilelist($event, item)" @dragleave="dragLeaveFilelist"
+            @drop.prevent.stop="dragDropFilelist($event, item)" :data-name="item.filename">
             <td class="pr-0 text-center" style="width: 32px">
               <template v-if="isUsb(item)">
-                <v-icon :color="item.childrens.length > 0 ? 'primary' : ''"
-                  >mdi-usb-flash-drive</v-icon
-                >
+                <v-icon :color="item.childrens.length > 0 ? 'primary' : ''">mdi-usb-flash-drive</v-icon>
               </template>
               <template v-else-if="item.isDirectory">
                 <v-icon>mdi-folder</v-icon>
               </template>
               <template v-else>
-                <template
-                  v-if="getSmallThumbnail(item) && getBigThumbnail(item)"
-                >
-                  <v-tooltip
-                    v-if="
-                      !item.isDirectory &&
+                <slot name="preview" v-bind:item="item">
+                  <template v-if="getSmallThumbnail(item) && getBigThumbnail(item)">
+                    <v-tooltip v-if="!item.isDirectory &&
                       getSmallThumbnail(item) &&
                       getBigThumbnail(item)
-                    "
-                    top
-                    content-class="tooltip__content-opacity1"
-                  >
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-img
-                        :src="getSmallThumbnail(item)"
-                        width="32"
-                        height="32"
-                        v-bind="attrs"
-                        v-on="on"
-                      >
-                        <template v-slot:placeholder>
-                          <v-row
-                            class="fill-height ma-0"
-                            align="center"
-                            justify="center"
-                          >
-                            <v-progress-circular
-                              indeterminate
-                              color="primary"
-                            ></v-progress-circular>
-                          </v-row>
-                        </template>
-                      </v-img>
-                    </template>
-                    <span
-                      ><v-img :src="getBigThumbnail(item)" width="250"
-                    /></span>
-                  </v-tooltip>
-                </template>
-                <template v-else-if="getSmallThumbnail(item)">
-                  <v-img :src="getSmallThumbnail(item)" width="32" height="32">
-                    <template v-slot:placeholder>
-                      <v-row
-                        class="fill-height ma-0"
-                        align="center"
-                        justify="center"
-                      >
-                        <v-progress-circular
-                          indeterminate
-                          color="primary"
-                        ></v-progress-circular>
-                      </v-row>
-                    </template>
-                  </v-img>
-                </template>
-                <template v-else>
-                  <v-icon>mdi-file</v-icon>
-                </template>
+                      " top content-class="tooltip__content-opacity1">
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-img :src="getSmallThumbnail(item)" width="32" height="32" v-bind="attrs" v-on="on">
+                          <template v-slot:placeholder>
+                            <v-row class="fill-height ma-0" align="center" justify="center">
+                              <v-progress-circular indeterminate color="primary"></v-progress-circular>
+                            </v-row>
+                          </template>
+                        </v-img>
+                      </template>
+                      <span><v-img :src="getBigThumbnail(item)" width="250" /></span>
+                    </v-tooltip>
+                  </template>
+                  <template v-else-if="getSmallThumbnail(item)">
+                    <v-img :src="getSmallThumbnail(item)" width="32" height="32">
+                      <template v-slot:placeholder>
+                        <v-row class="fill-height ma-0" align="center" justify="center">
+                          <v-progress-circular indeterminate color="primary"></v-progress-circular>
+                        </v-row>
+                      </template>
+                    </v-img>
+                  </template>
+                  <template v-else>
+                    <v-icon>mdi-file</v-icon>
+                  </template>
+                </slot>
               </template>
             </td>
             <td>{{ item.filename }}</td>
-            <td
-              class="text-no-wrap text-right"
-              v-if="visibleHeaders.find((header) => header.value === 'size')"
-            >
+            <td class="text-no-wrap text-right" v-if="visibleHeaders.find((header) => header.value === 'size')">
               {{ item.isDirectory ? "--" : $helpers.formatFilesize(item.size) }}
             </td>
-            <td
-              class="text-right"
-              v-if="
-                visibleHeaders.find((header) => header.value === 'modified')
-              "
-            >
+            <td class="text-right" v-if="visibleHeaders.find((header) => header.value === 'modified')
+              ">
               {{
                 isUsb(item)
-                  ? "--"
-                  : $helpers.formatDate(item.modified, timeOffsetSecs / 3600)
+                ? "--"
+                : $helpers.formatDate(item.modified, timeOffsetSecs / 3600)
               }}
             </td>
-            <td
-              class="text-no-wrap text-right"
-              v-if="
-                visibleHeaders.find(
+            <td class="text-no-wrap text-right" v-if="visibleHeaders.find(
                   (header) => header.value === 'object_height'
                 )
-              "
-            >
+                ">
               {{
                 item.object_height
-                  ? item.object_height.toFixed(2) + " mm"
-                  : "--"
+                ? item.object_height.toFixed(2) + " mm"
+                : "--"
               }}
             </td>
-            <td
-              class="text-no-wrap text-right"
-              v-if="
-                visibleHeaders.find((header) => header.value === 'layer_height')
-              "
-            >
+            <td class="text-no-wrap text-right" v-if="visibleHeaders.find((header) => header.value === 'layer_height')
+                ">
               {{
                 item.layer_height ? item.layer_height.toFixed(2) + " mm" : "--"
               }}
             </td>
-            <td
-              class="text-no-wrap text-right"
-              v-if="
-                visibleHeaders.find(
-                  (header) => header.value === 'filament_total'
-                )
-              "
-            >
+            <td class="text-no-wrap text-right" v-if="visibleHeaders.find(
+                (header) => header.value === 'filament_total'
+              )
+              ">
               {{
                 item.filament_total
-                  ? item.filament_total.toFixed() + " mm"
-                  : "--"
+                ? item.filament_total.toFixed() + " mm"
+                : "--"
               }}
             </td>
-            <td
-              class="text-no-wrap text-right"
-              v-if="
-                visibleHeaders.find(
+            <td class="text-no-wrap text-right" v-if="visibleHeaders.find(
                   (header) => header.value === 'estimated_time'
                 )
-              "
-            >
+                ">
               {{ $helpers.formatPrintTime(item.estimated_time) }}
             </td>
-            <td
-              class="text-no-wrap text-right"
-              v-if="visibleHeaders.find((header) => header.value === 'slicer')"
-            >
-              {{ item.slicer ? item.slicer : "--" }}<br /><small
-                v-if="item.slicer_version"
-                >{{ item.slicer_version }}</small
-              >
+            <td class="text-no-wrap text-right" v-if="visibleHeaders.find((header) => header.value === 'slicer')">
+              {{ item.slicer ? item.slicer : "--" }}<br /><small v-if="item.slicer_version">{{ item.slicer_version
+              }}</small>
             </td>
-            <td
-              class="text-no-wrap text-right"
-              v-if="
-                visibleHeaders.find(
-                  (header) => header.value === 'printing_mode'
-                )
-              "
-            >
+            <td class="text-no-wrap text-right" v-if="visibleHeaders.find(
+                (header) => header.value === 'printing_mode'
+              )
+              ">
               {{
                 "settings" in item &&
                 "global_quality" in item.settings &&
                 "printing_mode" in item.settings.global_quality.values &&
                 item.settings
-                  ? item.settings.global_quality.values.printing_mode
-                  : "--"
+                ? item.settings.global_quality.values.printing_mode
+                : "--"
               }}
             </td>
           </tr>
         </template>
       </v-data-table>
-      <v-overlay
-        absolute
-        z-index="9999999999"
-        :opacity="dropzone.opacity"
-        :style="`visibility:${dropzone.visibility ? 'visible' : 'hidden'}`"
-      >
+      <v-overlay absolute z-index="9999999999" :opacity="dropzone.opacity"
+        :style="`visibility:${dropzone.visibility ? 'visible' : 'hidden'}`">
         <div>{{ dropzoneTitle }}</div>
       </v-overlay>
     </v-card>
-    <v-snackbar
-      :timeout="-1"
-      :value="true"
-      fixed
-      right
-      bottom
-      color="primary"
-      v-model="uploadSnackbar.status"
-    >
-      <span v-if="uploadSnackbar.max > 1" class="mr-1"
-        >({{ uploadSnackbar.number }}/{{ uploadSnackbar.max }})</span
-      ><strong>{{ snackbarTitle + " " + uploadSnackbar.filename }}</strong
-      ><br />
+    <v-snackbar :timeout="-1" :value="true" fixed right bottom color="primary" v-model="uploadSnackbar.status">
+      <span v-if="uploadSnackbar.max > 1" class="mr-1">({{ uploadSnackbar.number }}/{{ uploadSnackbar.max
+      }})</span><strong>{{ snackbarTitle + " " + uploadSnackbar.filename }}</strong><br />
       {{ Math.round(uploadSnackbar.percent) }} % @
       {{ $helpers.formatFilesize(Math.round(uploadSnackbar.speed)) }}/s<br />
-      <v-progress-linear
-        class="mt-2"
-        color="secondary"
-        :value="uploadSnackbar.percent"
-      ></v-progress-linear>
+      <v-progress-linear class="mt-2" color="secondary" :value="uploadSnackbar.percent"></v-progress-linear>
       <template v-slot:action="{ attrs }">
-        <v-btn
-          color="error"
-          icon
-          v-bind="attrs"
-          @click="cancelUpload"
-          style="min-width: auto"
-        >
+        <v-btn color="error" icon v-bind="attrs" @click="cancelUpload" style="min-width: auto">
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </template>
     </v-snackbar>
-    <v-menu
-      v-model="contextMenu.shown"
-      :position-x="contextMenu.x"
-      :position-y="contextMenu.y"
-      absolute
-      offset-y
-    >
+    <v-menu v-model="contextMenu.shown" :position-x="contextMenu.x" :position-y="contextMenu.y" absolute offset-y>
       <v-list>
-        <v-list-item
-          @click="clickRow(contextMenu.item, true)"
-          v-if="!contextMenu.item.isDirectory"
-        >
+        <v-list-item @click="clickRow(contextMenu.item, true)" v-if="!contextMenu.item.isDirectory">
           <v-icon class="mr-1">mdi-plus</v-icon> {{ createJobTitle }}
         </v-list-item>
-        <v-list-item
-          @click="downloadFile"
-          v-if="!contextMenu.item.isDirectory && enableDownload"
-        >
+        <v-list-item @click="downloadFile" v-if="!contextMenu.item.isDirectory && enableDownload">
           <v-icon class="mr-1">mdi-download</v-icon>
           {{ downloadTitle }}
         </v-list-item>
-        <v-list-item
-          :disabled="isUsb(contextMenu.item)"
-          @click="renameDirectory(contextMenu.item)"
-          v-if="contextMenu.item.isDirectory"
-        >
+        <v-list-item :disabled="isUsb(contextMenu.item)" @click="renameDirectory(contextMenu.item)"
+          v-if="contextMenu.item.isDirectory">
           <v-icon class="mr-1">mdi-rename-box</v-icon> {{ renameTitle }}
         </v-list-item>
         <v-list-item @click="renameFile(contextMenu.item)" v-else>
@@ -418,11 +231,8 @@
         <v-list-item @click="removeFile" v-if="!contextMenu.item.isDirectory">
           <v-icon class="mr-1">mdi-delete</v-icon> {{ deleteTitle }}
         </v-list-item>
-        <v-list-item
-          :disabled="isUsb(contextMenu.item)"
-          @click="deleteDirectory(contextMenu.item)"
-          v-if="contextMenu.item.isDirectory"
-        >
+        <v-list-item :disabled="isUsb(contextMenu.item)" @click="deleteDirectory(contextMenu.item)"
+          v-if="contextMenu.item.isDirectory">
           <v-icon class="mr-1">mdi-delete</v-icon> {{ deleteTitle }}
         </v-list-item>
 
@@ -437,182 +247,116 @@
         </v-list-item>
       </v-list>
     </v-menu>
-    <v-dialog
-      v-model="dialogCreateDirectory.show"
-      max-width="400"
-      :transition="false"
-    >
+    <v-dialog v-model="dialogCreateDirectory.show" max-width="400" :transition="false">
       <v-card>
-      <v-form @submit.prevent="createDirectoryAction">
-        <v-card-title class="headline">{{
-          dialogCreateDirectory.title
-        }}</v-card-title>
-        <v-card-text>
-          {{ dialogCreateDirectory.description }}
-          <text-input-keyboard
-            label="Name"
-            :rules="dialogCreateDirectory.rules"
-            required
-            outlined
-            v-model="dialogCreateDirectory.name"
-          ></text-input-keyboard>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="" text @click="dialogCreateDirectory.show = false">{{
-            cancelTitle
-          }}</v-btn>
-          <v-btn color="primary" text type="submit">{{
-            createDirectoryTitle
-          }}</v-btn>
-        </v-card-actions>
+        <v-form @submit.prevent="createDirectoryAction">
+          <v-card-title class="headline">{{
+            dialogCreateDirectory.title
+          }}</v-card-title>
+          <v-card-text>
+            {{ dialogCreateDirectory.description }}
+            <text-input-keyboard label="Name" :rules="dialogCreateDirectory.rules" required outlined
+              v-model="dialogCreateDirectory.name"></text-input-keyboard>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="" text @click="dialogCreateDirectory.show = false">{{
+              cancelTitle
+            }}</v-btn>
+            <v-btn color="primary" text type="submit">{{
+              createDirectoryTitle
+            }}</v-btn>
+          </v-card-actions>
         </v-form>
       </v-card>
     </v-dialog>
-    <v-dialog
-      v-model="dialogRenameFile.show"
-      max-width="400"
-      :transition="false"
-    >
+    <v-dialog v-model="dialogRenameFile.show" max-width="400" :transition="false">
       <v-card>
-      <v-form @submit.prevent="renameFileAction">
-        <v-card-title class="headline">{{ renameTitle }}</v-card-title>
-        <v-card-text>
-          <text-input-keyboard
-            label="Name"
-            required
-            outlined
-            v-model="dialogRenameFile.newName"
-          ></text-input-keyboard>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="" text @click="dialogRenameFile.show = false">{{
-            cancelTitle
-          }}</v-btn>
-          <v-btn
-            color="primary"
-            text
-            type="submit"
-            >{{ renameTitle }}</v-btn
-          >
-        </v-card-actions>
+        <v-form @submit.prevent="renameFileAction">
+          <v-card-title class="headline">{{ renameTitle }}</v-card-title>
+          <v-card-text>
+            <text-input-keyboard label="Name" required outlined v-model="dialogRenameFile.newName"></text-input-keyboard>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="" text @click="dialogRenameFile.show = false">{{
+              cancelTitle
+            }}</v-btn>
+            <v-btn color="primary" text type="submit">{{ renameTitle }}</v-btn>
+          </v-card-actions>
         </v-form>
       </v-card>
     </v-dialog>
-    <v-dialog
-      v-model="dialogRenameDirectory.show"
-      max-width="400"
-      :transition="false"
-    >
+    <v-dialog v-model="dialogRenameDirectory.show" max-width="400" :transition="false">
       <v-card>
-      <v-form @submit.prevent="renameDirectoryAction">
-        <v-card-title class="headline">{{ renameTitle }}</v-card-title>
-        <v-card-text>
-          <text-input-keyboard
-            label="Name"
-            required
-            outlined
-            v-model="dialogRenameDirectory.newName"
-          ></text-input-keyboard>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="" text @click="dialogRenameDirectory.show = false">{{
-            cancelTitle
-          }}</v-btn>
-          <v-btn
-            color="primary"
-            text
-            type="submit"
-            >{{ renameTitle }}</v-btn
-          >
-        </v-card-actions>
+        <v-form @submit.prevent="renameDirectoryAction">
+          <v-card-title class="headline">{{ renameTitle }}</v-card-title>
+          <v-card-text>
+            <text-input-keyboard label="Name" required outlined
+              v-model="dialogRenameDirectory.newName"></text-input-keyboard>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="" text @click="dialogRenameDirectory.show = false">{{
+              cancelTitle
+            }}</v-btn>
+            <v-btn color="primary" text type="submit">{{ renameTitle }}</v-btn>
+          </v-card-actions>
         </v-form>
       </v-card>
     </v-dialog>
-    <v-dialog
-      v-model="dialogDeleteDirectory.show"
-      max-width="400"
-      :transition="false"
-    >
+    <v-dialog v-model="dialogDeleteDirectory.show" max-width="400" :transition="false">
       <v-card>
-      <v-form @submit.prevent="deleteDirectoryAction">
-        <v-card-title class="headline"
-          >{{ deleteTitle }} :
-          {{ dialogDeleteDirectory.item.filename }}</v-card-title
-        >
-        <v-card-text>
-          <p class="mb-0">
-            {{ confirmationTitle }}
-          </p>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="" text @click="dialogDeleteDirectory.show = false">{{
-            cancelTitle
-          }}</v-btn>
-          <v-btn
-            color="error"
-            text
-            type="submit"
-            >{{ deleteTitle }}</v-btn
-          >
-        </v-card-actions>
+        <v-form @submit.prevent="deleteDirectoryAction">
+          <v-card-title class="headline">{{ deleteTitle }} :
+            {{ dialogDeleteDirectory.item.filename }}</v-card-title>
+          <v-card-text>
+            <p class="mb-0">
+              {{ confirmationTitle }}
+            </p>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="" text @click="dialogDeleteDirectory.show = false">{{
+              cancelTitle
+            }}</v-btn>
+            <v-btn color="error" text type="submit">{{ deleteTitle }}</v-btn>
+          </v-card-actions>
         </v-form>
       </v-card>
     </v-dialog>
     <v-dialog width="400" v-model="dialogPrintFile.show" :transition="false">
       <v-card>
-      <v-form @submit.prevent="startPrint(dialogPrintFile.item.filename)">
-        <v-card-title class="headline"
-          >{{ createJobTitle }}:
-          <br>
-          {{ dialogPrintFile.item.filename }}</v-card-title
-        >
-        <v-card-text>
-          <v-container>
-            <v-row>
-              <v-col cols="12">
-                <v-img
-                  width="150"
-                  class="mx-auto"
-                  contain
-                  v-if="getBigThumbnail(dialogPrintFile.item)"
-                  :src="getBigThumbnail(dialogPrintFile.item)"
-                ></v-img>
-              </v-col>
-              <v-col>
-                <slot name="alert" v-bind:item="dialogPrintFile.item"></slot>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="red darken-1"
-            text
-            @click="dialogPrintFile.show = false"
-            >{{ cancelTitle }}</v-btn
-          >
-          <v-btn
-            color="green darken-1"
-            text
-            type="submit"
-            >{{ createJobTitle }}</v-btn
-          >
-        </v-card-actions>
+        <v-form @submit.prevent="startPrint(dialogPrintFile.item.filename)">
+          <v-card-title class="headline">{{ createJobTitle }}:
+            <br>
+            {{ dialogPrintFile.item.filename }}</v-card-title>
+          <v-card-text>
+            <v-container>
+              <v-row>
+                <v-col cols="12">
+                  <v-img width="150" class="mx-auto" contain v-if="getBigThumbnail(dialogPrintFile.item)"
+                    :src="getBigThumbnail(dialogPrintFile.item)"></v-img>
+                </v-col>
+                <v-col>
+                  <slot name="alert" v-bind:item="dialogPrintFile.item"></slot>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="red darken-1" text @click="dialogPrintFile.show = false">{{ cancelTitle }}</v-btn>
+            <v-btn color="green darken-1" text type="submit">{{ createJobTitle }}</v-btn>
+          </v-card-actions>
         </v-form>
       </v-card>
     </v-dialog>
 
     <v-dialog v-model="copyDialog.show" max-width="500" :transition="false">
       <v-card>
-        <v-card-title class="headline"
-          >{{ copyDialog.action === "copy" ? copyTitle : moveTitle }}
-          {{ copyDialog.filename }}</v-card-title
-        >
+        <v-card-title class="headline">{{ copyDialog.action === "copy" ? copyTitle : moveTitle }}
+          {{ copyDialog.filename }}</v-card-title>
         <v-card-text>
           <template>
             <span>
@@ -627,11 +371,7 @@
                   <td class="px-1"><v-icon>mdi-folder-upload</v-icon></td>
                   <td class="px-1">..</td>
                 </tr>
-                <tr
-                  v-for="item in copyDialog.fileList"
-                  :key="item.filename"
-                  @click="clickCopyItem(item)"
-                >
+                <tr v-for="item in copyDialog.fileList" :key="item.filename" @click="clickCopyItem(item)">
                   <template v-if="copyDialog.filename !== item.filename">
                     <td class="px-1">
                       <template v-if="isUsbInDialog(item)">
@@ -659,13 +399,8 @@
           <v-btn color="" text @click="copyDialog.show = false">{{
             cancelTitle
           }}</v-btn>
-          <v-btn
-            color="primary"
-            text
-            @click="copyFileAction"
-            :disabled="!copyDialog.newPath"
-            >{{ copyDialog.action === "copy" ? copyTitle : moveTitle }}</v-btn
-          >
+          <v-btn color="primary" text @click="copyFileAction" :disabled="!copyDialog.newPath">{{ copyDialog.action ===
+            "copy" ? copyTitle : moveTitle }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -954,8 +689,8 @@ export default class FileManager extends Vue {
   }
 
   createDirectory () {
-      this.dialogCreateDirectory.name = ""
-      this.dialogCreateDirectory.show = true
+    this.dialogCreateDirectory.name = ""
+    this.dialogCreateDirectory.show = true
   }
 
   refreshFileList () {
@@ -987,11 +722,11 @@ export default class FileManager extends Vue {
 
   get visiblePath () {
     let visiblePath = ''
-//    if(this.rootSync.includes('gcodes/')){
-//      visiblePath = this.pathSync.substring(this.pathSync.indexOf('/'))+'/'
-//    } else {
-      visiblePath = this.pathSync !== this.rootSync ? this.pathSync.substring(this.rootSync.length) : '/'
-//    }
+    //    if(this.rootSync.includes('gcodes/')){
+    //      visiblePath = this.pathSync.substring(this.pathSync.indexOf('/'))+'/'
+    //    } else {
+    visiblePath = this.pathSync !== this.rootSync ? this.pathSync.substring(this.rootSync.length) : '/'
+    //    }
     return visiblePath
   }
 
@@ -1104,9 +839,9 @@ export default class FileManager extends Vue {
       if (!item.isDirectory) {
         this.dialogPrintFile.item = item
         if (this.enablePrintDialog) {
-          this.$emit('fileclick', this.pathSync, item)          
+          this.$emit('fileclick', this.pathSync, item)
           this.dialogPrintFile.show = true
-        } else{
+        } else {
           this.startPrint(this.dialogPrintFile.item.filename)
         }
       } else {
@@ -1262,7 +997,7 @@ export default class FileManager extends Vue {
     this.copyDialog.newPath = this.pathSync
     this.copyDialog.item = item
     // const dirArray = this.copyDialog.newPath.split("/")
-    const dirArray = [this.rootSync, ...this.copyDialog.newPath.replace(this.rootSync, '').split("/")].filter((itm: string)=>itm.length);
+    const dirArray = [this.rootSync, ...this.copyDialog.newPath.replace(this.rootSync, '').split("/")].filter((itm: string) => itm.length);
     this.copyDialog.fileList = this.$helpers.findDirectory(this.filetree, dirArray) || []
     if (this.copyDialog.fileList.length !== 0) {
       this.copyDialog.fileList = this.copyDialog.fileList.filter(file => file.filename !== "thumbs" && file.filename.substr(0, 1) !== "." && (this.validGcodeExtensions.includes(`.${file.filename.split('.').pop()}`) || file.isDirectory))
@@ -1290,7 +1025,7 @@ export default class FileManager extends Vue {
     if (item.isDirectory) {
       this.copyDialog.newPath += '/' + item.filename
       // const dirArray = this.copyDialog.newPath.split("/")
-      const dirArray = [this.rootSync, ...this.copyDialog.newPath.replace(this.rootSync, '').split("/")].filter((itm: string)=>itm.length);
+      const dirArray = [this.rootSync, ...this.copyDialog.newPath.replace(this.rootSync, '').split("/")].filter((itm: string) => itm.length);
       this.copyDialog.fileList = this.$helpers.findDirectory(this.filetree, dirArray) || []
       if (this.copyDialog.fileList.length !== 0) {
         this.copyDialog.fileList = this.copyDialog.fileList.filter(file => file.filename !== "thumbs" && file.filename.substr(0, 1) !== "." && (this.validGcodeExtensions.includes(`.${file.filename.split('.').pop()}`) || file.isDirectory))
@@ -1315,7 +1050,7 @@ export default class FileManager extends Vue {
     let arr = this.copyDialog.newPath.split('/')
     arr.length = arr.length - 1
     this.copyDialog.newPath = arr.join('/')
-    const dirArray = [this.rootSync, ...this.copyDialog.newPath.replace(this.rootSync, '').split("/")].filter((itm: string)=>itm.length);
+    const dirArray = [this.rootSync, ...this.copyDialog.newPath.replace(this.rootSync, '').split("/")].filter((itm: string) => itm.length);
     this.copyDialog.fileList = this.$helpers.findDirectory(this.filetree, dirArray) || []
     if (this.copyDialog.fileList.length !== 0) {
       this.copyDialog.fileList = this.copyDialog.fileList.filter(file => file.filename !== "thumbs" && file.filename.substr(0, 1) !== "." && (this.validGcodeExtensions.includes(`.${file.filename.split('.').pop()}`) || file.isDirectory))
@@ -1330,7 +1065,7 @@ export default class FileManager extends Vue {
   }
   loadPath () {
     this.$emit('refresh', this.pathSync)
-    let dirArray = [this.rootSync, ...this.pathSync.replace(this.rootSync, '').split("/")].filter((itm: string)=>itm.length);
+    let dirArray = [this.rootSync, ...this.pathSync.replace(this.rootSync, '').split("/")].filter((itm: string) => itm.length);
     this.files = this.$helpers.findDirectory(this.filetree, dirArray)
     if (this.files !== null) {
       this.files = this.files.filter(file => file.filename !== "thumbs" && file.filename.substr(0, 1) !== "." && (this.validGcodeExtensions.includes(`.${file.filename.split('.').pop()}`) || file.isDirectory))
@@ -1338,7 +1073,7 @@ export default class FileManager extends Vue {
   }
   @Watch('filetree', { deep: true })
   filetreeChanged (newVal: FileStateFile[]) {
-    let dirArray = [this.rootSync, ...this.pathSync.replace(this.rootSync, '').split("/")].filter((itm: string)=>itm.length);
+    let dirArray = [this.rootSync, ...this.pathSync.replace(this.rootSync, '').split("/")].filter((itm: string) => itm.length);
     this.files = this.$helpers.findDirectory(newVal, dirArray);
     if (this.files?.length) {
       this.files = this.files.filter(file => file.filename !== "thumbs" && file.filename.substr(0, 1) !== "." && (this.validGcodeExtensions.includes(`.${file.filename.split('.').pop()}`) || file.isDirectory));
@@ -1355,12 +1090,12 @@ export default class FileManager extends Vue {
     this.uploadSnackbar.speed = 0
     this.uploadSnackbar.lastProgress.loaded = 0
     this.uploadSnackbar.lastProgress.time = 0
-    
+
     let pathForUpload = ''
-    if(this.visiblePath[this.visiblePath.length-1] === "/"){
+    if (this.visiblePath[this.visiblePath.length - 1] === "/") {
       pathForUpload = this.visiblePath + filename
-    } else{
-      pathForUpload = this.visiblePath + '/' + filename      
+    } else {
+      pathForUpload = this.visiblePath + '/' + filename
     }
 
     formData.append('file', file, pathForUpload)
