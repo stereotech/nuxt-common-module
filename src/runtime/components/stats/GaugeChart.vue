@@ -103,7 +103,9 @@ export default class GaugeChart extends Vue {
             width: 50,
             height: 14,
             fontSize: 14,
-            color: "black",
+            color: this.dark
+              ? this.$vuetify.theme.currentTheme.secondary
+              : this.$vuetify.theme.currentTheme.accent,
             borderColor: "inherit",
             borderRadius: 20,
             borderWidth: 0,
