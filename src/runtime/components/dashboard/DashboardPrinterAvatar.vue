@@ -10,7 +10,7 @@
     >
       <div :class="style" />
     </v-img>
-    <v-dialog width="400" v-model="isDialogBigImageShow" :transition="false">
+    <v-dialog width="400" v-model="isDialogBigImageShow" :transition="false" click:outside="isDialogBigImageShow = false">
       <v-card class="text-center">
         <v-img
           class="elevation-1"
