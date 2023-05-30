@@ -1,24 +1,32 @@
 <template>
   <div>
    <v-img
-      class="elevation-1"
+      :class="clicable ? 'clicable elevation-1' : 'elevation-1'"
       alt="Avatar"
       aspect-ratio="1"
       v-bind="$attrs"
       v-on="$listeners"
-      @click="isDialogBigImageShow = true"
+      @click="click"
     >
       <div :class="style" />
     </v-img>
-    <v-dialog width="400" v-model="isDialogBigImageShow" :transition="false" click:outside="isDialogBigImageShow = false">
+    <v-dialog 
+      width="400" 
+      v-model="isDialogBigImageShow" 
+      :transition="false" 
+      click:outside="isDialogBigImageShow = false"
+      >
       <v-card class="text-center">
-        <v-img
-          class="elevation-1"
-          alt="Image"
-          aspect-ratio="1"
-          v-bind="$attrs"
-          v-on="$listeners"
-        />
+        <v-card-text class="text-center">
+          <v-img
+            class="elevation-1"
+            alt="Image"
+            aspect-ratio="1"
+            v-bind="$attrs"
+            v-on="$listeners"
+            width="300"
+          />
+        </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="red darken-1" text @click="isDialogBigImageShow = false">close</v-btn>
@@ -61,6 +69,13 @@ export default class DashboardPrinterAvatar extends Vue {
         break;
     }
   }
+  
+  click(){
+    if(this.clicable){
+      this.isDialogBigImageShow = true
+    }
+  }
+  
 }
 </script>
 
@@ -100,5 +115,8 @@ export default class DashboardPrinterAvatar extends Vue {
     rgba(76, 175, 80, 0.5) 5px,
     rgba(76, 175, 80, 0.5) 10px
   );
+}
+.clicable{
+  cursor: pointer;
 }
 </style>
