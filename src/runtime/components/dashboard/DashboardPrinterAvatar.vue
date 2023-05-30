@@ -1,13 +1,41 @@
 <template>
-  <v-img
-    class="elevation-1"
-    alt="Avatar"
-    aspect-ratio="1"
-    v-bind="$attrs"
-    v-on="$listeners"
-  >
-    <div :class="style" />
-  </v-img>
+  <div>
+    <template v-if="clicable">
+      <v-tooltip>
+        <template v-slot:activator="{ on, attrs }">
+          <v-img
+            class="elevation-1"
+            alt="Avatar"
+            aspect-ratio="1"
+            v-bind="$attrs"
+            v-on="$listeners"
+          >
+            <div :class="style" />
+          </v-img>
+        </template>
+        <span>
+          <v-img
+            class="elevation-1"
+            alt="Image"
+            aspect-ratio="1"
+            v-bind="$attrs"
+            v-on="$listeners"
+            width="250" />
+        </span>
+      </v-tooltip>
+    </template>  
+    <template v-else>
+      <v-img
+        class="elevation-1"
+        alt="Avatar"
+        aspect-ratio="1"
+        v-bind="$attrs"
+        v-on="$listeners"
+      >
+        <div :class="style" />
+      </v-img>
+    </template>
+  </div>
 </template>
 
 <script lang="ts">
@@ -17,6 +45,7 @@ import { Vue, Component, Prop } from "nuxt-property-decorator";
   name: "DashboardPrinterAvatar",
 })
 export default class DashboardPrinterAvatar extends Vue {
+  @Prop({type: Boolean, default: false}) clicable!: boolean
   @Prop({ type: String, default: "" }) state!:
     | "warning"
     | "white"
