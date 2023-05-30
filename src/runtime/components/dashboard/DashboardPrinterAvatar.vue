@@ -11,15 +11,15 @@
       <div :class="style" />
     </v-img>
     <v-dialog 
-      width="400" 
+      width="350" 
       v-model="isDialogBigImageShow" 
       :transition="false" 
       click:outside="isDialogBigImageShow = false"
       >
-      <v-card class="text-center">
+      <v-card>
         <v-card-text class="text-center">
           <v-img
-            class="elevation-1"
+            class="elevation-1 text-center"
             alt="Image"
             aspect-ratio="1"
             v-bind="$attrs"
@@ -27,10 +27,6 @@
             width="300"
           />
         </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="red darken-1" text @click="isDialogBigImageShow = false">close</v-btn>
-        </v-card-actions>
       </v-card>
     </v-dialog>
   </div>
