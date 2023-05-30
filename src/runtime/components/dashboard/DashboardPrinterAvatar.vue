@@ -17,7 +17,7 @@
       click:outside="isDialogBigImageShow = false"
       >
       <v-card>
-        <v-card-text class="text-center">
+        <v-card-text class="text-center pt-8">
           <v-img
             class="elevation-1 text-center"
             alt="Image"
@@ -25,6 +25,7 @@
             v-bind="$attrs"
             v-on="$listeners"
             width="300"
+            max-width="300"
           />
         </v-card-text>
       </v-card>
