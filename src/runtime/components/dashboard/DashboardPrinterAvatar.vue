@@ -1,40 +1,38 @@
 <template>
   <div>
-    <template v-if="clicable">
-      <v-tooltip>
-        <template v-slot:activator="{ on, attrs }">
-          <v-img
-            class="elevation-1"
-            alt="Avatar"
-            aspect-ratio="1"
-            v-bind="$attrs"
-            v-on="$listeners"
-          >
-            <div :class="style" />
-          </v-img>
-        </template>
-        <span>
-          <v-img
-            class="elevation-1"
-            alt="Image"
-            aspect-ratio="1"
-            v-bind="$attrs"
-            v-on="$listeners"
-            width="250" />
-        </span>
-      </v-tooltip>
-    </template>  
-    <template v-else>
-      <v-img
-        class="elevation-1"
-        alt="Avatar"
-        aspect-ratio="1"
-        v-bind="$attrs"
-        v-on="$listeners"
-      >
-        <div :class="style" />
-      </v-img>
-    </template>
+   <v-img
+      class="elevation-1"
+      alt="Avatar"
+      aspect-ratio="1"
+      v-bind="$attrs"
+      v-on="$listeners"
+      @click="isDialogBigImageShow = true"
+    >
+      <div :class="style" />
+    </v-img>
+    <v-dialog width="400" v-model="isDialogBigImageShow" :transition="false">
+      <v-card class="text-center">
+<!--        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col cols="12">-->
+               <v-img
+                  class="elevation-1"
+                  alt="Image"
+                  aspect-ratio="1"
+                  v-bind="$attrs"
+                  v-on="$listeners"
+                >
+                <!--</v-col>
+              </v-row>
+           </v-container>
+          </v-card-text>-->
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="red darken-1" text @click="isDialogBigImageShow = false">close</v-btn>
+          </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -54,6 +52,8 @@ export default class DashboardPrinterAvatar extends Vue {
     | "grey"
     | "";
 
+  isDialogBigImageShow = false
+  
   get style() {
     switch (this.state) {
       case "warning":
