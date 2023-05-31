@@ -11,7 +11,7 @@
       <div :class="style" />
     </v-img>
     <v-dialog 
-      width="350" 
+      :width="bigImageWidth+50" 
       v-model="isDialogBigImageShow" 
       :transition="false" 
       click:outside="isDialogBigImageShow = false"
@@ -24,8 +24,8 @@
             aspect-ratio="1"
             v-bind="$attrs"
             v-on="$listeners"
-            width="300"
-            max-width="300"
+            :width="bigImageWidth"
+            :max-width="bigImageWidth"
           />
         </v-card-text>
       </v-card>
@@ -41,6 +41,7 @@ import { Vue, Component, Prop } from "nuxt-property-decorator";
 })
 export default class DashboardPrinterAvatar extends Vue {
   @Prop({type: Boolean, default: false}) clicable!: boolean
+  @Prop({type: Number, default: 300}) bigImageWidth!: number
   @Prop({ type: String, default: "" }) state!:
     | "warning"
     | "white"
