@@ -44,10 +44,13 @@ export class Notification {
     }
     document.body.clientWidth
     
-    //if(message.dialog){
+    if(message.dialog){
       //this.vAlertElement.setAttribute('type', message.type)
       //this.vDialogElement.setAttribute('v-model', true)  
-    //} else {
+      console.log('')
+      console.log('message: ', message)
+    } 
+    //else {
     this.context.app.$toast.show(message.text, {
       icon: iconFromType(message.type),
       type: message.type,
