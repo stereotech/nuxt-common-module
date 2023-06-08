@@ -49,7 +49,7 @@ export class Notification {
 //       document.body.appendChild(this.vDialogElement)
       
       //this.vAlertElement.setAttribute('type', message.type)
-      this.vDialogElement.setAttribute('v-model', true)  
+      this.vDialogElement.setAttribute('v-model', message.dialog)  
       console.log('')
       console.log('message: ', message)
     } 
