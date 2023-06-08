@@ -15,13 +15,11 @@ export class Notification {
     this.vAlertElement = document.createElement('v-alert')
   }
   
-  //this.vDialogElement = document.createElement('v-dialog')
-  //this.vDialogElement.setAttribute('id','mari-test-')
-  //this.vAlertElement = document.createElement('v-alert')
-  //this.vAlertElement.setAttribute('dense', true)
-  //this.vAlertElement.setAttribute('text', true)
-  //this.vDialogElement.appendChild(this.vAlertElement)
-  //document.body.appendChild(this.vDialogElement)
+  this.vDialogElement.setAttribute('id','mari-test-')
+  this.vAlertElement.setAttribute('dense', true)
+  this.vAlertElement.setAttribute('text', true)
+  this.vDialogElement.appendChild(this.vAlertElement)
+  document.body.appendChild(this.vDialogElement)
 
   call (message: Message) {
 
