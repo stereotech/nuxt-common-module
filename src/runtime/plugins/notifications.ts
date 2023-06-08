@@ -7,17 +7,19 @@ import type { Context } from '@nuxt/types';
 
 export class Notification {
   context: Context;
+  vDialogElement: HTMLElement
+  vAlertElement: HTMLElement
   constructor (context: Context) {
     this.context = context;
   }
   
-  let vDialogElement = document.createElement('v-dialog')
-  vDialogElement.setAttribute('id','mari-test-')
-  let vAlertElement = document.createElement('v-alert')
-  vAlertElement.setAttribute('dense', true)
-  vAlertElement.setAttribute('text', true)
-  vDialogElement.appendChild(vAlertElement)
-  document.body.appendChild(vDialogElement)
+  this.vDialogElement = document.createElement('v-dialog')
+  this.vDialogElement.setAttribute('id','mari-test-')
+  this.vAlertElement = document.createElement('v-alert')
+  this.vAlertElement.setAttribute('dense', true)
+  this.vAlertElement.setAttribute('text', true)
+  this.vDialogElement.appendChild(this.vAlertElement)
+  document.body.appendChild(this.vDialogElement)
 
   call (message: Message) {
 
@@ -43,8 +45,8 @@ export class Notification {
     document.body.clientWidth
     
     if(message.dialog){
-      vAlertElement.setAttribute('type', message.type)
-      vDialogElement.setAttribute('v-model', true)  
+      this.vAlertElement.setAttribute('type', message.type)
+      this.vDialogElement.setAttribute('v-model', true)  
     } else {
     this.context.app.$toast.show(message.text, {
       icon: iconFromType(message.type),
