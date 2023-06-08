@@ -17,6 +17,8 @@ export class Notification {
   
   call (message: Message) {
 
+    this.vDialogElement.setAttribute('id','mari-test-')
+    
     const closeAction = {
       text: '',
       icon: 'close',
@@ -39,7 +41,7 @@ export class Notification {
     document.body.clientWidth
     
     if(message.dialog){
-      this.vDialogElement.setAttribute('id','mari-test-')
+
 //       this.vAlertElement.setAttribute('dense', true)
 //       this.vAlertElement.setAttribute('text', true)
 //       this.vDialogElement.appendChild(this.vAlertElement)
