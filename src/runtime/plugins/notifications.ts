@@ -18,6 +18,7 @@ export class Notification {
   call (message: Message) {
 
     this.vDialogElement.setAttribute('id','mari-test-')
+    document.body.appendChild(this.vDialogElement)
     
     const closeAction = {
       text: '',
@@ -48,7 +49,7 @@ export class Notification {
 //       document.body.appendChild(this.vDialogElement)
       
       //this.vAlertElement.setAttribute('type', message.type)
-      //this.vDialogElement.setAttribute('v-model', true)  
+      this.vDialogElement.setAttribute('v-model', true)  
       console.log('')
       console.log('message: ', message)
     } 
