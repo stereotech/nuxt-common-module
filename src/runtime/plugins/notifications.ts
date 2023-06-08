@@ -11,8 +11,8 @@ export class Notification {
   vAlertElement: HTMLElement;
   constructor (context: Context) {
     this.context = context;
-    this.vDialogElement = document.createElement('div');
-    this.vAlertElement = document.createElement('p')
+    this.vDialogElement = document.createElement('v-dialog');
+    this.vAlertElement = document.createElement('v-alert')
   }
   
   //this.vDialogElement = document.createElement('v-dialog')
