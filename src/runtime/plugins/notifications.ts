@@ -7,8 +7,8 @@ import type { Context } from '@nuxt/types';
 
 export class Notification {
   context: Context;
-  //vDialogElement: HTMLElement;
-  //vAlertElement: HTMLElement;
+  vDialogElement: HTMLElement;
+  vAlertElement: HTMLElement;
   constructor (context: Context) {
     this.context = context;
   }
