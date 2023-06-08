@@ -19,6 +19,10 @@ export class Notification {
 
     this.vDialogElement.setAttribute('id','mari-test-')
     document.body.appendChild(this.vDialogElement)
+    this.vAlertElement.setAttribute('dense', true)
+    this.vAlertElement.setAttribute('text', true)
+    this.vDialogElement.appendChild(this.vAlertElement)
+    document.body.appendChild(this.vDialogElement)    
     
     const closeAction = {
       text: '',
@@ -42,14 +46,8 @@ export class Notification {
     document.body.clientWidth
     
     if(message.dialog){
-
-//       this.vAlertElement.setAttribute('dense', true)
-//       this.vAlertElement.setAttribute('text', true)
-//       this.vDialogElement.appendChild(this.vAlertElement)
-//       document.body.appendChild(this.vDialogElement)
-      
-      //this.vAlertElement.setAttribute('type', message.type)
-      this.vDialogElement.setAttribute('v-model', message.dialog)  
+      this.vAlertElement.setAttribute('type', message.type)
+      //this.vDialogElement.setAttribute('v-model', message.dialog)  
       console.log('')
       console.log('message: ', message)
     } 
