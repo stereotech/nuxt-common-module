@@ -15,12 +15,6 @@ export class Notification {
     this.vAlertElement = document.createElement('v-alert')
   }
   
-  this.vDialogElement.setAttribute('id','mari-test-')
-  this.vAlertElement.setAttribute('dense', true)
-  this.vAlertElement.setAttribute('text', true)
-  this.vDialogElement.appendChild(this.vAlertElement)
-  document.body.appendChild(this.vDialogElement)
-
   call (message: Message) {
 
     const closeAction = {
@@ -45,6 +39,12 @@ export class Notification {
     document.body.clientWidth
     
     if(message.dialog){
+      this.vDialogElement.setAttribute('id','mari-test-')
+//       this.vAlertElement.setAttribute('dense', true)
+//       this.vAlertElement.setAttribute('text', true)
+//       this.vDialogElement.appendChild(this.vAlertElement)
+//       document.body.appendChild(this.vDialogElement)
+      
       //this.vAlertElement.setAttribute('type', message.type)
       //this.vDialogElement.setAttribute('v-model', true)  
       console.log('')
