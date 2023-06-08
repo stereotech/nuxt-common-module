@@ -10,6 +10,14 @@ export class Notification {
   constructor (context: Context) {
     this.context = context;
   }
+  
+  let vDialogElement = document.createElement('v-dialog')
+  vDialogElement.setAttribute('id','mari-test')
+  let vAlertElement = document.createElement('v-alert')
+  vAlertElement.setAttribute('dense', true)
+  vAlertElement.setAttribute('text', true)
+  vDialogElement.appendChild(vAlertElement)
+  document.body.appendChild(vDialogElement)
 
   call (message: Message) {
 
@@ -33,6 +41,11 @@ export class Notification {
       }
     }
     document.body.clientWidth
+    
+    if(message.dialog){
+      vAlertElement.setAttribute('type', message.type)
+      vDialogElement.setAttribute('v-model', true)  
+    } else {
     this.context.app.$toast.show(message.text, {
       icon: iconFromType(message.type),
       type: message.type,
@@ -53,6 +66,7 @@ export class Notification {
         }),
         closeAction]
     })
+    }
   }
 }
 
