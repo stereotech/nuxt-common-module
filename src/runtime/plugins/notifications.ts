@@ -12,7 +12,7 @@ export class Notification {
   }
   
   let vDialogElement = document.createElement('v-dialog')
-  vDialogElement.setAttribute('id','mari-test')
+  vDialogElement.setAttribute('id','mari-test-')
   let vAlertElement = document.createElement('v-alert')
   vAlertElement.setAttribute('dense', true)
   vAlertElement.setAttribute('text', true)
