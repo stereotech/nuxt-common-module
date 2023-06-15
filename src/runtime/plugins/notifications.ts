@@ -34,9 +34,10 @@ export class Notification {
             on: {
               click: () => {
                 this.$destroy()
-                if(this.$el)
+                if(this.$el){
                 console.log('this.$el', this.$el)
-                //this.$el?.parentNode?.removeChild(this.$el);
+                this.$el?.parentNode?.removeChild(this.$el);
+                }
               }
             }
           }, 'Close')
@@ -105,9 +106,10 @@ export class Notification {
     if(message.dialog){
         let component = new Nf()
         component.$mount()
-        if(document){
+        if(document.getElementById('app')){
           console.log('document', document)
           console.log('document.body', document.body)
+          document.getElementById('app')?.appendChild(component.$el)
         }
 //         document.getElementById('app')?.appendChild(component.$el)
     } 
