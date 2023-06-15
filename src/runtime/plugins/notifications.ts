@@ -7,23 +7,79 @@ import type { Context } from '@nuxt/types';
 
 export class Notification {
   context: Context;
-  vDialogElement: HTMLElement;
-  vAlertElement: HTMLElement;
   constructor (context: Context) {
     this.context = context;
-    this.vDialogElement = document.createElement('v-dialog');
-    this.vAlertElement = document.createElement('v-alert')
   }
   
   call (message: Message) {
 
-    this.vDialogElement.setAttribute('id','mari-test-')
-    document.body.appendChild(this.vDialogElement)
-    this.vAlertElement.setAttribute('dense', true)
-    this.vAlertElement.setAttribute('text', true)
-    this.vDialogElement.appendChild(this.vAlertElement)
-    document.body.appendChild(this.vDialogElement)    
-    
+        let Nf = Vue.component('notificationDialog', {
+        render: function (createElement) {
+
+          const alertVNode = createElement('v-alert', {
+            attrs: { type: message.type, icon: false },
+            style: {
+              width: '100%'
+            }
+          },
+            message.text)
+
+          const closeButtonVNode = createElement('v-btn', {
+            attrs: {
+              outlined: true,
+              color: 'primary',
+              block: false,
+              inline: true
+            },
+            on: {
+              click: () => {
+                this.$destroy()
+                this.$el?.parentNode?.removeChild(this.$el);
+              }
+            }
+          }, 'Close')
+
+          const cardDivVNode = createElement('v-card', {
+            class: ['pa-2', 'd-flex', 'flex-column', 'align-end',]
+          },
+            [alertVNode, closeButtonVNode]
+          )
+
+          const dialogDivVNode = createElement('div', {
+            class: ['v-dialog', 'v-dialog--active', 'v-dialog--persistent'],
+            style: {
+              transformOrigin: 'center center',
+              maxWidth: '600px'
+            }
+          },
+            [cardDivVNode])
+
+          const dialogContentDivVNode = createElement('div', {
+            class: {
+              'v-dialog__content': true,
+              'v-dialog__content--active': true
+            },
+            style: {
+              zIndex: 204
+            }
+          },
+            [dialogDivVNode])
+
+          const overlayDivVNode = createElement('div', {
+            class: {
+              'v-overlay__scrim': true,
+            },
+            style: {
+              backgroundColor: 'rgb(33, 33, 33, 0.46)',
+              zIndex: 203,
+            }
+          },
+            [dialogContentDivVNode])
+
+          return overlayDivVNode
+        },
+      })
+        
     const closeAction = {
       text: '',
       icon: 'close',
@@ -43,15 +99,14 @@ export class Notification {
         return 'information'
       }
     }
-    document.body.clientWidth
+//    document.body.clientWidth
     
     if(message.dialog){
-      this.vAlertElement.setAttribute('type', message.type)
-      //this.vDialogElement.setAttribute('v-model', message.dialog)  
-      console.log('')
-      console.log('message: ', message)
+        let component = new Nf()
+        component.$mount()
+        document.getElementById('app')?.appendChild(component.$el)
     } 
-    //else {
+    else {
     this.context.app.$toast.show(message.text, {
       icon: iconFromType(message.type),
       type: message.type,
@@ -72,7 +127,7 @@ export class Notification {
         }),
         closeAction]
     })
-    //}
+    }
   }
 }
 
