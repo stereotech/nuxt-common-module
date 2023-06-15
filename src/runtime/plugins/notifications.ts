@@ -34,10 +34,7 @@ export class Notification {
             on: {
               click: () => {
                 this.$destroy()
-                if(this.$el){
-                console.log('this.$el', this.$el)
-                this.$el?.parentNode?.removeChild(this.$el);
-                }
+                //this.$el?.parentNode?.removeChild(this.$el)
               }
             }
           }, 'Close')
