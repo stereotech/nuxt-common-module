@@ -1,6 +1,6 @@
 import Vue from 'vue'
-// import { Vue, Component, Watch, Prop, PropSync } from 'nuxt-property-decorator'
-// import { Plugin } from '@nuxt/types'
+import { Vue, Component, Watch, Prop, PropSync } from 'nuxt-property-decorator'
+import { Plugin } from '@nuxt/types'
 import { Message, MessageType } from '../../types/notifications'
 import { ToastObject } from 'vue-toasted'
 import type { Context } from '@nuxt/types';
@@ -34,7 +34,7 @@ export class Notification {
             on: {
               click: () => {
                 this.$destroy()
-                this.$el?.parentNode?.removeChild(this.$el);
+                //this.$el?.parentNode?.removeChild(this.$el);
               }
             }
           }, 'Close')
