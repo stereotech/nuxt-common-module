@@ -99,7 +99,6 @@ export class Notification {
         return 'information'
       }
     }
-//    document.body.clientWidth
     
     if(message.dialog){
         let component = new Nf()
