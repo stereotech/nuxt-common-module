@@ -1,4 +1,4 @@
-// import Vue from 'vue'
+import Vue from 'vue'
 // import { Vue, Component, Watch, Prop, PropSync } from 'nuxt-property-decorator'
 // import { Plugin } from '@nuxt/types'
 import { Message, MessageType } from '../../types/notifications'
