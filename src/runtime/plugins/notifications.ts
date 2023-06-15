@@ -105,7 +105,11 @@ export class Notification {
     if(message.dialog){
         let component = new Nf()
         component.$mount()
-        document.getElementById('app')?.appendChild(component.$el)
+        if(document){
+          console.log('document', document)
+          console.log('document.body', document.body)
+        }
+//         document.getElementById('app')?.appendChild(component.$el)
     } 
     else {
     this.context.app.$toast.show(message.text, {
