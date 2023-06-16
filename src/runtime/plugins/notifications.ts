@@ -1,6 +1,3 @@
-// import Vue from 'vue'
-// import { Vue, Component, Watch, Prop, PropSync } from 'nuxt-property-decorator'
-// import { Plugin } from '@nuxt/types'
 import { Message, MessageType } from '../../types/notifications'
 import { ToastObject } from 'vue-toasted'
 import type { Context } from '@nuxt/types';
@@ -33,17 +30,6 @@ export class Notification {
       }
     }
     
-//     if(message.dialog){
-//         let component = new Nf()
-//         component.$mount()
-//         if(document.getElementById('app')){
-//           console.log('document', document)
-//           console.log('document.body', document.body)
-//           document.getElementById('app')?.appendChild(component.$el)
-//         }
-//         document.getElementById('app')?.appendChild(component.$el)
-//     } 
-//     else {
     this.context.app.$toast.show(message.text, {
       icon: iconFromType(message.type),
       type: message.type,
@@ -64,7 +50,6 @@ export class Notification {
         }),
         closeAction]
     })
-    //}
   }
 }
 
