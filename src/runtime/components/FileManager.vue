@@ -85,7 +85,7 @@
           </template>
         </slot>
         <template #item="{ index, item }">
-          <tr :key="`${index} ${item.filename}`" v-longpress:600="(e) => showContextMenu(e, item)"
+          <tr v-if="!isUsb(item)" :key="`${index} ${item.filename}`" v-longpress:600="(e) => showContextMenu(e, item)"
             @contextmenu="showContextMenu($event, item)" @click="clickRow(item)" class="file-list-cursor user-select-none"
             :draggable="!isUsb(item)" @drag="dragFile($event, item)" @dragend="dragendFile($event)"
             @dragover="dragOverFilelist($event, item)" @dragleave="dragLeaveFilelist"
