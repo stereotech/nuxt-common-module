@@ -1,7 +1,7 @@
 <template>
   <div>
    <v-img
-      :class="clicable ? 'clicable elevation-1' : 'elevation-1'"
+      :class="clickable ? 'clickable elevation-1' : 'elevation-1'"
       alt="Avatar"
       aspect-ratio="1"
       v-bind="$attrs"
@@ -40,7 +40,7 @@ import { Vue, Component, Prop } from "nuxt-property-decorator";
   name: "DashboardPrinterAvatar",
 })
 export default class DashboardPrinterAvatar extends Vue {
-  @Prop({type: Boolean, default: false}) clicable!: boolean
+  @Prop({type: Boolean, default: false}) clickable!: boolean
   @Prop({type: Number, default: 300}) bigImageWidth!: number
   @Prop({ type: String, default: "" }) state!:
     | "warning"
@@ -69,7 +69,7 @@ export default class DashboardPrinterAvatar extends Vue {
   }
   
   click(){
-    if(this.clicable){
+    if(this.clickable){
       this.isDialogBigImageShow = true
     }
   }
@@ -114,7 +114,7 @@ export default class DashboardPrinterAvatar extends Vue {
     rgba(76, 175, 80, 0.5) 10px
   );
 }
-.clicable{
+.clickable{
   cursor: pointer;
 }
 </style>
